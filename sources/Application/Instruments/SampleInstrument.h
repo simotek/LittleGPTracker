@@ -14,6 +14,7 @@
 enum SampleInstrumentLoopMode {
 	SILM_ONESHOT=0,
 	SILM_LOOP,
+	SILM_LOOP_PINGPONG,
 	SILM_OSC,
 //	SILM_OSCFINE,
 	SILM_LOOPSYNC,
@@ -39,6 +40,7 @@ enum SampleInstrumentLoopMode {
 #define SIP_SAMPLE 		    MAKE_FOURCC('S','M','P','L')
 #define SIP_SLICES 		    MAKE_FOURCC('S','L','C','S')
 #define SIP_FILTMODE		MAKE_FOURCC('F','I','M','O') 
+#define SIP_ATTENUATE		MAKE_FOURCC('F','I','A','T')
 #define SIP_FILTMIX			MAKE_FOURCC('F','M','I','X')
 #define SIP_FILTCUTOFF		MAKE_FOURCC('F','C','U','T')
 #define SIP_FILTRESO		MAKE_FOURCC('F','R','E','S')
@@ -102,7 +104,7 @@ private:
        bool dirty_ ;
 	   TableSaveState tableState_ ;
 	   
-	   static int8_t lastMidiNote_[SONG_CHANNEL_COUNT] ;
+	   static int lastMidiNote_[SONG_CHANNEL_COUNT] ;
 	   static fixed lastSample_[SONG_CHANNEL_COUNT][2] ;
 	   static fixed feedback_[SONG_CHANNEL_COUNT][FB_BUFFER_LENGTH*2] ;
 
@@ -123,6 +125,7 @@ private:
 	   WatchedVariable *loopEnd_ ;
 	   Variable *filterMix_ ;
 	   Variable *filterMode_ ;
+	   Variable *attenuate_ ;
 	   Variable *pan_ ;
 	   Variable *loopMode_ ;
 	   Variable *slices_ ;

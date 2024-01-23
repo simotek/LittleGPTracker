@@ -21,7 +21,11 @@ protected:
 	void warpToNextSample(int dir) ;
 	void import(Path &element) ;
 	void preview(Path &element) ;
+	void endPreview() ;
 private:
+	Path *getImportElement();
+	bool isSampleLibRoot();
+	void setCurrent(Path *element, unsigned short mask);
 	T_SimpleList<Path> sampleList_ ;
 	int currentSample_ ;
 	int topIndex_ ;

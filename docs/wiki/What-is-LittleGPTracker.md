@@ -1,12 +1,14 @@
 # What is LittleGPTracker?
-[*LittleGPTracker*](http://www.10pm.org/nostromo/lgpt/) *(a.k.a piggy tracker) is a sample based tracker originally programed for the gamepark handhelds, but now also available for Microsoft Windows and Mac OSX. It implements a user interface similar to the refined track-by-joypad software* [*littlesounddj*](http://www.littlesounddj.com/)*. Piggy currently supports 8 monophonic 8Bit/16Bit/44.1Khz stereo channels as well as 16 channel midi output. Piggy is currently under development and the latest versions of the program (along with unstable ghetto builds) can be found at* [*http://gorehole.org/lgptWiki/*](http://gorehole.org/lgptWiki/)*.*
-You are reading a reference manual for those who are comfortable with LSDj or trackers in general. An alternative introduction to LittleGPTracker is our very own [quick_start_guide](http://wiki.littlegptracker.com/doku.php?id=lgpt:quick_start_guide). If you have a question this manual does not answer, please ask on the [lgpt mailing list](http://groups.yahoo.com/groups/littlegptracker/) or in #hexawe on efnet. Don't forget to check out the advanced [tips_tricks](http://wiki.littlegptracker.com/doku.php?id=lgpt:tips_tricks)
+[*LittleGPTracker*](http://www.10pm.org/nostromo/lgpt/) *(a.k.a piggy tracker) is a sample based tracker originally programed for the gamepark handhelds and PSP but now also available for Microsoft Windows and ~~Mac OSX~~. It implements a user interface similar to the refined track-by-joypad software* [*littlesounddj*](http://www.littlesounddj.com/)*. Piggy currently supports 8 monophonic 8Bit/16Bit/44.1Khz stereo channels as well as 16 channel midi output. Piggy is currently under development and the latest versions of the program (along with unstable ghetto builds) can be found at* [*https://github.com/djdiskmachine/LittleGPTracker/releases/*](https://github.com/djdiskmachine/LittleGPTracker/releases/)*.*
+You are reading a reference manual for those who are comfortable with LSDj or trackers in general. An alternative introduction to LittleGPTracker is our very own [quick_start_guide](https://web.archive.org/web/20170310001122/wiki.littlegptracker.com/doku.php?id=lgpt:quick_start_guide). If you have a question this manual does not answer, please join the [Discord](https://discord.com/invite/NMQVbrFgr3) or in #hexawe on efnet. Don't forget to check out the advanced [tips_tricks](https://web.archive.org/web/20170310001122/wiki.littlegptracker.com/doku.php?id=lgpt:tips_tricks)
 If you want to grab some sounds to get off the ground quickly, or want to hear and see what other people have been doing with piggy tracker, download some of the .zip archives from [http://hexawe.net](http://hexawe.net/)!
 
 # Files
 ## Installation
 
 Grab the installation package for your platform from the [download page](http://www.10pm.org/nostromo/lgpt/download.php). Extract the files from the archive & copy it where you like. after that you can run the executable type for your system, located in the lgpt root or in the /bin folder. linux users may need to set the binary as executable (chmod a+x lgpt.deb-exe).
+If you're using PPSSPP, LittleGPTracker might boot with a black screen. To workaround
+this, set Software rendering **or** change rendering resolution
 
 ## Directory Structure
 - **bin**
@@ -45,6 +47,9 @@ After that you can copy additional wavs to the lgptRoot/lgptProject/samples dire
 **Use 8 or 16 Bit wav files, any sampling frequency, mono or stereo**. 8bit samples are converted to 16bit at load time for compatibility with the engine (you can save space in storage but not in RAM).
 
 **Piggy now supports .sf2 Soundfonts. You must add these by hand to your SAMPLES directory, use PROGRAM CHANGE commands to load different patches. Loop points are automatically loaded, but you'll need to make VOLM setting to adjust decay.**
+
+## New project
+When creating a new project, a random name is selected for you. Generate a new name with Regen or edit it manually selecting characters with A and pressing up/down
 
 ## Multiple Projects
 
@@ -318,7 +323,8 @@ To move from one screen to the other, press the RTrigger combined with the direc
 - **cutoff:** filter cutoff frequency
 - **reso:** filter resonance frequency
 - **type:** this is where it gets a little trickier. The filter now supports continuous change from low pass to high pass. set type to 00 for low pazz. FF for hi-pass and 7f for Band pass (or is it notch? n0s must check). all intermediate values morph in between them.
-- **dist:** filter distortion. for the moment we have none & scream. i'm planning on maybe add a third choice that would make the filter behave a little better when resonance is set very high in the old/default mode
+- **mode:** filter distortion. Modes are none, bassy & scream. Scream adds loads of distortion when increasing resonance. Bassy makes the filter behave a little better when resonance is set very high compared to the default mode.
+- **attenuate:** volume attenuator post (scream) filter
 - **fb tune:** length of the feedback delay line
 - **fb mix:** how much of the feedback is pushed back in the circuit
 
@@ -330,9 +336,11 @@ In oscillator modes, under 0x80 the feedback of specified length is added to the
 - **interpolation:** Interpolation mode ('linear'/'none'): selects which interpolation mode is used when in between samples. linear interpols linearly while none takes the nearest neighbor. Use none when playing samples at low range to add some typical overtones.
 - **loop mode:** selects the looping mode.
   - none will play sample from zero to end.
-  - loop will start at zero and loop from loopstart to end.
+  - loop will start at zero and loop from loop start to loop end.
+  - pingpong will start at "start" and bounce the loop between loop start and loop end.
+  - oscillator is a special mode where the loop selection (from loop start to loop end) is taken as oscillator data and automatically tuned. Experiment with different settings, do not forget 'root note' is your friend to tune the oscillator back in a useful range
   - looper sync will automatically tune a loop so that it plays exactly 16 bars. Use the root note to play twice faster/slower
-  - oscillator is a special mode where the loop selection (from loopstart to end) is taken as oscillator data and automatically tuned. Experiment with different settings, do not forget 'root note' is your friend to tune the oscillator back in a useful range
+  - slicer will cut the sample into "slices" amount of samples, mapped from C-2 up to amount of slices
 - **start:** start point of the sample regardless of if loop is enabled; in hex
 - **loop Start:** start point of the sample when loop is enabled; in hex
 - **loop End:** end point of the sample; in hex. You can play samples backwards by setting the end value lower than the start!
@@ -348,10 +356,11 @@ The samples of the library have to be located in a folder samplelib at the same 
 ![](https://d2mxuefqeaa7sj.cloudfront.net/s_B9C92C3440E8671360862F10CAB0FE70873BFE49CFB51CA246C781C17506C258_1522140496106_sample_import_1.1f.png)
 
 
-When entering the import screen, the current folder is the library root folder “samplelib”. All sample in that folder are listed.
-Use U/D to select a sample and 'A' to load it
-B+L/R to rotates between all sub directories.
-In the latest ghetto, hitting 'A,A“ will bring up a sample loader pop-up screen, use the cursor to select directories and samples, and chose “listen” to play the sample, “import” to add it to your project, or “exit” to return the instrument screen.
+Hitting "A,A“ on the sample selection of the instrument screen will bring up a sample import pop-up screen. Use the cursor to select directories and samples. 
+When entering the import screen, the current folder is the library root folder “samplelib”. All samples and folders in that folder are listed.
+B+L/R jumps a page up/down in the sample folder.
+Legacy: Using A, choose “listen” to play the sample, “import” to add it to your project, or “exit” to return the instrument screen. Hold A and navigate up/down to preview samples while navigating.
+New in beta-2: Hold Start to preview. Keep holding start and navigate up/down to preview samples while navigating. Hold Start and Press Left to navigate up in the folder structure. Hold Start and press Right to load a sample.
 
 ## Midi Instrument Screen
 ![](https://d2mxuefqeaa7sj.cloudfront.net/s_B9C92C3440E8671360862F10CAB0FE70873BFE49CFB51CA246C781C17506C258_1522140537386_midi_1.1f.png)

@@ -13,11 +13,12 @@
 #define VAR_MASTERVOL   MAKE_FOURCC('M','S','T','R')
 #define VAR_WRAP        MAKE_FOURCC('W','R','A','P')
 #define VAR_MIDIDEVICE  MAKE_FOURCC('M','I','D','I')
-#define VAR_TRANSPOSE  MAKE_FOURCC('T','R','S','P')
+#define VAR_TRANSPOSE   MAKE_FOURCC('T','R','S','P')
 
 #define PROJECT_NUMBER "1.3"
-#define PROJECT_RELEASE "psp_djdiskmachine"
-#define BUILD_COUNT "000"
+#define PROJECT_RELEASE "o"
+#define BUILD_COUNT "-1"
+
 
 #define MAX_TAP 3
 

@@ -79,6 +79,22 @@ RASPIDIRS :=                      ../sources/Adapters/Unix/FileSystem \
                                 ../sources/Adapters/SDL/Timer\
                                 ../sources/Adapters/SDL/GUI
 
+STEAMDIRS 	:=	../sources/Adapters/Unix/FileSystem \
+				../sources/Adapters/DEB/Main\
+				../sources/Adapters/Unix/Process\
+				../sources/System/Process\
+				../sources/Externals/RTAudio\
+				../sources/Externals/RtMidi\
+				../sources/Adapters/DEB/System\
+				../sources/Adapters/Jack/Audio\
+				../sources/Adapters/Jack/Midi\
+				../sources/Adapters/Jack/Client\
+				../sources/Adapters/Jack/Midi\
+				../sources/Adapters/RTAudio\
+				../sources/Adapters/RTMidi\
+				../sources/Adapters/SDL/Timer\
+				../sources/Adapters/SDL/GUI
+
 GP2XDIRS	:=    . \
 				../sources/Adapters/GP2X/Main \
 				../sources/Adapters/GP2X/FileSystem \
@@ -110,6 +126,44 @@ DINGOODIRS      :=    . \
 				../sources/Adapters/DINGOO/Midi \
 				../sources/Adapters/Dummy/Midi \
 				../sources/Adapters/DINGOO/Audio \
+				../sources/Adapters/SDL/Audio \
+				../sources/Adapters/SDL/Process \
+				../sources/Adapters/SDL/GUI \
+				../sources/Adapters/SDL/Timer
+
+RS97DIRS      :=    . \
+				../sources/Adapters/DINGOO/Main \
+				../sources/Adapters/Unix/FileSystem \
+				../sources/System/Process \
+				../sources/Adapters/Unix/Process \
+				../sources/Adapters/DINGOO/System \
+				../sources/Adapters/DINGOO/Midi \
+				../sources/Adapters/DINGOO/Audio \
+				../sources/Adapters/SDL/Audio \
+				../sources/Adapters/SDL/Process \
+				../sources/Adapters/SDL/GUI \
+				../sources/Adapters/SDL/Timer
+				
+BITTBOYDIRS      :=    . \
+				../sources/Adapters/DINGOO/Main \
+				../sources/Adapters/Unix/FileSystem \
+				../sources/System/Process \
+				../sources/Adapters/Unix/Process \
+				../sources/Adapters/DINGOO/System \
+				../sources/Adapters/DINGOO/Midi \
+				../sources/Adapters/DINGOO/Audio \
+				../sources/Adapters/SDL/Audio \
+				../sources/Adapters/SDL/Process \
+				../sources/Adapters/SDL/GUI \
+				../sources/Adapters/SDL/Timer
+
+MIYOODIRS      :=    . \
+				../sources/Adapters/DINGOO/Main \
+				../sources/Adapters/Unix/FileSystem \
+				../sources/System/Process \
+				../sources/Adapters/Unix/Process \
+				../sources/Adapters/DINGOO/System \
+				../sources/Adapters/Dummy/Midi \
 				../sources/Adapters/SDL/Audio \
 				../sources/Adapters/SDL/Process \
 				../sources/Adapters/SDL/GUI \
@@ -199,6 +253,55 @@ DINGOOFILES             :=  GPSDLMain.o \
 					SDLEventManager.o \
 					SDLGUIWindowImp.o
 
+RS97FILES  		:=  GPSDLMain.o \
+					UnixFileSystem.o \
+					DINGOOAudio.o \
+					Process.o \
+					UnixProcess.o \
+					SDLAudioDriver.o \
+					DINGOOAudioDriver.o \
+					BITTBOYSystem.o \
+					DINGOOEventQueue.o \
+					SDLProcess.o \
+					SDLTimer.o \
+					GUIFactory.o \
+					SDLEventManager.o \
+					BITTBOYSerialMidiDevice.o \
+					BITTBOYMidiService.o \
+					SDLGUIWindowImp.o 
+					
+BITTBOYFILES    :=  GPSDLMain.o \
+					UnixFileSystem.o \
+					DINGOOAudio.o \
+					Process.o \
+					UnixProcess.o \
+					SDLAudioDriver.o \
+					DINGOOAudioDriver.o \
+					BITTBOYSystem.o \
+					DINGOOEventQueue.o \
+					SDLProcess.o \
+					SDLTimer.o \
+					GUIFactory.o \
+					SDLEventManager.o \
+					BITTBOYSerialMidiDevice.o \
+					BITTBOYMidiService.o \
+					SDLGUIWindowImp.o 
+
+MIYOOFILES    :=  GPSDLMain.o \
+					UnixFileSystem.o \
+					SDLAudio.o \
+					Process.o \
+					UnixProcess.o \
+					SDLAudioDriver.o \
+					MIYOOSystem.o \
+					DINGOOEventQueue.o \
+					SDLProcess.o \
+					SDLTimer.o \
+					GUIFactory.o \
+					SDLEventManager.o \
+					DummyMidi.o \
+					SDLGUIWindowImp.o 
+
 PSPFILES		:=	PSPmain.o  \
 					PSPFileSystem.o \
 					Process.o \
@@ -266,6 +369,26 @@ RASPIFILES                :=      UnixFileSystem.o \
                                         JackClient.o \
                                         JackAudio.o 
 
+STEAMFILES		:=  UnixFileSystem.o \
+					DEBmain.o \
+					DEBSystem.o \
+					GUIFactory.o \
+					SDLGUIWindowImp.o \
+					SDLEventManager.o \
+					Process.o \
+					UnixProcess.o \
+					RTAudioDriver.o \
+					RTAudioStub.o \
+					RtAudio.o\
+					RtMidi.o\
+					RTMidiService.o\
+					RTMidiOutDevice.o\
+					RTMidiInDevice.o\
+					SDLTimer.o \
+					JackAudioDriver.o \
+					JackClient.o \
+					JackAudio.o
+
 NDSFILES		:=	NDSmain.o \
 					NDSFileSystem.o \
 					DummyMidi.o \
@@ -314,7 +437,7 @@ CAANOOFILES		:=	CAANOOSDLMain.o \
 					SDLTimer.o \
 					GUIFactory.o SDLEventManager.o SDLGUIWindowImp.o 
 
-					COMMONFILES		:=	Logger.o Trace.o Result.o Status.o Config.o \
+COMMONFILES		:=	Logger.o Trace.o Result.o Status.o Config.o \
 					Timer.o FileSystem.o \
 					SysMutex.o TimeService.o \
 					MidiOutDevice.o MidiInDevice.o MidiService.o Groove.o \
@@ -429,7 +552,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(OUTPUT).$(EXTENSION) $(BUILD) *.elf *.gxb *.fxe
+	@rm -fr $(OUTPUT).$(EXTENSION) $(BUILD) *.elf *.gxb *.fxe *.gdb
 
 
 #---------------------------------------------------------------------------------
@@ -471,10 +594,15 @@ $(OUTPUT).beagle-exe	:	$(OFILES)
 endif
 #---------------------------------------------------------------------------------------
 
-
+# Make as many as possible
+# Build W32 first
 deploy:
-	../scripts/deployW32.sh 
-	../scripts/deployGP2X.sh 
-	../scripts/deployGP32.sh 
-	../scripts/deployOSX.sh 
-        
+	make PLATFORM=PSP
+	make PLATFORM=DEB
+#	make PLATFORM=RS97
+#	make PLATFORM=BITTBOY
+	make PLATFORM=MIYOO
+#	./resources/packaging/docker_steam.sh
+	./resources/packaging/build_and_copy_from_pi.sh
+	./resources/packaging/build_and_copy_from_chip.sh
+	./resources/packaging/lgpt_package.sh

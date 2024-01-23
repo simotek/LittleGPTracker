@@ -24,7 +24,7 @@ bool SampleInstrument::useDirtyDownsampling_ = false;
 
 #define SHOULD_KILL_CLICKS false
 
-int8_t SampleInstrument::lastMidiNote_[SONG_CHANNEL_COUNT]= {
+int SampleInstrument::lastMidiNote_[SONG_CHANNEL_COUNT]= {
 	-1,-1,-1,-1,-1,-1,-1,-1
 } ;
 
@@ -79,6 +79,9 @@ SampleInstrument::SampleInstrument() {
 
 	 filterMode_=new Variable("filter mode",SIP_FILTMODE,filterMode,3,0) ;
 	 Insert(filterMode_) ;
+
+	 attenuate_=new Variable("attenuate",SIP_ATTENUATE,0xFF) ;
+	 Insert(attenuate_) ;
 
 	 start_=new WatchedVariable("start",SIP_START,0) ;
 	 Insert(start_) ;
@@ -186,6 +189,7 @@ bool SampleInstrument::Start(int channel,unsigned char midinote,bool cleanstart)
 	 int rootNote=(rootNote_->GetInt()-60)+source_->GetRootNote(rp->midiNote_) ;
 
 	 rp->volume_=rp->baseVolume_=i2fp(volume_->GetInt()) ;
+	 rp->attenuate_=i2fp(attenuate_->GetInt()) ;
 
 	 rp->pan_=rp->basePan_=i2fp(pan_->GetInt()) ;
 
@@ -218,6 +222,7 @@ bool SampleInstrument::Start(int channel,unsigned char midinote,bool cleanstart)
 	 switch (loopmode) {
 		 case SILM_ONESHOT:
 		 case SILM_LOOP:
+		 case SILM_LOOP_PINGPONG:
 
 			// Compute speed factor
 			// if instrument sampled below 44.1Khz, should
@@ -227,7 +232,7 @@ bool SampleInstrument::Start(int channel,unsigned char midinote,bool cleanstart)
       rp->position_= float(rp->rendFirst_); 
 			rp->baseSpeed_=fl2fp(source_->GetSampleRate(rp->midiNote_)/driverRate) ;
 			rp->reverse_=(rp->rendLoopEnd_<rp->position_) ;
-      
+
 			break ;
 
 		case SILM_OSC:
@@ -409,6 +414,7 @@ void SampleInstrument::updateFeedback(renderParams *rp) {
 		switch(loopMode) {
 			case SILM_ONESHOT:
 			case SILM_LOOP:
+			case SILM_LOOP_PINGPONG:
 			case SILM_SLICE:
 			case SILM_LOOPSYNC:
 				rp->feedbackMode_=FB_ADD ;
@@ -560,6 +566,10 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 
 		fixed volscale=fl2fp(0.003921568627450980392156862745098f) ;
 		fixed volfactor=fp_mul(rp->volume_,volscale) ;
+
+		// Filter attenuate
+		fixed fpattenuate=fp_mul(rp->attenuate_,volscale) ;
+
 	  int pan=fp2i(rp->pan_) ;
 		fixed fixedpanl=panlaw[pan] ;
 		fixed fixedpanr=panlaw[254-pan] ;
@@ -636,7 +646,7 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 
 			// look where we are, if we need to
 
-			if (!rpReverse) {
+			if (!rpReverse) { //Looping forward 
 				if (input>=lastSample/*-((loopMode==SILM_OSCFINE)?1:0)*/) {
 					switch(loopMode) {
 						case SILM_ONESHOT:
@@ -654,6 +664,19 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 								fpSpeed=rp->speed_ ; 
 							}
 							break ;
+						case SILM_LOOP_PINGPONG:
+							if ((loopPosition > lastSample)) {
+								if (input <= lastSample || input >= loopPosition) {
+									rpReverse = !rpReverse;
+									fpSpeed = -fpSpeed;
+								}
+							} else {
+								if (input>=lastSample || input <= loopPosition) {
+									rpReverse = !rpReverse;
+									fpSpeed = -fpSpeed;
+								}
+							}
+							break;
 /*						case SILM_OSCFINE:
 						{
 							int offset=(input-lastSample)/channelCount ;
@@ -672,7 +695,7 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 							break ;
 					} ;
 				}
-			} else {
+			} else { // Looping backward
 				if (input<lastSample) {
 					switch(loopMode) {
 						case SILM_ONESHOT:
@@ -690,6 +713,19 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 								fpSpeed=rp->speed_ ; 
 							}
 							break ;
+						case SILM_LOOP_PINGPONG:
+							if ((loopPosition > lastSample)) {
+								if (input <= lastSample || input >= loopPosition) {
+									rpReverse = !rpReverse;
+									fpSpeed = -fpSpeed;
+								}
+							} else {
+								if (input>=lastSample || input <= loopPosition) {
+									rpReverse = !rpReverse;
+									fpSpeed = -fpSpeed;
+								}
+							}
+							break;
 /*						case SILM_OSCFINE:
 						{
 							int offset=(lastSample-input)/channelCount ;
@@ -751,6 +787,7 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 						feedbackEta=fp_mul(rp->fbMix_,fl2fp(4.0f));
 
 						volfactor=fp_mul(rp->volume_,volscale) ;
+						fpattenuate=fp_mul(rp->attenuate_,volscale) ;
 						pan=fp2i(rp->pan_) ;
 						fixed fixedpanl=panlaw[pan] ;
 						fixed fixedpanr=panlaw[254-pan] ;
@@ -892,6 +929,8 @@ bool SampleInstrument::Render(int channel,fixed *buffer,int size,bool updateTick
 						fltHeightPtr++ ;
 						fltSpeedPtr++ ;
 					}
+					// apply attenuation
+					s2=fp_mul(s2,fpattenuate) ;
 				}
 
 				if (channelCount==1) {

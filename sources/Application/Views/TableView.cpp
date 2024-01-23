@@ -2,6 +2,7 @@
 #include "Application/Utils/char.h"
 #include "Application/Instruments/CommandList.h"
 #include "Application/Player/TablePlayback.h"
+#include "Application/Utils/HelpLegend.h"
 
 #define FCC_EDIT MAKE_FOURCC('T','B','E','D')
 
@@ -710,6 +711,9 @@ void TableView::DrawView() {
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,0,j,true) ;
 		pos._y++ ;
+		if (j==row_ && (col_ == 0 || col_ == 1)) {
+	    	printHelpLegend(buffer, props);
+		}
 	}
 
 
@@ -746,6 +750,9 @@ void TableView::DrawView() {
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,2,j,true) ;
 		pos._y++ ;
+		if (j==row_ && (col_ == 2 || col_ == 3)) {
+	    	printHelpLegend(buffer, props);
+		}
 	}
 
 // Draw commands params
@@ -781,6 +788,9 @@ void TableView::DrawView() {
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,4,j,true) ;
 		pos._y++ ;
+		if (j==row_ && (col_ == 4 || col_ == 5)) {
+	    	printHelpLegend(buffer, props);
+		}
 	}
 
 
@@ -853,6 +863,7 @@ void TableView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 
 		pos._x=anchor._x-1 ;
 		pos._y=anchor._y+lastPosition_[0] ;
+		SetColor(CD_CURSOR) ;
 		DrawString(pos._x,pos._y,">",props) ;
 
 		pos._x+=10 ;
@@ -865,4 +876,11 @@ void TableView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 
 	} ;
 	drawNotes() ;
+}
+
+void TableView::printHelpLegend(char *buffer, GUITextProperties props) {
+  std::string* cmdStr = getHelpLegend(buffer);
+  DrawString(10, 0, cmdStr[0].c_str(), props);
+  DrawString(10, 1, cmdStr[1].c_str(), props);
+  DrawString(10, 2, cmdStr[2].c_str(), props);
 }
