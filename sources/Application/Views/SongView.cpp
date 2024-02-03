@@ -788,12 +788,12 @@ void SongView::DrawView() {
 	
 // Display row numbers
 
-	SetColor(CD_HILITE1) ;
 	char row[3] ;
 	pos=anchor ;
 	pos._x-=3;
 	for (int j=0;j<View::songRowCount_;j++) {
 		char p=j+viewData_->songOffset_ ;
+		((p/altRowNumber_)%2)?SetColor(CD_ROW):SetColor(CD_ROW2);
 		hex2char(p,row) ;
 		DrawString(pos._x,pos._y,row,props) ;
 		pos._y+=1 ;
@@ -828,18 +828,30 @@ void SongView::DrawView() {
                     invert=true ;
                 }
             }
-            
-            if (invert) {
-				SetColor(CD_HILITE2) ;
-				props.invert_=true ;
-			}
 			
 			// draw current step
 			
 			unsigned char d=*data++ ;
+
+			if (d==0xFE) {
+				SetColor(CD_SONGVIEWFE) ;
+			} 
+			else if (d==0x00) {
+				SetColor(CD_SONGVIEW00) ;
+			} 
+			else{
+				SetColor(CD_NORMAL) ;
+			}
+           
+            if (invert) {
+				SetColor(CD_HILITE2) ;
+				props.invert_=true ;
+			}
+
 			if (d==0xFF) {
 				DrawString(pos._x,pos._y,"--",props) ;
-			} else {
+			} 
+			else {
 				hex2char(d,row) ;
 				DrawString(pos._x,pos._y,row,props) ;
 			}

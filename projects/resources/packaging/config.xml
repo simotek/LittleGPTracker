@@ -1,21 +1,16 @@
-<!--
-        Example CONFIG.XML
-        uncomment field to use
--->
+<!-- CONFIG-CHIP.xml-->
 <CONFIG>
-    <!-- Screen size if windoed mode
-    <SCREENMULT value="3"/>
-    -->
-    <!-- Debugging and button conf
-    <DUMPEVENT value="YES"/>
-    -->
+
+	
+	<FULLSCREEN value='YES'/>
+	<DUMPEVENT value='YES'/>
     <!-- use if you want to put your tracks somewhere special
             Must be absolute path
-    <ROOTFOLDER value="/home/pi/RetroPie/roms/ports/lgpt/"/>
+    <ROOTFOLDER value="/home/chip/lgpt/"/>
     -->
     <!-- Useful if you don't want to clone your samplelib
             Must be absolute path
-    <SAMPLELIB value="/home/pi/RetroPie/roms/ports/lgpt/"/>
+    <SAMPLELIB value="/home/chip/lgpt/"/>
     -->
     <!-- Uncomment to render
     <RENDER value="FILE" />
