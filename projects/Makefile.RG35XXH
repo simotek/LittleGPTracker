@@ -5,6 +5,9 @@ STRIP = $(CROSS_COMPILE)strip
 	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 	@$(STRIP) $@
 
+# compiled using the https://github.com/shauninman/union-rg35xx-toolchain
+# Docker image
+
 DEVKIT = /opt/rg35xx-toolchain/usr/
 CROSS_COMPILE=$(DEVKIT)bin/arm-buildroot-linux-gnueabihf-
 
