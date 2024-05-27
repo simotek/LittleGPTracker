@@ -24,228 +24,158 @@ ICON   := lgpt_icon.bmp
 # Directory definitions
 #---------------------------------------------------------------------------------
 
+COMMONDIRS := \
+	../sources/System/Console \
+	../sources/System/io \
+	../sources/Services/Midi \
+	../sources/Services/Time \
+	../sources/Services/Controllers \
+	../sources/System/FileSystem \
+	../sources/System/Timer \
+	../sources/System/Errors \
+	../sources/UIFramework/Framework \
+	../sources/UIFramework/BasicDatas \
+	../sources/UIFramework/SimpleBaseClasses \
+	../sources/UIFramework/Interfaces \
+	../sources/Application \
+	../sources/Application/Controllers \
+	../sources/Application/Commands \
+	../sources/Application/Audio \
+	../sources/Application/Views \
+	../sources/Application/Views/ModalDialogs \
+	../sources/Application/Views/BaseClasses \
+	../sources/Application/Model \
+	../sources/Application/Utils \
+	../sources/Application/Player \
+	../sources/Application/Mixer \
+	../sources/Application/Instruments \
+	../sources/Application/Persistency \
+	../sources/Foundation \
+	../sources/Services/Audio \
+	../sources/Foundation/Services \
+	../sources/Foundation/Variables \
+	../sources/Externals/Compression \
+	../sources/Externals/Soundfont \
+	../sources/Externals/TinyXML
+
+#---------------------------------------------------------------------------------
+# Linux
+#---------------------------------------------------------------------------------
+
+LINUXDIRS := \
+	../sources/Adapters/Unix/FileSystem \
+	../sources/Adapters/DEB/Main \
+	../sources/Adapters/Unix/Process \
+	../sources/System/Process \
+	../sources/Externals/RTAudio \
+	../sources/Externals/RtMidi \
+	../sources/Adapters/DEB/System \
+	../sources/Adapters/Jack/Audio \
+	../sources/Adapters/Jack/Midi \
+	../sources/Adapters/Jack/Client \
+	../sources/Adapters/RTAudio \
+	../sources/Adapters/RTMidi \
+	../sources/Adapters/SDL/Timer \
+	../sources/Adapters/SDL/GUI
+
+BEAGLEBOARDDIRS := $(LINUXDIRS)
+DEBDIRS := $(LINUXDIRS)
+RASPIDIRS := $(LINUXDIRS)
+STEAMDIRS := $(LINUXDIRS)
+
+#---------------------------------------------------------------------------------
+# Consoles/Embedded
+#---------------------------------------------------------------------------------
+
 NDSDIRS := \
-  . \
-  ../sources/Adapters/NDS/FileSystem \
-  ../sources/Adapters/NDS/System \
-  ../sources/Adapters/NDS/Main \
-  ../sources/Adapters/Dummy/Midi \
-  ../sources/Adapters/NDS/Sound \
-  ../sources/Adapters/NDS/UI
+	. \
+	../sources/Adapters/NDS/FileSystem \
+	../sources/Adapters/NDS/System \
+	../sources/Adapters/NDS/Main \
+	../sources/Adapters/Dummy/Midi \
+	../sources/Adapters/NDS/Sound \
+	../sources/Adapters/NDS/UI
 
-DEBDIRS := \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/Adapters/DEB/Main \
-  ../sources/Adapters/Unix/Process \
-  ../sources/System/Process \
-  ../sources/Externals/RTAudio \
-  ../sources/Externals/RtMidi \
-  ../sources/Adapters/DEB/System \
-  ../sources/Adapters/Jack/Audio \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/Jack/Client \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/RTAudio \
-  ../sources/Adapters/RTMidi \
-  ../sources/Adapters/SDL/Timer \
-  ../sources/Adapters/SDL/GUI 
-
-BEAGLEBOARDDIRS := \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/Adapters/DEB/Main \
-  ../sources/Adapters/Unix/Process \
-  ../sources/System/Process \
-  ../sources/Externals/RTAudio \
-  ../sources/Adapters/DEB/System \
-  ../sources/Adapters/Dummy/Midi \
-  ../sources/Adapters/Jack/Audio \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/Jack/Client \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/RTAudio \
-  ../sources/Adapters/SDL/Timer \
-  ../sources/Adapters/SDL/GUI
-
-RASPIDIRS := \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/Adapters/DEB/Main \
-  ../sources/Adapters/Unix/Process \
-  ../sources/System/Process \
-  ../sources/Externals/RTAudio \
-  ../sources/Externals/RtMidi \
-  ../sources/Adapters/DEB/System \
-  ../sources/Adapters/Jack/Audio \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/Jack/Client \
-  ../sources/Adapters/Jack/Midi \
-  ../sources/Adapters/RTAudio \
-  ../sources/Adapters/RTMidi \
-  ../sources/Adapters/SDL/Timer \
-  ../sources/Adapters/SDL/GUI
-
-STEAMDIRS := \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/Adapters/DEB/Main\
-  ../sources/Adapters/Unix/Process\
-  ../sources/System/Process\
-  ../sources/Externals/RTAudio\
-  ../sources/Externals/RtMidi\
-  ../sources/Adapters/DEB/System\
-  ../sources/Adapters/Jack/Audio\
-  ../sources/Adapters/Jack/Midi\
-  ../sources/Adapters/Jack/Client\
-  ../sources/Adapters/Jack/Midi\
-  ../sources/Adapters/RTAudio\
-  ../sources/Adapters/RTMidi\
-  ../sources/Adapters/SDL/Timer\
-  ../sources/Adapters/SDL/GUI
+PSPDIRS := \
+	. \
+	../sources/Adapters/PSP/Main \
+	../sources/Adapters/PSP/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/PSP/System \
+	../sources/Adapters/Dummy/Midi \
+	../sources/Adapters/SDL/Process \
+	../sources/Adapters/SDL/Audio \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer 
 
 GP2XDIRS := \
-  . \
-  ../sources/Adapters/GP2X/Main \
-  ../sources/Adapters/GP2X/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/GP2X/System \
-  ../sources/Adapters/GP2X/Midi \
-  ../sources/Adapters/GP2X/Audio \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-CAANOODIRS := \
-  . \
-  ../sources/Adapters/CAANOO/Main \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/CAANOO/System \
-  ../sources/Adapters/CAANOO/Midi \
-  ../sources/Adapters/CAANOO/Audio \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-DINGOODIRS := \
-  . \
-  ../sources/Adapters/DINGOO/Main \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/DINGOO/System \
-  ../sources/Adapters/DINGOO/Midi \
-  ../sources/Adapters/Dummy/Midi \
-  ../sources/Adapters/DINGOO/Audio \
-  ../sources/Adapters/SDL/Audio \
-  ../sources/Adapters/SDL/Process \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-RS97DIRS := \
-  . \
-  ../sources/Adapters/DINGOO/Main \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/DINGOO/System \
-  ../sources/Adapters/DINGOO/Midi \
-  ../sources/Adapters/DINGOO/Audio \
-  ../sources/Adapters/SDL/Audio \
-  ../sources/Adapters/SDL/Process \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-BITTBOYDIRS := \
-  . \
-  ../sources/Adapters/DINGOO/Main \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/DINGOO/System \
-  ../sources/Adapters/DINGOO/Midi \
-  ../sources/Adapters/DINGOO/Audio \
-  ../sources/Adapters/SDL/Audio \
-  ../sources/Adapters/SDL/Process \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-MIYOODIRS := \
-  . \
-  ../sources/Adapters/DINGOO/Main \
-  ../sources/Adapters/Unix/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/Unix/Process \
-  ../sources/Adapters/DINGOO/System \
-  ../sources/Adapters/Dummy/Midi \
-  ../sources/Adapters/SDL/Audio \
-  ../sources/Adapters/SDL/Process \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer
-
-PSPDIRS	:=    . \
-  ../sources/Adapters/PSP/Main \
-  ../sources/Adapters/PSP/FileSystem \
-  ../sources/System/Process \
-  ../sources/Adapters/PSP/System \
-  ../sources/Adapters/Dummy/Midi \
-  ../sources/Adapters/SDL/Process \
-  ../sources/Adapters/SDL/Audio \
-  ../sources/Adapters/SDL/GUI \
-  ../sources/Adapters/SDL/Timer 
+	. \
+	../sources/Adapters/GP2X/Main \
+	../sources/Adapters/GP2X/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/Unix/Process \
+	../sources/Adapters/GP2X/System \
+	../sources/Adapters/GP2X/Midi \
+	../sources/Adapters/GP2X/Audio \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer
 
 GP32DIRS := \
-  .\
-  ../sources/Adapters/GP32FileSystem \
-  ../sources/Adapters/GP32Midi \
-  ../sources/Adapters/GP32/Main \
-  ../sources/Adapters/GP32System \
-  ../sources/Adapters/GP32Timer \
-  ../sources/Adapters/GP32UI
+	.\
+	../sources/Adapters/GP32FileSystem \
+	../sources/Adapters/GP32Midi \
+	../sources/Adapters/GP32/Main \
+	../sources/Adapters/GP32System \
+	../sources/Adapters/GP32Timer \
+	../sources/Adapters/GP32UI
+
+CAANOODIRS := \
+	. \
+	../sources/Adapters/CAANOO/Main \
+	../sources/Adapters/Unix/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/Unix/Process \
+	../sources/Adapters/CAANOO/System \
+	../sources/Adapters/CAANOO/Midi \
+	../sources/Adapters/CAANOO/Audio \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer
+
+DINGUXDIRS := \
+	. \
+	../sources/Adapters/DINGOO/Main \
+	../sources/Adapters/Unix/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/Unix/Process \
+	../sources/Adapters/DINGOO/System \
+	../sources/Adapters/DINGOO/Midi \
+	../sources/Adapters/DINGOO/Audio \
+	../sources/Adapters/SDL/Audio \
+	../sources/Adapters/SDL/Process \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer
+
+DINGOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
+RS97DIRS := $(DINGUXDIRS)
+BITTBOYDIRS := $(DINGUXDIRS)
+MIYOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
+
+#---------------------------------------------------------------------------------
+# Windows
+#---------------------------------------------------------------------------------
 
 W32DIRS := \
-  .\
-  ../sources/Adapters/W32FileSystem \
-  ../sources/Adapters/W32Midi \
-  ../sources/Adapters/W32Sound \
-  ../sources/Adapters/WSDLSystem \
-  ../sources/Adapters/WSDLUI \
-  ../sources/Adapters/SDL/Input \
-  ../sources/Adapters/W32/Main \
-  ../sources/Adapters/W32/Process \
-  ../sources/Adapters/W32/Audio \
-  ../sources/System/Process
-
-COMMONDIRS := \
-  ../sources/System/Console \
-  ../sources/System/io \
-  ../sources/Services/Midi \
-  ../sources/Services/Time \
-  ../sources/Services/Controllers \
-  ../sources/System/FileSystem \
-  ../sources/System/Timer \
-  ../sources/System/Errors \
-  ../sources/UIFramework/Framework \
-  ../sources/UIFramework/BasicDatas \
-  ../sources/UIFramework/SimpleBaseClasses \
-  ../sources/UIFramework/Interfaces \
-  ../sources/Application \
-  ../sources/Application/Controllers \
-  ../sources/Application/Commands \
-  ../sources/Application/Audio \
-  ../sources/Application/Views \
-  ../sources/Application/Views/ModalDialogs \
-  ../sources/Application/Views/BaseClasses \
-  ../sources/Application/Model \
-  ../sources/Application/Utils \
-  ../sources/Application/Player \
-  ../sources/Application/Mixer \
-  ../sources/Application/Instruments \
-  ../sources/Application/Persistency \
-  ../sources/Foundation \
-  ../sources/Services/Audio \
-  ../sources/Foundation/Services \
-  ../sources/Foundation/Variables \
-  ../sources/Externals/Compression \
-  ../sources/Externals/Soundfont \
-  ../sources/Externals/TinyXML
+	.\
+	../sources/Adapters/W32FileSystem \
+	../sources/Adapters/W32Midi \
+	../sources/Adapters/W32Sound \
+	../sources/Adapters/WSDLSystem \
+	../sources/Adapters/WSDLUI \
+	../sources/Adapters/SDL/Input \
+	../sources/Adapters/W32/Main \
+	../sources/Adapters/W32/Process \
+	../sources/Adapters/W32/Audio \
+	../sources/System/Process
 
 #---------------------------------------------------------------------------------
 # files definition
