@@ -16,9 +16,9 @@ include $(PWD)/Makefile.$(PLATFORM)
 #---------------------------------------------------------------------------------
 
 AUTHOR := n0s
-TITLE  := lgpt
-NAME   := LittleGPTracker
-ICON   := lgpt_icon.bmp
+TITLE := lgpt
+NAME := LittleGPTracker
+ICON := lgpt_icon.bmp
 
 #---------------------------------------------------------------------------------
 # Directory definitions
@@ -87,48 +87,6 @@ STEAMDIRS := $(LINUXDIRS)
 # Consoles/Embedded
 #---------------------------------------------------------------------------------
 
-NDSDIRS := \
-	. \
-	../sources/Adapters/NDS/FileSystem \
-	../sources/Adapters/NDS/System \
-	../sources/Adapters/NDS/Main \
-	../sources/Adapters/Dummy/Midi \
-	../sources/Adapters/NDS/Sound \
-	../sources/Adapters/NDS/UI
-
-PSPDIRS := \
-	. \
-	../sources/Adapters/PSP/Main \
-	../sources/Adapters/PSP/FileSystem \
-	../sources/System/Process \
-	../sources/Adapters/PSP/System \
-	../sources/Adapters/Dummy/Midi \
-	../sources/Adapters/SDL/Process \
-	../sources/Adapters/SDL/Audio \
-	../sources/Adapters/SDL/GUI \
-	../sources/Adapters/SDL/Timer 
-
-GP2XDIRS := \
-	. \
-	../sources/Adapters/GP2X/Main \
-	../sources/Adapters/GP2X/FileSystem \
-	../sources/System/Process \
-	../sources/Adapters/Unix/Process \
-	../sources/Adapters/GP2X/System \
-	../sources/Adapters/GP2X/Midi \
-	../sources/Adapters/GP2X/Audio \
-	../sources/Adapters/SDL/GUI \
-	../sources/Adapters/SDL/Timer
-
-GP32DIRS := \
-	.\
-	../sources/Adapters/GP32FileSystem \
-	../sources/Adapters/GP32Midi \
-	../sources/Adapters/GP32/Main \
-	../sources/Adapters/GP32System \
-	../sources/Adapters/GP32Timer \
-	../sources/Adapters/GP32UI
-
 CAANOODIRS := \
 	. \
 	../sources/Adapters/CAANOO/Main \
@@ -160,6 +118,48 @@ RS97DIRS := $(DINGUXDIRS)
 BITTBOYDIRS := $(DINGUXDIRS)
 MIYOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
 
+GP2XDIRS := \
+	. \
+	../sources/Adapters/GP2X/Main \
+	../sources/Adapters/GP2X/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/Unix/Process \
+	../sources/Adapters/GP2X/System \
+	../sources/Adapters/GP2X/Midi \
+	../sources/Adapters/GP2X/Audio \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer
+
+GP32DIRS := \
+	.\
+	../sources/Adapters/GP32FileSystem \
+	../sources/Adapters/GP32Midi \
+	../sources/Adapters/GP32/Main \
+	../sources/Adapters/GP32System \
+	../sources/Adapters/GP32Timer \
+	../sources/Adapters/GP32UI
+
+NDSDIRS := \
+	. \
+	../sources/Adapters/NDS/FileSystem \
+	../sources/Adapters/NDS/System \
+	../sources/Adapters/NDS/Main \
+	../sources/Adapters/Dummy/Midi \
+	../sources/Adapters/NDS/Sound \
+	../sources/Adapters/NDS/UI
+
+PSPDIRS := \
+	. \
+	../sources/Adapters/PSP/Main \
+	../sources/Adapters/PSP/FileSystem \
+	../sources/System/Process \
+	../sources/Adapters/PSP/System \
+	../sources/Adapters/Dummy/Midi \
+	../sources/Adapters/SDL/Process \
+	../sources/Adapters/SDL/Audio \
+	../sources/Adapters/SDL/GUI \
+	../sources/Adapters/SDL/Timer
+
 #---------------------------------------------------------------------------------
 # Windows
 #---------------------------------------------------------------------------------
@@ -180,225 +180,6 @@ W32DIRS := \
 #---------------------------------------------------------------------------------
 # files definition
 #---------------------------------------------------------------------------------
-
-DINGOOFILES := \
-	GPSDLMain.o \
-	UnixFileSystem.o \
-	DummyMidi.o \
-	DINGOOAudio.o \
-	Process.o \
-	UnixProcess.o \
-	SDLAudioDriver.o \
-	DINGOOAudioDriver.o \
-	DINGOOSystem.o \
-	DINGOOEventQueue.o \
-	SDLProcess.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	SDLGUIWindowImp.o
-
-RS97FILES := \
-	GPSDLMain.o \
-	UnixFileSystem.o \
-	DINGOOAudio.o \
-	Process.o \
-	UnixProcess.o \
-	SDLAudioDriver.o \
-	DINGOOAudioDriver.o \
-	BITTBOYSystem.o \
-	DINGOOEventQueue.o \
-	SDLProcess.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	BITTBOYSerialMidiDevice.o \
-	BITTBOYMidiService.o \
-	SDLGUIWindowImp.o 
-
-BITTBOYFILES := \
-	GPSDLMain.o \
-	UnixFileSystem.o \
-	DINGOOAudio.o \
-	Process.o \
-	UnixProcess.o \
-	SDLAudioDriver.o \
-	DINGOOAudioDriver.o \
-	BITTBOYSystem.o \
-	DINGOOEventQueue.o \
-	SDLProcess.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	BITTBOYSerialMidiDevice.o \
-	BITTBOYMidiService.o \
-	SDLGUIWindowImp.o 
-
-MIYOOFILES := \
-	GPSDLMain.o \
-	UnixFileSystem.o \
-	SDLAudio.o \
-	Process.o \
-	UnixProcess.o \
-	SDLAudioDriver.o \
-	MIYOOSystem.o \
-	DINGOOEventQueue.o \
-	SDLProcess.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	DummyMidi.o \
-	SDLGUIWindowImp.o 
-
-PSPFILES := \
-	PSPmain.o \
-	PSPFileSystem.o \
-	Process.o \
-	DummyMidi.o \
-	GUIFactory.o \
-	SDLGUIWindowImp.o \
-	SDLEventManager.o \
-	SDLAudioDriver.o \
-	SDLAudio.o \
-	SDLProcess.o \
-	SDLTimer.o \
-	PSPSystem.o
-
-DEBFILES := \
-	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
-	GUIFactory.o \
-	SDLGUIWindowImp.o \
-	SDLEventManager.o \
-	Process.o \
-	UnixProcess.o \
-	RTAudioDriver.o \
-	RTAudioStub.o \
-	RtAudio.o\
-	RtMidi.o\
-	RTMidiService.o\
-	RTMidiOutDevice.o\
-	RTMidiInDevice.o\
-	SDLTimer.o \
-	JackAudioDriver.o \
-	JackClient.o \
-	JackAudio.o 
-
-BEAGLEBOARDFILES := \
-	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
-	GUIFactory.o \
-	SDLGUIWindowImp.o \
-	SDLEventManager.o \
-	Process.o \
-	UnixProcess.o \
-	DummyMidi.o \
-	RTAudioDriver.o \
-	RTAudioStub.o \
-	RtAudio.o\
-	SDLTimer.o 
-
-RASPIFILES := \
-	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
-	GUIFactory.o \
-	SDLGUIWindowImp.o \
-	SDLEventManager.o \
-	Process.o \
-	UnixProcess.o \
-	RTAudioDriver.o \
-	RTAudioStub.o \
-	RtAudio.o \
-	RtMidi.o \
-	RTMidiService.o \
-	RTMidiOutDevice.o \
-	RTMidiInDevice.o \
-	SDLTimer.o \
-	JackAudioDriver.o \
-	JackClient.o \
-	JackAudio.o
-
-STEAMFILES := \
-	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
-	GUIFactory.o \
-	SDLGUIWindowImp.o \
-	SDLEventManager.o \
-	Process.o \
-	UnixProcess.o \
-	RTAudioDriver.o \
-	RTAudioStub.o \
-	RtAudio.o\
-	RtMidi.o\
-	RTMidiService.o\
-	RTMidiOutDevice.o\
-	RTMidiInDevice.o\
-	SDLTimer.o \
-	JackAudioDriver.o \
-	JackClient.o \
-	JackAudio.o
-
-NDSFILES := \
-	NDSmain.o \
-	NDSFileSystem.o \
-	DummyMidi.o \
-	NDSSound.o \
-	NDSSystem.o \
-	GUIFactory.o \
-	NDSGUIWindowImp.o
-
-W32FILES := \
-	WSDLmain.o \
-	W32FileSystem.o \
-	W32Midi.o \
-	W32AudioDriver.o \
-	WSDLSystem.o \
-	SDLInput.o \
-	Process.o \
-	W32Process.o \
-	W32Audio.o \
-	GUIFactory.o \
-	WSDLGUIWindowImp.o
-
-GP2XFILES := \
-	GPSDLMain.o \
-	GP2XFileSystem.o \
-	GP2XMidiService.o \
-	GP2XSerialMidiDevice.o \
-	GP2XAudio.o \
-	Process.o \
-	UnixProcess.o \
-	GP2XAudioDriver.o \
-	GP2XSystem.o \
-	GP2XEventQueue.o \
-	gpmemcpy.o \
-	gpmemset.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	SDLGUIWindowImp.o
-
-CAANOOFILES := \
-	CAANOOSDLMain.o \
-	UnixFileSystem.o \
-	CAANOOMidiService.o \
-	CAANOOSerialMidiDevice.o \
-	CAANOOAudio.o \
-	Process.o \
-	UnixProcess.o \
-	CAANOOAudioDriver.o \
-	CAANOOSystem.o \
-	CAANOOEventQueue.o \
-	gpmemcpy.o \
-	gpmemset.o \
-	SDLTimer.o \
-	GUIFactory.o \
-	SDLEventManager.o \
-	SDLGUIWindowImp.o
 
 COMMONFILES := \
 	Logger.o Trace.o Result.o Status.o Config.o \
@@ -453,15 +234,171 @@ COMMONFILES := \
 	tinyxmlparser.o tinyxml.o tinyxmlerror.o tinystr.o Tiny2NosStub.o
 
 #---------------------------------------------------------------------------------
+# Linux
+#---------------------------------------------------------------------------------
+
+LINUXFILES := \
+	UnixFileSystem.o \
+	DEBmain.o \
+	DEBSystem.o \
+	GUIFactory.o \
+	SDLGUIWindowImp.o \
+	SDLEventManager.o \
+	Process.o \
+	UnixProcess.o \
+	RTAudioDriver.o \
+	RTAudioStub.o \
+	RtAudio.o\
+	SDLTimer.o
+
+RTMIDIFILES := \
+	RtMidi.o\
+	RTMidiService.o\
+	RTMidiOutDevice.o\
+	RTMidiInDevice.o
+
+JACKFILES := \
+	JackAudioDriver.o \
+	JackClient.o \
+	JackAudio.o 
+
+DEBFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+BEAGLEBOARDFILES := $(LINUXFILES) DummyMidi.o
+RASPIFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+STEAMFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+
+#---------------------------------------------------------------------------------
+# Consoles/Embedded
+#---------------------------------------------------------------------------------
+
+CAANOOFILES := \
+	CAANOOSDLMain.o \
+	UnixFileSystem.o \
+	CAANOOMidiService.o \
+	CAANOOSerialMidiDevice.o \
+	CAANOOAudio.o \
+	Process.o \
+	UnixProcess.o \
+	CAANOOAudioDriver.o \
+	CAANOOSystem.o \
+	CAANOOEventQueue.o \
+	gpmemcpy.o \
+	gpmemset.o \
+	SDLTimer.o \
+	GUIFactory.o \
+	SDLEventManager.o \
+	SDLGUIWindowImp.o
+
+GP2XFILES := \
+	GPSDLMain.o \
+	GP2XFileSystem.o \
+	GP2XMidiService.o \
+	GP2XSerialMidiDevice.o \
+	GP2XAudio.o \
+	Process.o \
+	UnixProcess.o \
+	GP2XAudioDriver.o \
+	GP2XSystem.o \
+	GP2XEventQueue.o \
+	gpmemcpy.o \
+	gpmemset.o \
+	SDLTimer.o \
+	GUIFactory.o \
+	SDLEventManager.o \
+	SDLGUIWindowImp.o
+
+DINGUXFILES := \
+	DINGOOEventQueue.o \
+	GPSDLMain.o \
+	GUIFactory.o \
+	Process.o \
+	SDLAudioDriver.o \
+	SDLEventManager.o \
+	SDLGUIWindowImp.o \
+	SDLProcess.o \
+	SDLTimer.o \
+	UnixFileSystem.o \
+	UnixProcess.o
+
+DINGOOFILES := \
+	$(DINGUXFILES) \
+	DummyMidi.o \
+	DINGOOAudio.o \
+	DINGOOAudioDriver.o \
+	DINGOOSystem.o
+
+RS97FILES := \
+	$(DINGUXFILES) \
+	DINGOOAudio.o \
+	DINGOOAudioDriver.o \
+	BITTBOYSystem.o \
+	BITTBOYSerialMidiDevice.o \
+	BITTBOYMidiService.o
+
+BITTBOYFILES := \
+	$(DINGUXFILES) \
+	DINGOOAudio.o \
+	DINGOOAudioDriver.o \
+	BITTBOYSystem.o \
+	BITTBOYSerialMidiDevice.o \
+	BITTBOYMidiService.o
+
+MIYOOFILES := \
+	$(DINGUXFILES) \
+	DummyMidi.o \
+	MIYOOSystem.o \
+	SDLAudio.o
+
+NDSFILES := \
+	NDSmain.o \
+	NDSFileSystem.o \
+	DummyMidi.o \
+	NDSSound.o \
+	NDSSystem.o \
+	GUIFactory.o \
+	NDSGUIWindowImp.o
+
+PSPFILES := \
+	PSPmain.o \
+	PSPFileSystem.o \
+	Process.o \
+	DummyMidi.o \
+	GUIFactory.o \
+	SDLGUIWindowImp.o \
+	SDLEventManager.o \
+	SDLAudioDriver.o \
+	SDLAudio.o \
+	SDLProcess.o \
+	SDLTimer.o \
+	PSPSystem.o
+
+#---------------------------------------------------------------------------------
+# Windows
+#---------------------------------------------------------------------------------
+
+W32FILES := \
+	WSDLmain.o \
+	W32FileSystem.o \
+	W32Midi.o \
+	W32AudioDriver.o \
+	WSDLSystem.o \
+	SDLInput.o \
+	Process.o \
+	W32Process.o \
+	W32Audio.o \
+	GUIFactory.o \
+	WSDLGUIWindowImp.o
+
+#---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 
-TARGET   := $(TITLE)
-BUILD    := build$(PLATFORM)
-SOURCES  := $($(PLATFORM)DIRS) $(COMMONDIRS)
+TARGET := $(TITLE)
+BUILD := build$(PLATFORM)
+SOURCES := $($(PLATFORM)DIRS) $(COMMONDIRS)
 INCLUDES :=
 
 #---------------------------------------------------------------------------------
@@ -486,8 +423,8 @@ export PATH := $(DEVKITARM)/bin:$(PATH)
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT  := $(CURDIR)/$(TARGET)
-export VPATH   := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export OUTPUT := $(CURDIR)/$(TARGET)
+export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 export DEPSDIR := $(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
@@ -497,7 +434,8 @@ export DEPSDIR := $(CURDIR)/$(BUILD)
 export LD := $(CXX)
 export OFILES := $(COMMONFILES) $($(PLATFORM)FILES) 
 export OBJS := $(OFILES)
-export INCLUDE := $(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
+export INCLUDE := \
+	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 	$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
 	-I$(CURDIR)/$(BUILD)
 export LIBPATHS := $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
