@@ -68,20 +68,22 @@ LINUXDIRS := \
 	../sources/Adapters/Unix/Process \
 	../sources/System/Process \
 	../sources/Externals/RTAudio \
-	../sources/Externals/RtMidi \
 	../sources/Adapters/DEB/System \
-	../sources/Adapters/Jack/Audio \
-	../sources/Adapters/Jack/Midi \
-	../sources/Adapters/Jack/Client \
 	../sources/Adapters/RTAudio \
-	../sources/Adapters/RTMidi \
 	../sources/Adapters/SDL/Timer \
 	../sources/Adapters/SDL/GUI
 
+JACKDIRS := \
+	../sources/Adapters/Jack/Audio \
+	../sources/Adapters/Jack/Midi \
+	../sources/Adapters/Jack/Client
+
+RTMIDIDIRS := ../sources/Adapters/RTMidi
+
 BEAGLEBOARDDIRS := $(LINUXDIRS)
-DEBDIRS := $(LINUXDIRS)
-RASPIDIRS := $(LINUXDIRS)
-STEAMDIRS := $(LINUXDIRS)
+DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
+RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
+STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
