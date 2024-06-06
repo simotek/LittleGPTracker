@@ -4,6 +4,8 @@ LittleGPTracker (a.k.a 'The piggy') is a music tracker optimised to run on porta
 
 ## Support matrix
 
+attempt to define the features in each target supported by piggy
+
 target      | platform | audio         | midi  | extra     | libc  | march
 ------------|----------|---------------|-------|-----------|-------|---------
 BEAGLEBOARD | LINUX    | sdl           |       | soundfont | glibc | arm7h
@@ -32,6 +34,8 @@ WINDOWS     | WINDOWS  |               |       | soundfont |       | x86
 
 ## Modules
 
+modules are features that can be optionally included in the build
+
 * Audio
     - `OSS` alsa precursor
     - `RTAudio` cross platform audio lib
@@ -45,3 +49,18 @@ WINDOWS     | WINDOWS  |               |       | soundfont |       | x86
     - `dummy` fake midi driver for platforms without IO
 * Extra
     - `soundfont`: soundfont support, 32bit targets only
+
+## Defines
+
+defines are used to configure the build
+
+define              | info
+--------------------|------
+`__LINUX_ALSA__`    | ??? use alsa directly
+`__LINUX_ALSASEQ__` | ??? use alsa directly
+`_64BIT`            | 64 bit compatiblity patches
+`_DEBUG`            | include extra debug prints
+`_NO_JACK_`         | exclude jack support from build
+`_NO_RTAUDIO_`      | exclude rtaudio support from build
+`_NO_RTMIDI_`       | exclude rtmidi support from build
+`CPP_MEMORY`        | ???

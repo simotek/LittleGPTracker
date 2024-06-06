@@ -64,26 +64,37 @@ COMMONDIRS := \
 
 LINUXDIRS := \
 	../sources/Adapters/Unix/FileSystem \
-	../sources/Adapters/DEB/Main \
+	../sources/Adapters/LINUX/Main \
 	../sources/Adapters/Unix/Process \
 	../sources/System/Process \
-	../sources/Externals/RTAudio \
-	../sources/Adapters/DEB/System \
-	../sources/Adapters/RTAudio \
+	../sources/Adapters/LINUX/System \
 	../sources/Adapters/SDL/Timer \
 	../sources/Adapters/SDL/GUI
+
+DUMMYMIDIDIRS := \
+	../sources/Adapters/Dummy/Midi
 
 JACKDIRS := \
 	../sources/Adapters/Jack/Audio \
 	../sources/Adapters/Jack/Midi \
 	../sources/Adapters/Jack/Client
 
-RTMIDIDIRS := ../sources/Adapters/RTMidi
+RTAUDIODIRS := \
+	../sources/Adapters/RTAudio \
+	../sources/Externals/RTAudio
 
-BEAGLEBOARDDIRS := $(LINUXDIRS)
-DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
-RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
-STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
+RTMIDIDIRS := \
+	../sources/Adapters/RTMidi \
+	../sources/Externals/RtMidi
+
+SDLAUDIODIRS := \
+	../sources/Adapters/SDL/Audio
+
+BEAGLEBOARDDIRS := $(LINUXDIRS) $(RTAUDIODIRS)
+DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDLAUDIODIRS)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -119,6 +130,7 @@ DINGOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
 RS97DIRS := $(DINGUXDIRS)
 BITTBOYDIRS := $(DINGUXDIRS)
 MIYOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
+PLUSHDIRS := $(MIYOODIRS)
 
 GP2XDIRS := \
 	. \
@@ -241,33 +253,43 @@ COMMONFILES := \
 
 LINUXFILES := \
 	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
+	LINUXMain.o \
+	LINUXSystem.o \
 	GUIFactory.o \
 	SDLGUIWindowImp.o \
 	SDLEventManager.o \
 	Process.o \
 	UnixProcess.o \
-	RTAudioDriver.o \
-	RTAudioStub.o \
-	RtAudio.o\
 	SDLTimer.o
 
+DUMMYMIDIFILES := \
+	DummyMidi.o
+
+RTAUDIOFILES := \
+	RTAudioDriver.o \
+	RTAudioStub.o \
+	RtAudio.o
+
 RTMIDIFILES := \
-	RtMidi.o\
-	RTMidiService.o\
-	RTMidiOutDevice.o\
+	RtMidi.o \
+	RTMidiService.o \
+	RTMidiOutDevice.o \
 	RTMidiInDevice.o
 
 JACKFILES := \
 	JackAudioDriver.o \
 	JackClient.o \
-	JackAudio.o 
+	JackAudio.o
+
+SDLAUDIOFILES := \
+	SDLAudioDriver.o \
+	SDLAudio.o
 
 DEBFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
-BEAGLEBOARDFILES := $(LINUXFILES) DummyMidi.o
+BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
 RASPIFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
 STEAMFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+X64FILES := $(LINUXFILES) $(SDLAUDIOFILES) $(RTMIDIFILES)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -350,6 +372,8 @@ MIYOOFILES := \
 	DummyMidi.o \
 	MIYOOSystem.o \
 	SDLAudio.o
+
+PLUSHFILES = $(MIYOOFILES)
 
 NDSFILES := \
 	NDSmain.o \
