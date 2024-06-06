@@ -1,6 +1,6 @@
-# LittleGPTracker
+# LittleGPTracker (aka piggy, piggytracker)
 
-LittleGPTracker (a.k.a 'The piggy') is a music tracker optimised to run on portable game consoles.
+ridiculously versatile and portable LSDJ alike music tracker
 
 ## Build
 
@@ -9,6 +9,10 @@ compile the software from the projects directory, requires GCC, gnu make, variou
 ```
 # build for desktop linux on x86_64
 make PLATFORM=X64
+
+# build for desktop linux 32 bit
+# (theoretically equivalent to old DEB target)
+make PLATFORM=X86
 
 # build for RG35XX+ family devices
 make PLATFORM=PLUSH
@@ -58,25 +62,26 @@ apologies for vim binds
 
 attempt to define the features in each target supported by piggy
 
-platform    | family  | audio | midi   | libc  | march
-------------|---------|-------|--------|-------|---------
-BEAGLEBOARD | LINUX   | sdl   |        | glibc | arm7h
-BITTBOY     | DINGUX  | sdl   |        | musl  |
-CAANOO      | CAANOO  |       |        |       |
-DEBIAN      | LINUX   |       |        | glibc | x86
-DINGOO      | DINGUX  |       |        |       | mips
-GP2X        |         |       |        |       | arm9tdmi
-GP32        |         |       |        |       | arm9tdmi
-MIYOO       | DINGUX  | sdl   | dummy  | glibc | arm7h
-NDS         | NDS     | nds   |        |       |
-OSX         |         |       |        |       | powerpc
-PSP         | PSPSDK  | psp   |        |       | mips
-RASPI       |         |       |        |       | arm7h
-PLUSH       | DINGUX  | sdl   | dummy  | glibc | arm7h
-RS97        |         |       |        |       | arm7h
-STEAM       | LINUX   |       |        | glibc | x86
-WINDOWS     | WINDOWS |       |        |       | x86
-X64         | LINUX   | sdl   | rtmidi | glibc | x86_64
+platform    | family  | audio         | midi   | libc  | march
+------------|---------|---------------|--------|-------|---------
+BEAGLEBOARD | LINUX   | sdl           |        | glibc | arm7h
+BITTBOY     | DINGUX  | sdl           |        | musl  |
+CAANOO      | CAANOO  |               |        |       |
+DEBIAN      | LINUX   |               |        | glibc | x86
+DINGOO      | DINGUX  |               |        |       | mips
+GP2X        |         |               |        |       | arm9tdmi
+GP32        |         |               |        |       | arm9tdmi
+MIYOO       | DINGUX  | sdl           | dummy  | glibc | arm7h
+NDS         | NDS     | nds           |        |       |
+OSX         |         |               |        |       | powerpc
+PSP         | PSPSDK  | psp           |        |       | mips
+RASPI       |         |               |        |       | arm7h
+PLUSH       | DINGUX  | sdl           | dummy  | glibc | arm7h
+RS97        |         |               |        |       | arm7h
+STEAM       | LINUX   |               |        | glibc | x86
+WINDOWS     | WINDOWS |               |        |       | x86
+X64         | LINUX   | sdl           | rtmidi | glibc | x86_64
+X86         | LINUX   | rtaudio, jack | rtmidi | glibc | x86
 
 * `platform`: a configuration for a specific device or family of devices
 * `family`: OS for open platforms, SDK for homebrew ones
