@@ -1,0 +1,21 @@
+-include $(PWD)/rules_base
+
+# config
+DEFINES := \
+	-DCPP_MEMORY \
+	-D__LINUX_ALSA__ \
+	-D__LINUX_ALSASEQ__ \
+	-D_64BIT \
+	-DSDLAUDIO \
+	-DRTMIDI
+
+# optimization
+CFLAGS := $(DEFINES) -g -O3 -Wall -I/usr/local/include -I$(PWD)/../sources
+CXXFLAGS := $(CFLAGS) -std=gnu++03
+LIBS := -L/local/lib -Wl,-rpath,/usr/local/lib -lasound -lSDL -ljack -lpthread
+OUTPUT := ../lgpt
+EXTENSION := x64
+
+# build rule
+%.x64: $(OFILES)
+	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)

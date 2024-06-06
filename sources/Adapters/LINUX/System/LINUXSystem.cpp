@@ -14,23 +14,33 @@
 #include "Adapters/Unix/Process/UnixProcess.h"
 #include "System/Console/Logger.h"
 
-#ifdef AUDIO_JACK
+#ifdef DUMMYMIDI
+#include "Adapters/Dummy/Midi/DummyMidi.h"
+#endif
+
+#ifdef JACKAUDIO
 #include "Adapters/Jack/Audio/JackAudio.h"
-#include "Adapters/Jack/Midi/JackMidiService.h"
 #include "Adapters/Jack/Client/JackClient.h"
 #endif
 
-#ifdef AUDIO_RT
+#ifdef JACKMIDI
+#include "Adapters/Jack/Midi/JackMidiService.h"
+#endif
+
+#ifdef RTAUDIO
 #include "Adapters/RTAudio/RTAudioStub.h"
 #endif
 
-#ifdef MIDI_RT
+#ifdef RTMIDI
 #include "Adapters/RTMidi/RTMidiService.h"
+#endif
+
+#ifdef SDLAUDIO
+#include "Adapters/SDL/Audio/SDLAudio.h"
 #endif
 
 EventManager *LINUXSystem::eventManager_ = NULL;
 static int secbase = 0;
-
 
 /*
  * starts the main loop
@@ -65,54 +75,60 @@ void LINUXSystem::Boot(int argc,char **argv) {
 		strcpy(buff,".");
 	}
 	Path::SetAlias("bin",dirname(buff)) ;
-
 	Path::SetAlias("root",".") ;
 
-#ifdef _DEBUG
+  // always use stdout, user can capture in launch script
   Trace::GetInstance()->SetLogger(*(new StdOutLogger()));
-#else
-  Path logPath("bin:lgpt.log");
-  FileLogger *fileLogger=new FileLogger(logPath);
-  if(fileLogger->Init().Succeeded())
-  {
-    Trace::GetInstance()->SetLogger(*fileLogger);    
-  }
-#endif
 
   // Process arguments
-	Config::GetInstance()->ProcessArguments(argc,argv) ;
+  Config::GetInstance()->ProcessArguments(argc,argv) ;
 
-	// Install GUI Factory
-	I_GUIWindowFactory::Install(new GUIFactory()) ;
+  // Install GUI Factory
+  I_GUIWindowFactory::Install(new GUIFactory()) ;
 
-	// Install Timers
-	TimerService::GetInstance()->Install(new SDLTimerService()) ;
+  // Install Timers
+  TimerService::GetInstance()->Install(new SDLTimerService()) ;
 
-#ifdef AUDIO_JACK
-	// if we're using jack then install jack
-	if (JackClient::GetInstance()->Init()) {
-		Trace::Debug("Audio","Found jack.. connecting to it") ;
-		AudioSettings hints ;  // Jack doesn't care of hints for now on
-		Audio::Install(new JackAudio(hints)) ;
-		// MidiService::Install(new JackMidiService()) ;
-		MidiService::Install(new RTMidiService()) ;
-	}
-	else
+#ifdef JACKAUDIO
+	Trace::Log("System","Installing JACK audio") ;
+	Audio::Install(new JackAudio(AudioSettings hints));
 #endif
-	 {
-		Trace::Debug("Audio","Jack not found.. using default audio driver") ;
-		AudioSettings hints ;
-		hints.bufferSize_= 256 ;
-		hints.preBufferCount_=2 ;
-		Audio::Install(new RTAudioStub(hints)) ;
-		MidiService::Install(new RTMidiService()) ;
-	}
+
+#ifdef RTAUDIO
+	Trace::Log("System","Installing RT audio") ;
+	AudioSettings hints ;
+	hints.bufferSize_= 256 ;
+	hints.preBufferCount_=2 ;
+	Audio::Install(new RTAudioStub(hints)) ;
+#endif
+
+#ifdef SDLAUDIO
+	Trace::Log("System","Installing SDL audio") ;
+	AudioSettings hint;
+	hint.bufferSize_ = 1024;
+	hint.preBufferCount_ = 8;
+	Audio::Install(new SDLAudio(hint));
+#endif
+
+#ifdef DUMMYMIDI
+	Trace::Log("System","Installing DUMMY MIDI") ;
+	MidiService::Install(new DummyMidi());
+#endif
+
+#ifdef JACKMIDI
+	Trace::Log("System","Installing JACK MIDI") ;
+  MidiService::Install(new JackMidiService()) ;
+#endif
+
+#ifdef RTMIDI
+	Trace::Log("System","Installing RT MIDI") ;
+	MidiService::Install(new RTMidiService()) ;
+#endif
 
 	// Install Threads
+	SysProcessFactory::Install(new UnixProcessFactory());
 
-	SysProcessFactory::Install(new UnixProcessFactory()) ;
-
-	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0 )   {
+	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0 ) {
 		return;
 	}
 	SDL_EnableUNICODE(1);
@@ -120,18 +136,8 @@ void LINUXSystem::Boot(int argc,char **argv) {
 
 	atexit(SDL_Quit);
 
-	eventManager_=I_GUIWindowFactory::GetInstance()->GetEventManager() ;
-	eventManager_->Init() ;
-
-	eventManager_->MapAppButton("a",APP_BUTTON_A) ;
-	eventManager_->MapAppButton("s",APP_BUTTON_B) ;
-	eventManager_->MapAppButton("left",APP_BUTTON_LEFT) ;
-	eventManager_->MapAppButton("right",APP_BUTTON_RIGHT) ;
-	eventManager_->MapAppButton("up",APP_BUTTON_UP) ;
-	eventManager_->MapAppButton("down",APP_BUTTON_DOWN) ;
-	eventManager_->MapAppButton("right ctrl",APP_BUTTON_L) ;
-	eventManager_->MapAppButton("left ctrl",APP_BUTTON_R) ;
-	eventManager_->MapAppButton("space",APP_BUTTON_START) ;
+	eventManager_ = I_GUIWindowFactory::GetInstance()->GetEventManager();
+	eventManager_ -> Init();
 };
 
 void LINUXSystem::Shutdown() {};
@@ -171,15 +177,18 @@ void *LINUXSystem::Malloc(unsigned size) {
  * wraps free
  */
 void LINUXSystem::Free(void *ptr) {
-	//Trace::Debug("free:%x",ptr) ;
-	free(ptr) ;
+	free(ptr);
 } 
 
 /*
  * wraps memset
  */
 void LINUXSystem::Memset(void *addr,char val,int size) {
-    unsigned int ad=(unsigned int)addr ;
+#ifdef _64BIT
+    unsigned int ad = (intptr_t)addr;
+#else
+    unsigned int ad=(unsigned int)addr;
+#endif
     if (((ad&0x3)==0)&&((size&0x3)==0)) { // Are we 4-byte aligned ?
         unsigned int intVal=0;
         for (int i=0;i<4;i++) {

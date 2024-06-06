@@ -13,9 +13,9 @@ include $(PWD)/Makefile.$(PLATFORM)
 #---------------------------------------------------------------------------------
 
 AUTHOR := n0s
-TITLE  := lgpt
-NAME   := LittleGPTracker
-ICON   := lgpt_icon.bmp
+TITLE := lgpt
+NAME := LittleGPTracker
+ICON := lgpt_icon.bmp
 
 #---------------------------------------------------------------------------------
 # Directory definitions
@@ -61,26 +61,37 @@ COMMONDIRS := \
 
 LINUXDIRS := \
 	../sources/Adapters/Unix/FileSystem \
-	../sources/Adapters/DEB/Main \
+	../sources/Adapters/LINUX/Main \
 	../sources/Adapters/Unix/Process \
 	../sources/System/Process \
-	../sources/Externals/RTAudio \
-	../sources/Adapters/DEB/System \
-	../sources/Adapters/RTAudio \
+	../sources/Adapters/LINUX/System \
 	../sources/Adapters/SDL/Timer \
 	../sources/Adapters/SDL/GUI
+
+DUMMYMIDIDIRS := \
+	../sources/Adapters/Dummy/Midi
 
 JACKDIRS := \
 	../sources/Adapters/Jack/Audio \
 	../sources/Adapters/Jack/Midi \
 	../sources/Adapters/Jack/Client
 
-RTMIDIDIRS := ../sources/Adapters/RTMidi
+RTAUDIODIRS := \
+	../sources/Adapters/RTAudio \
+	../sources/Externals/RTAudio
 
-BEAGLEBOARDDIRS := $(LINUXDIRS)
-DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
-RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
-STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTMIDIDIRS)
+RTMIDIDIRS := \
+	../sources/Adapters/RTMidi \
+	../sources/Externals/RtMidi
+
+SDLAUDIODIRS := \
+	../sources/Adapters/SDL/Audio
+
+BEAGLEBOARDDIRS := $(LINUXDIRS) $(RTAUDIODIRS)
+DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDLAUDIODIRS)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -110,11 +121,12 @@ DINGOODIRS := \
 	../sources/Adapters/SDL/Audio \
 	../sources/Adapters/SDL/Process \
 	../sources/Adapters/SDL/GUI \
-	../sources/Adapters/SDL/Timer 
+	../sources/Adapters/SDL/Timer
 
 RS97DIRS := $(DINGOODIRS)
 BITTBOYDIRS := $(DINGOODIRS)
 MIYOODIRS := $(DINGOODIRS)
+PLUSHDIRS := $(MIYOODIRS)
 
 GP2XDIRS := \
 	. \
@@ -237,17 +249,22 @@ COMMONFILES := \
 
 LINUXFILES := \
 	UnixFileSystem.o \
-	DEBmain.o \
-	DEBSystem.o \
+	LINUXMain.o \
+	LINUXSystem.o \
 	GUIFactory.o \
 	SDLGUIWindowImp.o \
 	SDLEventManager.o \
 	Process.o \
 	UnixProcess.o \
+	SDLTimer.o
+
+DUMMYMIDIFILES := \
+	DummyMidi.o
+
+RTAUDIOFILES := \
 	RTAudioDriver.o \
 	RTAudioStub.o \
-	RtAudio.o\
-	SDLTimer.o
+	RtAudio.o
 
 RTMIDIFILES := \
 	RtMidi.o\
@@ -260,10 +277,15 @@ JACKFILES := \
 	JackClient.o \
 	JackAudio.o 
 
+SDLAUDIOFILES := \
+	SDLAudioDriver.o \
+	SDLAudio.o
+
 DEBFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
-BEAGLEBOARDFILES := $(LINUXFILES) DummyMidi.o
+BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
 RASPIFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
 STEAMFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+X64FILES := $(LINUXFILES) $(SDLAUDIOFILES) $(RTMIDIFILES)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -285,7 +307,7 @@ CAANOOFILES := \
 	SDLTimer.o \
 	GUIFactory.o \
 	SDLEventManager.o \
-	SDLGUIWindowImp.o 
+	SDLGUIWindowImp.o
 
 GP2XFILES := \
 	GPSDLMain.o \
@@ -303,7 +325,7 @@ GP2XFILES := \
 	SDLTimer.o \
 	GUIFactory.o \
 	SDLEventManager.o \
-	SDLGUIWindowImp.o 
+	SDLGUIWindowImp.o
 
 DINGUXFILES := \
 	DINGOOEventQueue.o \
@@ -346,6 +368,8 @@ MIYOOFILES := \
 	DummyMidi.o \
 	MIYOOSystem.o \
 	SDLAudio.o
+
+PLUSHFILES = $(MIYOOFILES)
 
 NDSFILES := \
 	NDSmain.o \
@@ -394,9 +418,9 @@ W32FILES := \
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 
-TARGET   := $(TITLE)
-BUILD    := build$(PLATFORM)
-SOURCES  := $($(PLATFORM)DIRS) $(COMMONDIRS)
+TARGET := $(TITLE)
+BUILD := build$(PLATFORM)
+SOURCES := $($(PLATFORM)DIRS) $(COMMONDIRS)
 INCLUDES :=
 
 #---------------------------------------------------------------------------------
@@ -421,8 +445,8 @@ export PATH := $(DEVKITARM)/bin:$(PATH)
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT  := $(CURDIR)/$(TARGET)
-export VPATH   := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export OUTPUT := $(CURDIR)/$(TARGET)
+export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
 export DEPSDIR := $(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
