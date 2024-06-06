@@ -14,6 +14,46 @@ make PLATFORM=X64
 make PLATFORM=PLUSH
 ```
 
+## Config
+
+there are no default keybinds use a `config.xml` file
+
+apologies for vim binds
+
+```
+<CONFIG>
+  <!-- paths -->
+  <ROOTFOLDER value="/path/to/tracks"/>
+  <SAMPLELIB value="/path/to/samples"/>
+  <!-- appearance -->
+  <!--
+  <SCREENMULT value="1"/>
+  <BACKGROUND value="0F0A1C"/>
+  <FOREGROUND value="EB0350"/>
+  <HICOLOR1 value="FFFFFF"/>
+  <HICOLOR2 value="0AA290"/>
+  <ROWCOLOR1 value="AAAAAA"/>
+  <ROWCOLOR2 value="FFFFFF"/>
+  <SONGVIEW_00 value="5D021E"/>
+  <SONGVIEW_FE value="5D021E"/>
+  -->
+  <!-- keybinds -->
+  <KEY_UP value="k" />
+  <KEY_DOWN value="j" />
+  <KEY_LEFT value="h" />
+  <KEY_RIGHT value="l" />
+  <KEY_A value="x" />
+  <KEY_B value="z" />
+  <KEY_LSHOULDER value="left shift" />
+  <KEY_RSHOULDER value="space" />
+  <KEY_START value="return" />
+  <!--
+  <DUMPEVENT value="YES"/><!-- uncomment to log keypresses -->
+  <RENDER value="FILE"/><!-- uncomment to render -->
+  -->
+</CONFIG>
+```
+
 ## Support matrix
 
 attempt to define the features in each target supported by piggy
