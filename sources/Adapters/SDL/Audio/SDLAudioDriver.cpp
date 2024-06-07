@@ -119,6 +119,7 @@ bool SDLAudioDriver::StartDriver() {
 
 	for (int i=0;i<settings_.preBufferCount_;i++) {
 		AddBuffer((short *)miniBlank_,fragSize_/4) ;
+		MidiService::GetInstance()->AdvancePlayQueue();
 	}
 	if (settings_.preBufferCount_==0) {
 		thread_->Notify() ;
@@ -164,6 +165,7 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream,int len) {
 
 			memcpy(mainBuffer_+bufferSize_-bufferPos_, pool_[poolPlayPosition_].buffer_,pool_[poolPlayPosition_].size_);
     
+            MidiService::GetInstance()->Flush() ;
              // Adapt buffer variables
     
     	     bufferSize_=bufferSize_-bufferPos_+pool_[poolPlayPosition_].size_ ;
