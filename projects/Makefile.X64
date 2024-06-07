@@ -9,10 +9,17 @@ DEFINES := \
 	-DSDLAUDIO \
 	-DRTMIDI
 
+ALSA_CFLAGS := $(shell pkg-config alsa --cflags)
+ALSA_LIBS := $(shell pkg-config alsa --libs)
+JACK_CFLAGS := $(shell pkg-config jack --cflags)
+JACK_LIBS := $(shell pkg-config jack --libs)
+SDL_CFLAGS := $(shell pkg-config sdl --cflags)
+SDL_LIBS := $(shell pkg-config sdl --libs)
+
 # optimization
-CFLAGS := $(DEFINES) -g -O3 -Wall -I/usr/local/include -I$(PWD)/../sources
+CFLAGS := $(DEFINES) -g -O3 -Wall $(ALSA_CFLAGS) $(JACK_CFLAGS) $(SDL_CFLAGS) -I$(PWD)/../sources
 CXXFLAGS := $(CFLAGS) -std=gnu++03
-LIBS := -L/local/lib -Wl,-rpath,/usr/local/lib -lasound -lSDL -ljack -lpthread
+LIBS := $(ALSA_LIBS) $(JACK_LIBS) $(SDL_LIBS)
 OUTPUT := ../lgpt
 EXTENSION := x64
 
