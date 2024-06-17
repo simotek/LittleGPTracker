@@ -1,6 +1,7 @@
 bin/**
 build/**
 projects/build**
+sources/Resources/font.h
 tracks/**
 *.dat
 *.wav
