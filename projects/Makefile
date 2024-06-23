@@ -474,7 +474,7 @@ export LIBPATHS := $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 #---------------------------------------------------------------------------------
 
 $(BUILD):
-	../scripts/mkfont.py ../assets/fonts/$(FONT) ../sources/Resources/font.h
+	python3 ../scripts/mkfont.py ../assets/fonts/$(FONT) ../sources/Resources/font.h
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(PWD)/Makefile
 
