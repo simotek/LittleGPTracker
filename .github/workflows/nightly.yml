@@ -33,6 +33,7 @@ jobs:
         with:
           tag_name: nightly
           prerelease: true
+          token: ${{ secrets.RELEASE_TOKEN }}
           files: |
             projects/lgpt.x64
 
