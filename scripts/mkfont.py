@@ -1,11 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # USAGE: ./mkfont.py FONT_BMP [OUTPUT_FILE]
 # FONT_BMP must be a black/white (#000000, #FFFFFF) 128x64px bmp
 # if OUTPUT_FILE is omitted, will print to stdout
 
 import sys
-from PIL import Image
+try:
+    from PIL import Image
+except:
+    import Image
 
 
 def printFont(font, dst=sys.stdout):
