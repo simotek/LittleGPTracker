@@ -24,9 +24,15 @@ jobs:
 
       - name: build x86_64
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd projects
           make PLATFORM=X64
-          gh release upload nightly lgpt.x64
+
+      - name: upload release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nightly
+          prerelease: true
+          files: |
+            projects/lgpt.x64
+
