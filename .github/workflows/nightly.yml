@@ -1,0 +1,24 @@
+name: Nightly Build
+
+on:
+  push:
+    branches:
+      - refactor-build
+
+jobs:
+  build:
+    name: Nightly Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build x86_64
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd projects
+          make PLATFORM=X64
+          gh release upload nightly lgpt.x64
