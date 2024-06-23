@@ -22,7 +22,7 @@ jobs:
 
       - name: install linux deps
         run: | 
-          sudo apt install libsdl1.2-dev libsdk_mixer1.2-dev libasound2-dev libjack-dev
+          sudo apt install libsdl1.2-dev libsdl_mixer1.2-dev libasound2-dev libjack-dev
 
       - name: build x86_64
         shell: bash
