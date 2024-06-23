@@ -14,19 +14,21 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: install python deps
-        shell: bash
-        run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          python3 -m pip install -r requirements.txt
+#      - name: install python deps
+#        shell: bash
+#        run: |
+#          python3 -m venv venv
+#          source venv/bin/activate
+#          python3 -m pip install -r requirements.txt
 
       - name: build x86_64
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          python3 -m venv venv
           source venv/bin/activate
+          python3 -m pip install -r requirements.txt
           cd projects
           make PLATFORM=X64
           gh release upload nightly lgpt.x64
