@@ -5,10 +5,7 @@
 # if OUTPUT_FILE is omitted, will print to stdout
 
 import sys
-try:
-    from PIL import Image
-except:
-    import Image
+from PIL import Image
 
 
 def printFont(font, dst=sys.stdout):
