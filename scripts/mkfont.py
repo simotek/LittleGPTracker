@@ -7,6 +7,7 @@
 import sys
 from PIL import Image
 
+
 def printFont(font, dst=sys.stdout):
     for y in range(8):
         for c in range(128):
@@ -14,6 +15,7 @@ def printFont(font, dst=sys.stdout):
                     print(font[1024 * y + 8 * c + x], end=',', file=dst)
             print(' ', end='', file=dst)
         print('', file=dst)
+
 
 def readBmpChar(font, pxs, c):
     cy = c // 16
@@ -24,6 +26,7 @@ def readBmpChar(font, pxs, c):
         for x in range(8):
             v = 1 if pxs[pxx + x, pxy + y][0] > 0 else 0
             font[y * 1024 + c * 8 + x] = v
+
 
 def toFont(img):
     pxs = img.load()
@@ -45,6 +48,7 @@ def readArgs():
         dstfile = sys.stdout
 
     return (srcfile, dstfile)
+
 
 def main():
     src, dst = readArgs()
