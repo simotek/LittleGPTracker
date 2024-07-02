@@ -16,7 +16,7 @@ just to be safe <3
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 Changelog Jul 2 2024
-1.4.1
+1.4.0
     Adds:
         Automated build for bittboy, Win32, PSP, Miyoo, Deb32
         License changed from CC-BY-SA-NC to GPL-3
