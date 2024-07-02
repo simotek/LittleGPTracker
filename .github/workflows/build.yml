@@ -43,7 +43,12 @@ jobs:
       - name: Package build
         shell: bash
         working-directory: projects
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources-1.0*
+          ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
@@ -76,7 +81,12 @@ jobs:
 
       - name: Package build
         working-directory: projects
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources-1.0*
+          ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
@@ -115,7 +125,12 @@ jobs:
 
       - name: Package build
         working-directory: projects
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources-1.0*
+          ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
@@ -148,7 +163,12 @@ jobs:
 
       - name: Package build
         working-directory: projects
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources-1.0*
+          ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
@@ -181,7 +201,12 @@ jobs:
 
       - name: Package build
         working-directory: projects
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources-1.0*
+          ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
