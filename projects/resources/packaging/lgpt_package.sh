@@ -1,8 +1,9 @@
 #!/bin/bash
-cd $(git rev-parse --show-toplevel)/projects/
-BUILD="$(grep -oP 'BUILD_COUNT [^"]*"\K[^"]*' ../sources/Application/Model/Project.h)"
-VERSION=1.3o_$BUILD
-PACKAGE=LGPT-$VERSION.zip
+cd "$(git rev-parse --show-toplevel)/projects/"
+PROJECT_NUMBER=$(grep -oP 'PROJECT_NUMBER "\K[^"]*' ../sources/Application/Model/Project.h)
+PROJECT_RELEASE=$(grep -oP 'PROJECT_RELEASE "\K[^"]*' ../sources/Application/Model/Project.h)
+BUILD_COUNT=$(grep -oP 'BUILD_COUNT "\K[^"]*' ../sources/Application/Model/Project.h)
+VERSION="${PROJECT_NUMBER}${PROJECT_RELEASE}${BUILD_COUNT}"
 
 collect_resources() { #1PLATFORM #2lgpt.*-exe
   if [[ -n $(find -name "$2") ]]; then
@@ -32,10 +33,10 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
 
 collect_resources PSP EBOOT.PBP
 collect_resources DEB lgpt.deb-exe
-# collect_resources RS97 lgpt.dge
-# collect_resources BITTBOY lgpt-bittboy.elf
 collect_resources MIYOO lgpt-miyoo.elf
-# collect_resources STEAM lgpt.steam-exe
 collect_resources W32 lgpt-W32.exe
 collect_resources RASPI lgpt.rpi-exe
 collect_resources CHIP lgpt.chip-exe
+collect_resources BITTBOY lgpt-bittboy.elf
+# collect_resources RS97 lgpt.dge
+# collect_resources STEAM lgpt.steam-exe

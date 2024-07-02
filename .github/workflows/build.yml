@@ -162,3 +162,37 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
+
+
+  build-bittboy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Bittboy toolchain
+        run: |
+          wget -O /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz https://github.com/djdiskmachine/MiyooMini-toolchain/releases/download/toolchain/miyoo-toolchain-v2.0.0-arm-buildroot-linux-musleabi_sdk-buildroot.tar.gz
+          mkdir /opt/arm-buildroot-linux-musleabi_sdk-buildroot
+          tar -xvf /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz -C /opt/arm-buildroot-linux-musleabi_sdk-buildroot  --strip-components=1
+
+      - name: Build Bittboy
+        working-directory: projects
+        run: make PLATFORM=BITTBOY
+
+      - name: Package build
+        working-directory: projects
+        run: ./resources/packaging/lgpt_package.sh
+
+      - name: Extract Git tag name
+        id: extract_tag
+        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
+          files: ./projects/*.zip

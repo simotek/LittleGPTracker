@@ -15,7 +15,29 @@ projects but make sure to backup your old cherished work
 just to be safe <3
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-Changelog Feb 1 2024
+Changelog Jul 2 2024
+1.4.1
+    Adds:
+        Automated build for bittboy, Win32, PSP, Miyoo, Deb32
+        License changed from CC-BY-SA-NC to GPL-3
+
+    * MVEL cmd    
+        Set step velocity for MIDI instruments
+        https://github.com/democloid/picoTracker/pull/163
+        
+        Author: @maks@fluttercommunity.social
+        Co-authored-by: djdiskmachine <djdiskmachine@proton.me>
+
+    * Config option to set major beat color in phrase screen
+
+        Author: koisignal <koitokakitsubata@gmail.com>
+        
+    * Deep clone
+        Clones selected chain and the phrases within
+        
+        Author: koisignal <koitokakitsubata@gmail.com>
+        Co-authored-by: djdiskmachine <djdiskmachine@proton.me>
+
 1.3o_2
     Adds:
         Alt row count colors, shoutout to https://github.com/edne !

@@ -3,7 +3,7 @@ name: Check build viability
 on: [pull_request]
 
 jobs:
-  check-windows:
+  win32:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -39,7 +39,7 @@ jobs:
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh 
 
-  check-miyoo:
+  miyoo:
     runs-on: ubuntu-latest
 
     steps:
