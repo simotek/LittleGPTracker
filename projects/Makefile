@@ -546,7 +546,7 @@ export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
 #---------------------------------------------------------------------------------
 $(BUILD):
-	../sources/Resources/mkfont.py ../sources/Resources/$(FONT) ../sources/Resources/font.h
+	python3 ../sources/Resources/mkfont.py ../sources/Resources/$(FONT) ../sources/Resources/font.h
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(PWD)/Makefile
 
@@ -602,6 +602,6 @@ deploy:
 #	make PLATFORM=MIYOO
 	./resources/packaging/build_and_copy_from_pi.sh
 	./resources/packaging/build_and_copy_from_chip.sh
-	make PLATFORM=BITTBOY
+#	make PLATFORM=BITTBOY
 #	make PLATFORM=RS97
 	./resources/packaging/lgpt_package.sh

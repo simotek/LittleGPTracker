@@ -3,7 +3,7 @@ cd "$(git rev-parse --show-toplevel)/projects/"
 PROJECT_NUMBER=$(grep -oP 'PROJECT_NUMBER "\K[^"]*' ../sources/Application/Model/Project.h)
 PROJECT_RELEASE=$(grep -oP 'PROJECT_RELEASE "\K[^"]*' ../sources/Application/Model/Project.h)
 BUILD_COUNT=$(grep -oP 'BUILD_COUNT "\K[^"]*' ../sources/Application/Model/Project.h)
-VERSION="${PROJECT_NUMBER}${PROJECT_RELEASE}${BUILD_COUNT}"
+VERSION="${PROJECT_NUMBER}.${PROJECT_RELEASE}.${BUILD_COUNT}"
 
 collect_resources() { #1PLATFORM #2lgpt.*-exe
   if [[ -n $(find -name "$2") ]]; then

@@ -10,6 +10,8 @@
 	Required libs:
 		sudo apt install -y build-essential cmake pkgconf \
 		libusb-0.1 libgpgme11 libarchive-tools fakeroot
+		pip3 install Pillow
+
 	Dev kit:
 		https://github.com/djdiskmachine/pspdev
 	using nano ~/.bashrc, add
@@ -27,6 +29,7 @@
 	Required libs:
 		sudo dpkg --add-architecture i386 && sudo apt update
 	    sudo apt install -y git make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
+		pip3 install Pillow
 
 	Build with:
 		make PLATFORM=DEB
@@ -34,12 +37,14 @@
 ##### RASPI: Compile under Linux
 	Required libs:
 	    sudo apt install -y git gcc libsdl1.2-dev make g++ libjack-dev
+		pip3 install Pillow
 	Build with:
 		make PLATFORM=RASPI
 
 ##### BITTBOY: Compile under Linux
 	Required libs:
 		sudo apt install -y libncurses-dev
+		pip3 install Pillow
 	Dev kit:
 		https://github.com/djdiskmachine/MiyooMini-toolchain/releases/download/toolchain/miyoo-toolchain-v2.0.0-arm-buildroot-linux-musleabi_sdk-buildroot.tar.gz
 	    install in /opt/
@@ -49,6 +54,7 @@
 ##### MIYOOMINI: Compile under Linux
 	Required libs:
 		sudo apt install -y libncurses-dev
+		pip3 install Pillow
 	Dev kit:
 		https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
 	    install in /opt/
@@ -58,12 +64,16 @@
 ##### RS97/RG350: Compile under Linux
 	Required libs:
 		sudo apt install -y libncurses-dev
+		pip3 install Pillow
 	Dev kit:
 		https://github.com/djdiskmachine/buildroot-rg350-old-kernel/releases/download/toolchain/mipsel-rg350-linux-uclibc_sdk-buildroot.tar.gz
 	    install in /opt/ and run relocate-sdk.sh from there
 	Build with:
 		make PLATFORM=RS97
 
-##### STEAMDECK: Compile in "scout" docker
-	docker run -v /lgpt/repo/path/LittleGPTracker:/LGPT -it registry.gitlab.steamos.cloud/steamrt/scout/sdk/i386:latest bash
-	cd LGPT/projects && make PLATFORM=STEAM
+##### RG35XX: Compile in edemirkans toolchain docker
+	clone:
+		https://github.com/edemirkan/rg35xx-toolchain
+	Build with:
+		make PLATFORM=RG35XX
+
