@@ -11,7 +11,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install build deps
-        run: choco install -y directx-sdk zip --no-progress --yes
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
+          choco install -y directx-sdk zip --no-progress --yes
         shell: powershell
 
       - name: Download and Extract VCE9 release
@@ -71,6 +74,8 @@ jobs:
       
       - name: Install required libraries
         run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
           sudo dpkg --add-architecture i386
           sudo apt update
           sudo apt install -y make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
@@ -111,6 +116,8 @@ jobs:
 
       - name: Install required libraries
         run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
           sudo apt update
           sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
 
@@ -153,6 +160,8 @@ jobs:
 
       - name: Install Miyoo Mini toolchain
         run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
           wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
           mkdir /opt/miyoomini-toolchain
           tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/miyoomini-toolchain  --strip-components=1
@@ -191,6 +200,8 @@ jobs:
 
       - name: Install Bittboy toolchain
         run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
           wget -O /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz https://github.com/djdiskmachine/MiyooMini-toolchain/releases/download/toolchain/miyoo-toolchain-v2.0.0-arm-buildroot-linux-musleabi_sdk-buildroot.tar.gz
           mkdir /opt/arm-buildroot-linux-musleabi_sdk-buildroot
           tar -xvf /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz -C /opt/arm-buildroot-linux-musleabi_sdk-buildroot  --strip-components=1
