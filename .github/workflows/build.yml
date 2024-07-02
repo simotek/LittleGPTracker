@@ -163,7 +163,6 @@ jobs:
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
-
   build-bittboy:
     runs-on: ubuntu-latest
     steps:

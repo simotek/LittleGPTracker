@@ -38,6 +38,10 @@ Changelog Jul 2 2024
         Author: koisignal <koitokakitsubata@gmail.com>
         Co-authored-by: djdiskmachine <djdiskmachine@proton.me>
 
+    * Font at build time
+        Modify sources/Resources/original.bmp __or__
+        FONT variable in Makefile
+
 1.3o_2
     Adds:
         Alt row count colors, shoutout to https://github.com/edne !

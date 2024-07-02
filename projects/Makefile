@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------------
 
 PLATFORM:=  RASPI
-
+FONT := original.bmp
 include $(PWD)/Makefile.$(PLATFORM)
 
 #---------------------------------------------------------------------------------
@@ -546,6 +546,7 @@ export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
 #---------------------------------------------------------------------------------
 $(BUILD):
+	../sources/Resources/mkfont.py ../sources/Resources/$(FONT) ../sources/Resources/font.h
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(PWD)/Makefile
 
@@ -594,15 +595,13 @@ $(OUTPUT).beagle-exe	:	$(OFILES)
 endif
 #---------------------------------------------------------------------------------------
 
-# Make as many as possible
-# Build W32 first
+# Only build non-automated configs
 deploy:
-	make PLATFORM=PSP
-	make PLATFORM=DEB
-#	make PLATFORM=RS97
-#	make PLATFORM=BITTBOY
-	make PLATFORM=MIYOO
-#	./resources/packaging/docker_steam.sh
+#	make PLATFORM=PSP
+#	make PLATFORM=DEB
+#	make PLATFORM=MIYOO
 	./resources/packaging/build_and_copy_from_pi.sh
 	./resources/packaging/build_and_copy_from_chip.sh
+	make PLATFORM=BITTBOY
+#	make PLATFORM=RS97
 	./resources/packaging/lgpt_package.sh
