@@ -9,6 +9,7 @@
 #---------------------------------------------------------------------------------
 
 PLATFORM := RASPI
+FONT := fixed.bmp
 include $(PWD)/Makefile.$(PLATFORM)
 
 #---------------------------------------------------------------------------------
@@ -95,6 +96,7 @@ DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
 RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
 STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
 X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDLAUDIODIRS)
+X86DIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -126,10 +128,10 @@ DINGUXDIRS := \
 	../sources/Adapters/SDL/GUI \
 	../sources/Adapters/SDL/Timer
 
-DINGOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
+DINGOODIRS := $(DINGUXDIRS) $(DUMMYMIDIDIRS)
 RS97DIRS := $(DINGUXDIRS)
 BITTBOYDIRS := $(DINGUXDIRS)
-MIYOODIRS := $(DINGUXDIRS) ../sources/Adapters/Dummy/Midi
+MIYOODIRS := $(DINGUXDIRS) $(DUMMYMIDIDIRS)
 PLUSHDIRS := $(MIYOODIRS)
 
 GP2XDIRS := \
@@ -285,11 +287,12 @@ SDLAUDIOFILES := \
 	SDLAudioDriver.o \
 	SDLAudio.o
 
-DEBFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+DEBFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
-RASPIFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
-STEAMFILES := $(LINUXFILES) $(RTMIDIFILES) $(JACKFILES)
+RASPIFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
+STEAMFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 X64FILES := $(LINUXFILES) $(SDLAUDIOFILES) $(RTMIDIFILES)
+X86FILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -471,6 +474,7 @@ export LIBPATHS := $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 #---------------------------------------------------------------------------------
 
 $(BUILD):
+	python3 ../scripts/mkfont.py ../assets/fonts/$(FONT) ../sources/Resources/font.h
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(PWD)/Makefile
 

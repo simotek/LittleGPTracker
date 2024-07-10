@@ -1,0 +1,39 @@
+name: Nightly Build
+
+on:
+  push:
+    branches:
+      - refactor-build
+
+jobs:
+  build:
+    name: Nightly Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install python deps
+        run: |
+          pip3 install -r requirements.txt
+
+      - name: install linux deps
+        run: | 
+          sudo apt install libsdl1.2-dev libsdl-mixer1.2-dev libasound2-dev libjack-dev
+
+      - name: build x86_64
+        shell: bash
+        run: |
+          cd projects
+          make PLATFORM=X64
+
+      - name: upload release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nightly
+          prerelease: true
+          token: ${{ secrets.RELEASE_TOKEN }}
+          files: |
+            projects/lgpt.x64
+
