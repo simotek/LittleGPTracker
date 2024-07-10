@@ -200,10 +200,10 @@ extern DECLSPEC void SDLCALL SDL_free(void *mem);
 extern DECLSPEC char * SDLCALL SDL_getenv(const char *name);
 #endif
 
-#ifdef HAVE_PUTENV
-#define SDL_putenv	putenv
+#ifdef HAVE_SETENV
+#define SDL_setenv	setenv
 #else
-extern DECLSPEC int SDLCALL SDL_putenv(const char *variable);
+extern DECLSPEC int SDLCALL SDL_setenv(const char *name, const char *value, int overwrite);
 #endif
 
 #ifdef HAVE_QSORT

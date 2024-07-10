@@ -44,7 +44,7 @@
 #define HAVE_FREE	1
 #define HAVE_ALLOCA	1
 #define HAVE_GETENV	1
-#define HAVE_PUTENV	1
+#define HAVE_SETENV	1
 #define HAVE_MEMSET	1
 #define HAVE_MEMCPY	1
 #define HAVE_MEMMOVE	1

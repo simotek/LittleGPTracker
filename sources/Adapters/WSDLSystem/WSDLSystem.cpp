@@ -28,6 +28,7 @@ int WSDLSystem::MainLoop() {
 void WSDLSystem::Boot(int argc,char **argv) {
 
 	SDL_putenv("SDL_VIDEODRIVER=directx") ;
+	SDL_setenv("SDL_VIDEODRIVER","directx",1)
 
 	// Install System
 	System::Install(new WSDLSystem()) ;
