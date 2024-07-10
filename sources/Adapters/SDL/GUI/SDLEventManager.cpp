@@ -65,7 +65,7 @@ bool SDLEventManager::Init()
 		hatCS_[i]=new HatControllerSource(sourceName) ;
 	}
   
-	for (int i=0;i<SDLK_LAST;i++) 
+	for (int i=0;i<SDL_NUM_SCANCODES;i++) 
   {
 		keyname_[i]=SDL_GetKeyName((SDLKey)i) ;
 	} 
@@ -167,7 +167,7 @@ void SDLEventManager::PostQuitMessage()
 
 int SDLEventManager::GetKeyCode(const char *key)
 {
-	for (int i=0;i<SDLK_LAST;i++)
+	for (int i=0;i<SDL_NUM_SCANCODES;i++)
   {
 		if (!strcmp(key,keyname_[i]))
     {

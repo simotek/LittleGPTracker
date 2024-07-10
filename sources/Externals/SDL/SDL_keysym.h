@@ -283,7 +283,7 @@ typedef enum {
 
 	/* Add any other keys here */
 
-	SDLK_LAST
+	SDL_NUM_SCANCODES
 } SDLKey;
 
 /* Enumeration of valid key mods (possibly OR'd together) */

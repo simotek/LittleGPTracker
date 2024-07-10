@@ -28,7 +28,7 @@ private:
 
 	SDL_Joystick *joystick_;
 
-	const char *keyname_[SDLK_LAST] ;
+	const char *keyname_[SDL_NUM_SCANCODES] ;
 
 } ;
 
