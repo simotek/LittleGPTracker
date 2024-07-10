@@ -1,7 +1,7 @@
 #include "EventDispatcher.h"
 #include "System/Console/Trace.h"
 #include "Application/Model/Config.h"
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 
 int EventDispatcher::keyRepeat_=30 ;
 int EventDispatcher::keyDelay_=500 ;

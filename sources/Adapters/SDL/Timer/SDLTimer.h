@@ -2,7 +2,7 @@
 #define _SDL_TIMER_H_
 
 #include "System/Timer/Timer.h"
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 
 class SDLTimer: public I_Timer {
 public:

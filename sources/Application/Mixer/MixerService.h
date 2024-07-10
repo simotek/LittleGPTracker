@@ -7,7 +7,7 @@
 #include "Services/Audio/AudioOut.h"
 #include "Application/Commands/CommandDispatcher.h" // Would be better done externally and call an API here
 #include "MixBus.h"
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 
 enum MixerServiceMode {
 	MSM_AUDIO,
