@@ -13,8 +13,8 @@ ALSA_CFLAGS := $(shell pkg-config alsa --cflags)
 ALSA_LIBS := $(shell pkg-config alsa --libs)
 JACK_CFLAGS := $(shell pkg-config jack --cflags)
 JACK_LIBS := $(shell pkg-config jack --libs)
-SDL_CFLAGS := $(shell pkg-config sdl --cflags)
-SDL_LIBS := $(shell pkg-config sdl --libs)
+SDL_CFLAGS := $(shell pkg-config sdl2 --cflags)
+SDL_LIBS := $(shell pkg-config sdl2 --libs)
 
 # optimization
 CFLAGS := $(DEFINES) -g -O3 -Wall $(ALSA_CFLAGS) $(JACK_CFLAGS) $(SDL_CFLAGS) -I$(PWD)/../sources

@@ -3,7 +3,7 @@
 
 #include "Application/Application.h"
 #include "Adapters/CAANOO/System/CAANOOSystem.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <string.h>
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Application/Persistency/PersistencyService.h" 

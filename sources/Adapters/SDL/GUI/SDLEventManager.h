@@ -7,7 +7,7 @@
 #include "Services/Controllers/JoystickControllerSource.h"
 #include "Services/Controllers/HatControllerSource.h"
 #include "Services/Controllers/KeyboardControllerSource.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #include <string>
 

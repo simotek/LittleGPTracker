@@ -2,7 +2,7 @@
 #define SDL_GUI_WINDOW_H_
 
 #include "UIFramework/Interfaces/I_GUIWindowImp.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 bool ProcessDEBEvent(SDL_Event &event) ;
 void ProcessButtonChange(unsigned short,unsigned short) ;

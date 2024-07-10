@@ -3,7 +3,7 @@
 
 #include "System/System/System.h"
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 #define USEREVENT_TIMER 0
 #define USEREVENT_EXPOSE 1

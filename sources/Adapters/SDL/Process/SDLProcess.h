@@ -2,7 +2,7 @@
 #define _SDL_PROCESS_H_
 
 #include "System/Process/Process.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 class SDLProcessFactory:public SysProcessFactory {
 	bool BeginThread(SysThread &) ;

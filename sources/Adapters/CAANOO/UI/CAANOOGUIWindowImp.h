@@ -2,7 +2,7 @@
 #define CAANOO_GUI_WINDOW_H_
 
 #include "UIFramework/Interfaces/I_GUIWindowImp.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "Adapters/CAANOOSystem/CAANOOEventQueue.h"
 
 bool ProcessCAANOOEvent(CAANOOEvent &event) ;

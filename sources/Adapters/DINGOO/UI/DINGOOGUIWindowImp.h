@@ -2,7 +2,7 @@
 #define DINGOO_GUI_WINDOW_H_
 
 #include "UIFramework/Interfaces/I_GUIWindowImp.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "Adapters/DINGOOSystem/DINGOOEventQueue.h"
 
 bool ProcessDINGOOEvent(DINGOOEvent &event) ;

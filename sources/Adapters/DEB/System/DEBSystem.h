@@ -3,7 +3,7 @@
 
 #include "System/System/System.h"
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 
 class DEBSystem: public System {
 public:

@@ -4,7 +4,7 @@
 #include "Application/Application.h"
 #include "Adapters/GP2X/System/GP2XSystem.h"
 #include "Foundation/T_Singleton.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <string.h>
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Application/Persistency/PersistencyService.h" 

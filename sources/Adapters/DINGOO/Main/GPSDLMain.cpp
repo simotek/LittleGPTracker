@@ -1,7 +1,7 @@
 #include "Application/Application.h"
 #include "Adapters/DINGOO/System/DINGOOSystem.h"
 #include "Foundation/T_Singleton.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include <string.h>
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Application/Persistency/PersistencyService.h" 

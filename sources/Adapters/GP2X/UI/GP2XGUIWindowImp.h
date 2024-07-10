@@ -2,7 +2,7 @@
 #define GP2X_GUI_WINDOW_H_
 
 #include "UIFramework/Interfaces/I_GUIWindowImp.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "Adapters/GP2XSystem/GP2XEventQueue.h"
 
 bool ProcessGP2XEvent(GP2XEvent &event) ;

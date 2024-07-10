@@ -2,7 +2,7 @@
 #define _SDL_SOUND_H_
 
 #include "Services/Audio/AudioDriver.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "System/Process/Process.h"
 
 class SDLAudioDriver ;
