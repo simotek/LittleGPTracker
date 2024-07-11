@@ -42,6 +42,11 @@ Changelog Jul 2 2024
         Modify sources/Resources/original.bmp __or__
         FONT variable in Makefile
 
+    * Add audition (#87)
+        Adds note audition in phrase view
+        Original implementation by democloid: https://github.com/democloid/picoTracker/pull/86
+        Previews notes when entering new and modifying existing notes
+
 1.3o_2
     Adds:
         Alt row count colors, shoutout to https://github.com/edne !
