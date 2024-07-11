@@ -1028,8 +1028,8 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		unsigned char d=*data++ ;
         setTextProps(props,0,j,false) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 		if (d==0xFF) {
-			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
             note2char(d,buffer) ;
@@ -1051,15 +1051,16 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		unsigned char d=*data++ ;
         setTextProps(props,1,j,false) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 		if (d==0xFF) {
 			SetColor(CD_NORMAL) ;
 			DrawString(pos._x,pos._y,"I",props) ;
-			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 			DrawString(pos._x+1,pos._y,"--",props) ;
 		} else {
 			hex2char(d,buffer+1) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
    			if (j==row_ && (col_ == 0 || col_ == 1)) {
+				SetColor(CD_NORMAL);
                 sprintf(buffer,"I%2.2x: ",d) ;
 				std::string instrLine=buffer ;
                 setTextProps(props,1,j,true) ;
@@ -1088,7 +1089,7 @@ void PhraseView::DrawView() {
 		FourCC command=*f++ ;
 		fourCC2char(command,buffer) ;
         setTextProps(props,2,j,false) ;
-		('-'==buffer[0]&&(0==j||4==j||8==j||12==j))?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,2,j,true) ;
 		pos._y++ ;
@@ -1112,7 +1113,7 @@ void PhraseView::DrawView() {
 /*		if (p==0xFFFF) {
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
-*/			
+*/			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 			hexshort2char(p,buffer) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
 /*		}
@@ -1132,7 +1133,7 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		FourCC command=*f++ ;
 		fourCC2char(command,buffer) ;
-		('-'==buffer[0]&&(0==j||4==j||8==j||12==j))?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
         setTextProps(props,4,j,false) ;
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,4,j,true) ;
@@ -1156,7 +1157,7 @@ void PhraseView::DrawView() {
 /*		if (p==0xFFFF) {
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
-*/			
+*/			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 			hexshort2char(p,buffer) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
 /*		}
@@ -1253,6 +1254,7 @@ void PhraseView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 } ;
 
 void PhraseView::printHelpLegend(FourCC command, GUITextProperties props) {
+	SetColor(CD_NORMAL);
 	std::string* cmdStr = getHelpLegend(command);
 	DrawString(10, 0, cmdStr[0].c_str(), props);
 	DrawString(10, 1, cmdStr[1].c_str(), props);
