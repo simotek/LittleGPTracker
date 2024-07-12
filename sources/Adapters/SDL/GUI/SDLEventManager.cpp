@@ -25,7 +25,6 @@ bool SDLEventManager::Init()
 		return false;
 	}
   
-	SDL_EnableUNICODE(1);
 	SDL_ShowCursor(SDL_DISABLE);
 	
 	atexit(SDL_Quit) ;
