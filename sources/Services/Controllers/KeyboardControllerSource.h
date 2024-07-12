@@ -3,7 +3,8 @@
 
 #include "ControllerSource.h"
 
-#define MAX_KEY 400
+// SDL_NUM_SCANCODES is currently 512
+#define MAX_KEY 512
 
 class KeyboardControllerSource: public ControllerSource {
 public:
