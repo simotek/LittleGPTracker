@@ -131,7 +131,6 @@ void LINUXSystem::Boot(int argc,char **argv) {
 	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0 ) {
 		return;
 	}
-	SDL_EnableUNICODE(1);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	atexit(SDL_Quit);

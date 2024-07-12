@@ -79,7 +79,6 @@ void GPSDLSystem::Boot(int argc,char **argv) {
     if (SDL_Init(SDL_INIT_EVENTTHREAD | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_TIMER) < 0) {
         return;
     }
-    SDL_EnableUNICODE(1);
     atexit(SDL_Quit);
 
     eventManager_ = I_GUIWindowFactory::GetInstance() -> GetEventManager();

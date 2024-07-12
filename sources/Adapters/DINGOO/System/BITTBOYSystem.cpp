@@ -89,8 +89,6 @@ void GPSDLSystem::Boot(int argc,char **argv) {
 		return;
 	}
 
-	SDL_EnableUNICODE(1);
-
 	atexit(SDL_Quit);
 
 	eventManager_=I_GUIWindowFactory::GetInstance()->GetEventManager() ;
