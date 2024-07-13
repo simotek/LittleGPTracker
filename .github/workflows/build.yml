@@ -246,7 +246,6 @@ jobs:
             apt update && apt install -y python3 python3-pillow
             git clone https://github.com/djdiskmachine/LittleGPTracker.git
             cd LittleGPTracker/projects
-            git checkout rg35xx_MIDI
             make PLATFORM=RG35XX
           "
           sudo chmod -R 777 ./workspace/LittleGPTracker/projects
