@@ -3,7 +3,7 @@ name: Check build viability
 on: [pull_request]
 
 jobs:
-  check-windows:
+  win32:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -39,7 +39,7 @@ jobs:
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh 
 
-  check-miyoo:
+  miyoo:
     runs-on: ubuntu-latest
 
     steps:
@@ -51,6 +51,8 @@ jobs:
           wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
           mkdir /opt/miyoomini-toolchain
           tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/miyoomini-toolchain  --strip-components=1
+          python -m pip install --upgrade pip
+          pip install Pillow
 
       - name: Build Miyoo Mini
         working-directory: projects

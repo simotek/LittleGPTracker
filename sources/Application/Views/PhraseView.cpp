@@ -22,6 +22,7 @@ PhraseView::PhraseView(GUIWindow &w,ViewData *viewData):
 	GUIPoint pos(0,10) ;
 	cmdEditField_=new UIBigHexVarField(pos,cmdEdit_,4,"%4.4X",0,0xFFFF,16,true) ;
 	row_=0 ;
+	viewData->phraseCurPos_ = 0;
 	col_=0 ;
 	lastNote_=60 ;
 	lastInstr_=0 ;
@@ -99,8 +100,14 @@ void PhraseView::updateCursor(int dx,int dy) {
 			cmdEdit_.SetInt(*(phrase_->param2_+(16*viewData_->currentPhrase_+row_))) ;
 			break ;
 	} ;
-
+	viewData_->phraseCurPos_ = row_;
 	isDirty_=true;
+}
+
+void PhraseView::stopAudition() {
+	Player *player = Player::GetInstance();
+	if (viewData_->playMode_ == PM_AUDITION)
+		player->Stop();
 }
 
 void PhraseView::updateCursorValue(ViewUpdateDirection direction,int xOffset,int yOffset) {
@@ -208,6 +215,20 @@ void PhraseView::updateCursorValue(ViewUpdateDirection direction,int xOffset,int
 			case 1:
 				lastInstr_=*c ;
 				break ;
+		}
+	}
+	Player *player = Player::GetInstance();
+	// Phrase FX params are currently not applied to preview
+	if (col_ == 0 || col_ == 1) { // || col_ == 3 || col_ == 5) { 
+		if (player->IsRunning()) {
+			if ((viewData_->playMode_ == PM_AUDITION)) {
+				player->Stop();
+				player->OnStartButton(PM_AUDITION, viewData_->songX_, false,
+										viewData_->chainRow_);
+			}
+		} else {
+			player->OnStartButton(PM_AUDITION, viewData_->songX_, false,
+								viewData_->chainRow_);
 		}
 	}
 	isDirty_=true ;
@@ -750,11 +771,15 @@ void PhraseView::processNormalButtonMask(unsigned short mask) {
 		if (mask&EPBM_RIGHT) warpToNeighbour(1);
 		if (mask&EPBM_UP) warpInChain(-1) ;
 		if (mask&EPBM_DOWN) warpInChain(1);
-		if (mask&EPBM_A) cutPosition();
+		if (mask&EPBM_A) {
+			stopAudition();
+			cutPosition();
+			}
         if (mask&EPBM_L) {
             viewMode_=VM_CLONE ;
         } ;
  	    if (mask&EPBM_R) toggleMute() ;
+ 	    if (mask&EPBM_B) stopAudition() ;
 
 	} else {
         
@@ -778,12 +803,14 @@ void PhraseView::processNormalButtonMask(unsigned short mask) {
         
         if (mask&EPBM_R) {
 			if (mask&EPBM_LEFT) {
+					stopAudition();
 					ViewType vt=VT_CHAIN ;
 					ViewEvent ve(VET_SWITCH_VIEW,&vt) ;
 					SetChanged();
 					NotifyObservers(&ve) ;
 			}
 			if (mask&EPBM_RIGHT) {
+				stopAudition();
 				unsigned char *c=phrase_->instr_+(16*viewData_->currentPhrase_+row_) ;
 				if (*c!=0xFF) {
 					viewData_->currentInstrument_=*c ;
@@ -801,6 +828,7 @@ void PhraseView::processNormalButtonMask(unsigned short mask) {
 			if (mask&EPBM_DOWN) {
 
 				// Go to table view
+					stopAudition();
 
 					ViewType vt=VT_TABLE ;
 
@@ -822,6 +850,7 @@ void PhraseView::processNormalButtonMask(unsigned short mask) {
 			if (mask&EPBM_UP) {
 
 				// Go to groove view
+					stopAudition();
 
 					ViewType vt=VT_GROOVE;
 					ViewEvent ve(VET_SWITCH_VIEW,&vt) ;
@@ -999,8 +1028,8 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		unsigned char d=*data++ ;
         setTextProps(props,0,j,false) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 		if (d==0xFF) {
-			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
             note2char(d,buffer) ;
@@ -1022,15 +1051,16 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		unsigned char d=*data++ ;
         setTextProps(props,1,j,false) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 		if (d==0xFF) {
 			SetColor(CD_NORMAL) ;
 			DrawString(pos._x,pos._y,"I",props) ;
-			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
 			DrawString(pos._x+1,pos._y,"--",props) ;
 		} else {
 			hex2char(d,buffer+1) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
    			if (j==row_ && (col_ == 0 || col_ == 1)) {
+				SetColor(CD_NORMAL);
                 sprintf(buffer,"I%2.2x: ",d) ;
 				std::string instrLine=buffer ;
                 setTextProps(props,1,j,true) ;
@@ -1059,7 +1089,7 @@ void PhraseView::DrawView() {
 		FourCC command=*f++ ;
 		fourCC2char(command,buffer) ;
         setTextProps(props,2,j,false) ;
-		('-'==buffer[0]&&(0==j||4==j||8==j||12==j))?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,2,j,true) ;
 		pos._y++ ;
@@ -1083,7 +1113,7 @@ void PhraseView::DrawView() {
 /*		if (p==0xFFFF) {
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
-*/			
+*/			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 			hexshort2char(p,buffer) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
 /*		}
@@ -1103,7 +1133,7 @@ void PhraseView::DrawView() {
 	for (int j=0;j<16;j++) {
 		FourCC command=*f++ ;
 		fourCC2char(command,buffer) ;
-		('-'==buffer[0]&&(0==j||4==j||8==j||12==j))?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL) ;
+		(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
         setTextProps(props,4,j,false) ;
 		DrawString(pos._x,pos._y,buffer,props) ;
         setTextProps(props,4,j,true) ;
@@ -1127,7 +1157,7 @@ void PhraseView::DrawView() {
 /*		if (p==0xFFFF) {
 			DrawString(pos._x,pos._y,"----",props) ;
 		} else {
-*/			
+*/			(0==j||4==j||8==j||12==j)?SetColor(CD_MAJORBEAT):SetColor(CD_NORMAL);
 			hexshort2char(p,buffer) ;
 			DrawString(pos._x,pos._y,buffer,props) ;
 /*		}
@@ -1172,7 +1202,8 @@ void PhraseView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 		for (int i=0;i<SONG_CHANNEL_COUNT;i++) {
             if (player->IsChannelPlaying(i)) {
 
-    			if (viewData_->currentPlayPhrase_[i]==viewData_->currentPhrase_) {
+    			if (viewData_->currentPlayPhrase_[i]==viewData_->currentPhrase_ &&
+		            viewData_->playMode_ != PM_AUDITION) {
     				pos._y=anchor._y+viewData_->phrasePlayPos_[i] ;
     				if (!player->IsChannelMuted(i)) {
 						SetColor(CD_CURSOR) ;
@@ -1223,6 +1254,7 @@ void PhraseView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 } ;
 
 void PhraseView::printHelpLegend(FourCC command, GUITextProperties props) {
+	SetColor(CD_NORMAL);
 	std::string* cmdStr = getHelpLegend(command);
 	DrawString(10, 0, cmdStr[0].c_str(), props);
 	DrawString(10, 1, cmdStr[1].c_str(), props);
