@@ -15,7 +15,16 @@ projects but make sure to backup your old cherished work
 just to be safe <3
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-Changelog Jul 13 2024
+Changelog Jul 14 2024
+1.4.1
+    Adds:
+        Play chain offset
+        When in chain view, pressing R+Start plays the current song row
+        starting at the offset from current chain row.
+    Fixes:
+        RG35XX no longer segfaults on boot
+        USB MIDI disabled due to missing OS dependencies
+        
 1.4.0
     Adds:
         Automated build for bittboy, Win32, PSP, Miyoo, Deb32, RG35XX
