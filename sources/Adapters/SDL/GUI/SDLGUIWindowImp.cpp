@@ -60,8 +60,12 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
 
   windowed_ = !framebuffer_;
 
-  const SDL_VideoInfo* videoInfo = SDL_GetVideoInfo();
-  NAssert(videoInfo != NULL);
+
+  SDL_DisplayMode displayMode;
+
+  // SDL Prioritises screens so just take the first for now.
+  int displayModeRet = SDL_GetDisplayMode(0, 0, &displayMode);
+  NAssert(displayModeRet != 0);
  
  #if defined(PLATFORM_GP2X)
   int screenWidth = 320;
@@ -75,19 +79,18 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
   int screenHeight = 240;
   windowed_ = false;
  #else
-  int screenWidth = videoInfo->current_w;
-  int screenHeight = videoInfo->current_h;
+  int screenWidth = displayMode.w;
+  int screenHeight = displayMode.h;
  #endif
  
  #if defined(RS97)
   /* Pick the best bitdepth for the RS97 as it will select 32 as its default, even though that's slow */
   bitDepth_ = 16;
  #else
-  bitDepth_ = videoInfo->vfmt->BitsPerPixel;
+  bitDepth_ = SDL_BITSPERPIXEL(displayMode.format);
  #endif
   
-  char driverName[64] ;
-  SDL_VideoDriverName(driverName,64);
+  const char * driverName = SDL_GetVideoDriver(0);
   
   Trace::Log("DISPLAY","Using driver %s. Screen (%d,%d) Bpp:%d",driverName,screenWidth,screenHeight,bitDepth_);
   
@@ -98,9 +101,7 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
   {
   	fullscreen=true ;
   }
-  
-  SDL_WM_SetCaption("LittleGPTracker","lgpt");
-	
+  	
   if (!strcmp(driverName, "fbcon"))
   {
     framebuffer_ = true;
@@ -136,15 +137,21 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
   screenRect_._bottomRight._y=windowed_?appHeight*mult_:screenHeight;
 
   Trace::Log("DISPLAY","Creating SDL Window (%d,%d)",screenRect_.Width(), screenRect_.Height());
-	screen_ = SDL_SetVideoMode(screenRect_.Width(),screenRect_.Height(),bitDepth_ ,fullscreen?SDL_FULLSCREEN:SDL_HWSURFACE);
-	NAssert(screen_) ;
+    window_ = SDL_CreateWindow("LittleGPTracker",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,
+                               screenRect_.Width(),screenRect_.Height(),fullscreen?SDL_WINDOW_FULLSCREEN:SDL_WINDOW_SHOWN);
+    NAssert(window_) ;
 
 	// Compute the x & y offset to locate our app window
 
 	appAnchorX_=(screenRect_.Width()-appWidth*mult_)/2 ;
 	appAnchorY_=(screenRect_.Height()-appHeight*mult_)/2 ;
 
-	SDL_WM_SetIcon(SDL_LoadBMP("lgpt_icon.bmp"), NULL);
+    SDL_SetWindowIcon(window_, SDL_LoadBMP("lgpt_icon.bmp"));
+
+    // Todo: SL: This needs to be refetched on resize and possibly
+    //           at other times as well
+    //           see: https://wiki.libsdl.org/SDL2/SDL_GetWindowSurface
+    surface_ = SDL_GetWindowSurface(window_);
 
     Uint32 rmask, gmask, bmask, amask;
 
@@ -311,7 +318,7 @@ void SDLGUIWindowImp::prepareFullFonts()
   {
     
 	  fonts[i] = SDL_CreateRGBSurface(
-                 SDL_HWSURFACE, 
+                 SDL_SWSURFACE,
                  8*mult_, 8*mult_, 
                  bitDepth_,
                  0, 0, 0, 0);
@@ -373,7 +380,7 @@ void SDLGUIWindowImp::prepareFonts()
     g=0xF1 ;
     b=0x96 ;      
   }
-  backgroundColor_=SDL_MapRGB(screen_->format, r,g,b) ;
+  backgroundColor_=SDL_MapRGB(surface_->format, r,g,b) ;
            
   value=config->GetValue("FOREGROUND") ;
   if (value)
@@ -388,7 +395,7 @@ void SDLGUIWindowImp::prepareFonts()
     g=0x6B ;
     b=0x56 ;      
   }
-  foregroundColor_=SDL_MapRGB(screen_->format, r,g,b) ;
+  foregroundColor_=SDL_MapRGB(surface_->format, r,g,b) ;
         
   prepareFullFonts() ;
 }
@@ -425,12 +432,12 @@ void SDLGUIWindowImp::DrawChar(const char c, GUIPoint &pos, GUITextProperties &p
 
 		unsigned int fontID=c ;
 		if (fontID<FONT_COUNT) {
-			SDL_BlitSurface(fonts[fontID], &srcRect,screen_, &dstRect);
+            SDL_BlitSurface(fonts[fontID], &srcRect,surface_, &dstRect);
 		}
 
 	} else {
 		// prepare bg & fg pixel ptr
-		int pixelSize=screen_->format->BytesPerPixel ;
+        int pixelSize=surface_->format->BytesPerPixel ;
 		unsigned char *bgPtr=(unsigned char *)&backgroundColor_ ;
 		unsigned char *fgPtr=(unsigned char *)&currentColor_ ;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -438,7 +445,7 @@ void SDLGUIWindowImp::DrawChar(const char c, GUIPoint &pos, GUITextProperties &p
 		fgPtr+=(4-pixelSize) ;
 #endif
 		const unsigned char *src=font+c*8 ;
-		unsigned char *dest=((unsigned char *)screen_->pixels) + (yy*screen_->pitch) + xx*pixelSize;
+        unsigned char *dest=((unsigned char *)surface_->pixels) + (yy*surface_->pitch) + xx*pixelSize;
 
 		for (int y = 0; y < 8; y++) {
 			for (int n=0;n<mult_;n++) {
@@ -449,7 +456,7 @@ void SDLGUIWindowImp::DrawChar(const char c, GUIPoint &pos, GUITextProperties &p
 						dest+=pixelSize ;
 					}
 				}
-				dest+=screen_->pitch-8*pixelSize*mult_ ;
+                dest+=surface_->pitch-8*pixelSize*mult_ ;
     		}
 			if (y<7) src+=FONT_WIDTH ;
   		}
@@ -506,13 +513,13 @@ void SDLGUIWindowImp::DrawString(const char *string,GUIPoint &pos,GUITextPropert
 			unsigned int fontID=string[l] ;
 			if (fontID<FONT_COUNT)
       {
-				SDL_BlitSurface(fonts[fontID], &srcRect,screen_, &dstRect);
+                SDL_BlitSurface(fonts[fontID], &srcRect,surface_, &dstRect);
 			}
 		} 
     else
     {
 			// prepare bg & fg pixel ptr
-			int pixelSize=screen_->format->BytesPerPixel ;
+            int pixelSize=surface_->format->BytesPerPixel ;
 			unsigned char *bgPtr=(unsigned char *)&backgroundColor_ ;
 			unsigned char *fgPtr=(unsigned char *)&currentColor_ ;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -520,7 +527,7 @@ void SDLGUIWindowImp::DrawString(const char *string,GUIPoint &pos,GUITextPropert
 			fgPtr+=(4-pixelSize) ;
 #endif
 			const unsigned char *src=font+(string[l]*8) ;
-			unsigned char *dest=((unsigned char *)screen_->pixels) + (yy*screen_->pitch) + xx*pixelSize;
+            unsigned char *dest=((unsigned char *)surface_->pixels) + (yy*surface_->pitch) + xx*pixelSize;
 
 			for (int y = 0; y < 8; y++) {
 				for (int n=0;n<mult_;n++) {
@@ -531,7 +538,7 @@ void SDLGUIWindowImp::DrawString(const char *string,GUIPoint &pos,GUITextPropert
 							dest+=pixelSize ;
 						}
 					}
-					dest+=screen_->pitch-8*pixelSize*mult_ ;
+                    dest+=surface_->pitch-8*pixelSize*mult_ ;
         		}
 				if (y<7) src+=FONT_WIDTH ;
 	  		}
@@ -545,7 +552,7 @@ void SDLGUIWindowImp::DrawRect(GUIRect &r)
 {
   SDL_Rect rect;
   transform(r, &rect);
-  SDL_FillRect(screen_, &rect,currentColor_) ;
+  SDL_FillRect(surface_, &rect,currentColor_) ;
 } ;
 
 void SDLGUIWindowImp::Clear(GUIColor &c,bool overlay) 
@@ -556,8 +563,8 @@ void SDLGUIWindowImp::Clear(GUIColor &c,bool overlay)
   rect.w = screenRect_.Width();
   rect.h = screenRect_.Height();
  
-	backgroundColor_=SDL_MapRGB(screen_->format,c._r&0xFF,c._g&0xFF,c._b&0xFF);
-  SDL_FillRect(screen_, &rect,backgroundColor_) ;  
+    backgroundColor_=SDL_MapRGB(surface_->format,c._r&0xFF,c._g&0xFF,c._b&0xFF);
+  SDL_FillRect(surface_, &rect,backgroundColor_) ;
 
 #ifdef _SHOW_GP2X_
 	drawGP2X() ;
@@ -583,8 +590,8 @@ void SDLGUIWindowImp::ClearRect(GUIRect &r)
 {
   SDL_Rect rect;
   transform(r, &rect);
-  SDL_FillRect(screen_, &rect,backgroundColor_) ;
-} ;
+  SDL_FillRect(surface_, &rect,backgroundColor_) ;
+}
 
 // To the app we might have a smaller window
 // than the effective one (PSP)
@@ -598,14 +605,15 @@ GUIRect SDLGUIWindowImp::GetRect()
 
 void SDLGUIWindowImp::Invalidate() 
 {
-	SDL_Event event ;
-	event.type=SDL_VIDEOEXPOSE ;
-	SDL_PushEvent(&event) ;
+    // Todo: SL: Haven't found a good replacement here yet
+    //SDL_Event event ;
+    //event.type=SDL_VIDEOEXPOSE ;
+    //SDL_PushEvent(&event) ;
 }
 
 void SDLGUIWindowImp::SetColor(GUIColor &c) 
 {
-	currentColor_=SDL_MapRGB(screen_->format,c._r&0xFF,c._g&0xFF,c._b&0xFF);
+    currentColor_=SDL_MapRGB(surface_->format,c._r&0xFF,c._g&0xFF,c._b&0xFF);
 }
 
 void SDLGUIWindowImp::Lock() 
@@ -615,9 +623,9 @@ void SDLGUIWindowImp::Lock()
     return;
   }
 
-	if (SDL_MUSTLOCK(screen_)) 
+    if (SDL_MUSTLOCK(surface_))
   {
-		SDL_LockSurface(screen_) ;
+        SDL_LockSurface(surface_) ;
 	}
 }
 
@@ -628,9 +636,9 @@ void SDLGUIWindowImp::Unlock()
     return;
   }
 
-	if (SDL_MUSTLOCK(screen_)) 
+    if (SDL_MUSTLOCK(surface_))
   {
-		SDL_UnlockSurface(screen_) ;
+        SDL_UnlockSurface(surface_) ;
 	}
 }
 
@@ -642,6 +650,7 @@ void SDLGUIWindowImp::Flush()
 #endif
 #ifdef _SHOW_GP2X_
     drawGP2XOverlay() ;
+    // Todo: SL: Maybe i'm blind but I can't spot rect_ anywhere.
     SDL_UpdateRect(screen_, 0, 0, rect_.Width(), rect_.Height());
 #endif
 #ifndef BUFFERED
@@ -650,11 +659,16 @@ void SDLGUIWindowImp::Flush()
     {
         if (updateCount_<MAX_OVERLAYS)
         {
-            SDL_UpdateRects(screen_,updateCount_, updateRects_);
+            SDL_UpdateWindowSurfaceRects(window_,updateRects_,updateCount_);
         }
         else
         {
-            SDL_UpdateRect(screen_, 0, 0, screenRect_.Width(),screenRect_.Height());
+            SDL_Rect updateRect;
+            updateRect.x = screenRect_.Left();
+            updateRect.y = screenRect_.Top();
+            updateRect.w = screenRect_.Width();
+            updateRect.h = screenRect_.Height();
+            SDL_UpdateWindowSurfaceRects(window_,&updateRect,1);
         }
     }
     updateCount_=0;
@@ -663,7 +677,7 @@ void SDLGUIWindowImp::Flush()
 
 void SDLGUIWindowImp::ProcessExpose() 
 {
-	_window->Update() ;
+    _window->Update() ;
 }
 
 void SDLGUIWindowImp::ProcessQuit()

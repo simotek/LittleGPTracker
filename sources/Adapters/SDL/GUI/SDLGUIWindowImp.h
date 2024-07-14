@@ -55,9 +55,10 @@ protected:
 	SDL_Surface *load_image(int which,char *filename,int x,int y) ;
 #endif
 private:
-	SDL_Surface *screen_;
+    SDL_Window *window_;
+    SDL_Surface *surface_;
 //	SDL_Surface *offscreen_ ;
-	GUIRect screenRect_ ;
+    GUIRect screenRect_ ;
 	unsigned int currentColor_ ;
 	unsigned int backgroundColor_ ;
 	unsigned int foregroundColor_ ;
