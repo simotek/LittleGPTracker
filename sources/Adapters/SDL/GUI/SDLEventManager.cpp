@@ -80,7 +80,7 @@ int SDLEventManager::MainLoop()
 				case SDL_KEYDOWN:
 					if (dumpEvent_) 
           {
-                        Trace::Log("EVENT","key(%s):%d",SDL_GetScancodeName(event.key.keysym.scancode),1) ;
+                        Trace::Log("EVENT","key(%s:%d):%d",SDL_GetScancodeName(event.key.keysym.scancode),event.key.keysym.scancode,1) ;
 					}
                     keyboardCS_->SetKey((int)event.key.keysym.scancode,true) ;
 					break ;
@@ -88,7 +88,7 @@ int SDLEventManager::MainLoop()
 				case SDL_KEYUP:
 					if (dumpEvent_) 
           {
-                        Trace::Log("EVENT","key(%s):%d",SDL_GetScancodeName(event.key.keysym.scancode),0) ;
+                        Trace::Log("EVENT","key(%s:%d):%d",SDL_GetScancodeName(event.key.keysym.scancode),event.key.keysym.scancode,0) ;
 					}
                     keyboardCS_->SetKey((int)event.key.keysym.scancode,false) ;
 					break ;
@@ -167,5 +167,5 @@ void SDLEventManager::PostQuitMessage()
 
 int SDLEventManager::GetKeyCode(const char *key)
 {
-    SDL_GetScancodeFromName(key);
+    return SDL_GetScancodeFromName(key);
 }
