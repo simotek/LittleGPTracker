@@ -65,13 +65,13 @@ bool SDLAudioDriver::InitDriver() {
   input.samples=settings_.bufferSize_ ;
   input.userdata=this ;
 
-  SDL_ClearError();
-  SDL_OpenAudioDevice(NULL,0,&input,&returned,0);
+  // On my machine this wasn't working.
+  // SDL_AudioDeviceID deviceId = SDL_OpenAudioDevice(NULL,0,&input,&returned,0);
   // The above may return 0 meaning an error or success.
-  const char * error = SDL_GetError();
-  if ( error )
+  int ret = SDL_OpenAudio(&input,&returned);
+  if ( ret != 0 )
   {
-    Trace::Error("Couldn't open sdl audio: %s\n", error);
+    Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
   	return false ;
   } 
   const char * driverName = SDL_GetCurrentAudioDriver() ;
