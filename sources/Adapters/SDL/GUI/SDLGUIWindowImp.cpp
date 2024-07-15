@@ -602,9 +602,10 @@ GUIRect SDLGUIWindowImp::GetRect()
 void SDLGUIWindowImp::Invalidate() 
 {
     // Todo: SL: Haven't found a good replacement here yet
-    //SDL_Event event ;
-    //event.type=SDL_VIDEOEXPOSE ;
-    //SDL_PushEvent(&event) ;
+    SDL_Event event ;
+    event.type=SDL_WINDOWEVENT ;
+    event.window.event = SDL_WINDOWEVENT_EXPOSED;
+    SDL_PushEvent(&event) ;
 }
 
 void SDLGUIWindowImp::SetColor(GUIColor &c) 
