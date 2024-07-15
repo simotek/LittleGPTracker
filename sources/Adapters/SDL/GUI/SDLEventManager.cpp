@@ -64,11 +64,6 @@ bool SDLEventManager::Init()
 		hatCS_[i]=new HatControllerSource(sourceName) ;
 	}
   
-	for (int i=0;i<SDL_NUM_SCANCODES;i++) 
-  {
-		keyname_[i]=SDL_GetKeyName((SDLKey)i) ;
-	} 
-  
 	return true ;
 } 
 
@@ -85,17 +80,17 @@ int SDLEventManager::MainLoop()
 				case SDL_KEYDOWN:
 					if (dumpEvent_) 
           {
-						Trace::Log("EVENT","key(%s):%d",keyname_[event.key.keysym.sym],1) ;
+                        Trace::Log("EVENT","key(%s):%d",SDL_GetScancodeName(event.key.keysym.scancode),1) ;
 					}
-					keyboardCS_->SetKey((int)event.key.keysym.sym,true) ;
+                    keyboardCS_->SetKey((int)event.key.keysym.scancode,true) ;
 					break ;
 
 				case SDL_KEYUP:
 					if (dumpEvent_) 
           {
-						Trace::Log("EVENT","key(%s):%d",keyname_[event.key.keysym.sym],0) ;
+                        Trace::Log("EVENT","key(%s):%d",SDL_GetScancodeName(event.key.keysym.scancode),0) ;
 					}
-					keyboardCS_->SetKey((int)event.key.keysym.sym,false) ;
+                    keyboardCS_->SetKey((int)event.key.keysym.scancode,false) ;
 					break ;
 
 
@@ -166,12 +161,5 @@ void SDLEventManager::PostQuitMessage()
 
 int SDLEventManager::GetKeyCode(const char *key)
 {
-	for (int i=0;i<SDL_NUM_SCANCODES;i++)
-  {
-		if (!strcmp(key,keyname_[i]))
-    {
-			return i ;
-		}
-	}
-	return -1 ;
+    SDL_GetScancodeFromName(key);
 }

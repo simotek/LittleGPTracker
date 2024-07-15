@@ -53,10 +53,6 @@ SDLInput::SDLInput() {
 	} ;
 	Trace::Debug("Joystick: %s",joystick_?"opened":"not found") ;
 
-	// build translation table
-	for (int i=0;i<SDL_NUM_SCANCODES;i++) {
-		keyname_[i]=SDL_GetKeyName((SDLKey)i) ;
-	} ;
 	// initialises default mapping table
 	for (int i=0;i<9;i++) {
 		keyMappingType[i]=MT_KEY ;
@@ -102,7 +98,7 @@ void SDLInput::mapKey(int index,const char *keyname) {
 		switch(type) {
 			case MT_KEY:
 				for (int i=0;i<SDL_NUM_SCANCODES;i++) {
-					if (!strcmp(key,keyname_[i])) {
+                    if (!strcmp(key,SDL_GetScancodeName(i))) {
 						keyMapping[index]=i ;
 						break ;
 					} ;

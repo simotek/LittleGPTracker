@@ -27,7 +27,6 @@ public:
 private:
 	static bool finished_ ;
 	static bool dumpEvent_ ;
-	const char *keyname_[SDL_NUM_SCANCODES] ;
 	SDL_Joystick *joystick_[MAX_JOY_COUNT];
 	ButtonControllerSource *buttonCS_[MAX_JOY_COUNT] ;
 	JoystickControllerSource *joystickCS_[MAX_JOY_COUNT] ;
