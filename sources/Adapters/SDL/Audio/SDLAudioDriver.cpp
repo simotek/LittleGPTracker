@@ -65,13 +65,16 @@ bool SDLAudioDriver::InitDriver() {
   input.samples=settings_.bufferSize_ ;
   input.userdata=this ;
 
-  if (SDL_OpenAudio(&input,&returned) < 0 )
+  SDL_ClearError();
+  SDL_OpenAudioDevice(NULL,0,&input,&returned,0);
+  // The above may return 0 meaning an error or success.
+  const char * error = SDL_GetError();
+  if ( error )
   {
-  	Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
+    Trace::Error("Couldn't open sdl audio: %s\n", error);
   	return false ;
   } 
-  char bufferName[256] ;
-  SDL_AudioDriverName(bufferName,256) ;
+  const char * driverName = SDL_GetCurrentAudioDriver() ;
 
   fragSize_=returned.size ;
   // Allocates a rotating sound buffer
@@ -83,7 +86,7 @@ bool SDLAudioDriver::InitDriver() {
   mainBuffer_=(char *)((((int)unalignedMain_)+1)&(0xFFFFFFFC)) ;
 #endif
 
-  Trace::Log("AUDIO","%s successfully opened with %d samples",bufferName,fragSize_/4 ) ;
+  Trace::Log("AUDIO","%s successfully opened with %d samples",driverName,fragSize_/4 ) ;
 
   // Create mini blank buffer in case of underruns
 
