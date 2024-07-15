@@ -137,9 +137,15 @@ int SDLEventManager::MainLoop()
 				case SDL_QUIT:
 					sdlWindow->ProcessQuit() ;
 					break ;
-				case SDL_VIDEOEXPOSE:
-					sdlWindow->ProcessExpose() ;
-
+                case SDL_WINDOWEVENT:
+                    switch (event.window.event)
+                    {
+                        case SDL_WINDOWEVENT_EXPOSED:
+                        case SDL_WINDOWEVENT_RESIZED:
+                        case SDL_WINDOWEVENT_SIZE_CHANGED:
+                            sdlWindow->ProcessExpose() ;
+                            break;
+                    }
 					break ;
 				case SDL_USEREVENT:
 					sdlWindow->ProcessUserEvent(event) ;

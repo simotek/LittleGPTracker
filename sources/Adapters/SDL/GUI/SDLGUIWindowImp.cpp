@@ -147,10 +147,6 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
 	appAnchorY_=(screenRect_.Height()-appHeight*mult_)/2 ;
 
     SDL_SetWindowIcon(window_, SDL_LoadBMP("lgpt_icon.bmp"));
-
-    // Todo: SL: This needs to be refetched on resize and possibly
-    //           at other times as well
-    //           see: https://wiki.libsdl.org/SDL2/SDL_GetWindowSurface
     surface_ = SDL_GetWindowSurface(window_);
 
     Uint32 rmask, gmask, bmask, amask;
@@ -677,6 +673,8 @@ void SDLGUIWindowImp::Flush()
 
 void SDLGUIWindowImp::ProcessExpose() 
 {
+    // Expose and resize events will cause a new surface to be needed.
+    surface_ = SDL_GetWindowSurface(window_);
     _window->Update() ;
 }
 
