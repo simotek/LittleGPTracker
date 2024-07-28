@@ -78,6 +78,10 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
   int screenWidth = 320; 
   int screenHeight = 240;
   windowed_ = false;
+ #elif defined(RASP)
+  int screenWidth = 320; 
+  int screenHeight = 240;
+  //windowed_ = false;
  #else
   int screenWidth = displayMode.w;
   int screenHeight = displayMode.h;
@@ -148,6 +152,8 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
 
     SDL_SetWindowIcon(window_, SDL_LoadBMP("lgpt_icon.bmp"));
     surface_ = SDL_GetWindowSurface(window_);
+
+    NAssert(surface_) ;
 
     Uint32 rmask, gmask, bmask, amask;
 
@@ -641,16 +647,12 @@ void SDLGUIWindowImp::Unlock()
 
 void SDLGUIWindowImp::Flush()
 {
-#ifdef BUFFERED
-    // flip front and back buffers in hardware
-    SDL_Flip(screen_);
-#endif
+
 #ifdef _SHOW_GP2X_
     drawGP2XOverlay() ;
     // Todo: SL: Maybe i'm blind but I can't spot rect_ anywhere.
     SDL_UpdateRect(screen_, 0, 0, rect_.Width(), rect_.Height());
 #endif
-#ifndef BUFFERED
     // blit partial updates on resource constrained platforms
     if ((!framebuffer_)&&(updateCount_!=0))
     {
@@ -669,7 +671,6 @@ void SDLGUIWindowImp::Flush()
         }
     }
     updateCount_=0;
-#endif
 }
 
 void SDLGUIWindowImp::ProcessExpose() 

@@ -1,6 +1,6 @@
 
 #include "SDLProcess.h"
-#include <SDL/SDL_thread.h>
+#include <SDL2/SDL_thread.h>
 
 int _SDLStartThread(void *argp) {
 	SysThread *play=(SysThread *)argp ;
