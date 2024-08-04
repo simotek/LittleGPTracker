@@ -1,7 +1,11 @@
 #ifndef _MIXER_SERVICE_H_
 #define _MIXER_SERVICE_H_
 
+#ifdef SDL2
+#include <SDL2/SDL.h>
+#else
 #include <SDL/SDL.h>
+#endif
 #include "Application/Commands/CommandDispatcher.h" // Would be better done externally and call an API here
 #include "Foundation/Observable.h"
 #include "Foundation/T_Singleton.h"
