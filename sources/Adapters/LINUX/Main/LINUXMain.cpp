@@ -1,7 +1,7 @@
 #include <string.h>
 #include "Application/Application.h"
 #include "Adapters/LINUX/System/LINUXSystem.h"
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Adapters/SDL2/GUI/SDLGUIWindowImp.h"
 
 /*
  * generic entrypoint for linux based targets

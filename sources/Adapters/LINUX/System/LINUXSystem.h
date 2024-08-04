@@ -2,7 +2,7 @@
 #define _LINUX_SYSTEM_H_
 
 #include "System/System/System.h"
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
 
 class LINUXSystem: public System {

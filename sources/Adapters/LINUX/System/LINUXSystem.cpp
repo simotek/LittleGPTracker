@@ -3,10 +3,10 @@
 #include <sys/time.h>
 #include <time.h>
 #include <unistd.h>
-#include "Adapters/SDL/GUI/GUIFactory.h"
-#include "Adapters/SDL/GUI/SDLEventManager.h"
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
+#include "Adapters/SDL2/GUI/GUIFactory.h"
+#include "Adapters/SDL2/GUI/SDLEventManager.h"
+#include "Adapters/SDL2/GUI/SDLGUIWindowImp.h"
+#include "Adapters/SDL2/Timer/SDLTimer.h"
 #include "Adapters/Unix/FileSystem/UnixFileSystem.h"
 #include "Adapters/Unix/Process/UnixProcess.h"
 #include "Application/Controllers/ControlRoom.h"
@@ -36,7 +36,7 @@
 #endif
 
 #ifdef SDLAUDIO
-#include "Adapters/SDL/Audio/SDLAudio.h"
+#include "Adapters/SDL2/Audio/SDLAudio.h"
 #endif
 
 EventManager *LINUXSystem::eventManager_ = NULL;
@@ -55,7 +55,7 @@ int LINUXSystem::MainLoop() {
  */
 void LINUXSystem::Boot(int argc,char **argv) {
 
-	SDL_putenv((char *)"SDL_VIDEO_X11_WMCLASS=LittleGPTracker") ;
+    SDL_setenv((char *)"SDL_VIDEO_X11_WMCLASS",(char *)"LittleGPTracker",1) ;
 
 	// Install System
 	System::Install(new LINUXSystem());
@@ -131,7 +131,6 @@ void LINUXSystem::Boot(int argc,char **argv) {
 	if ( SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) < 0 ) {
 		return;
 	}
-	SDL_EnableUNICODE(1);
 	SDL_ShowCursor(SDL_DISABLE);
 
 	atexit(SDL_Quit);
