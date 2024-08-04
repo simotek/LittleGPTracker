@@ -1,12 +1,12 @@
 
 #include "GP2XSerialMidiDevice.h"
-#include "System/Console/Trace.h"
-#include <stdio.h>
-#include <unistd.h>
 #include <fcntl.h>
+#include <memory.h>
+#include <stdio.h>
 #include <sys/signal.h>
 #include <sys/types.h>
-#include <memory.h>
+#include <unistd.h>
+#include "System/Console/Trace.h"
 
 const char *port="/dev/ttyS0" ;
 //const char *port="/dev/usb/tts/0" ;

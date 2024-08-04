@@ -1,8 +1,8 @@
 #include "Table.h"
-#include "System/System/System.h"
 #include "Application/Instruments/CommandList.h"
-#include "Application/Utils/HexBuffers.h"
 #include "Application/Utils/char.h"
+#include "Application/Utils/HexBuffers.h"
+#include "System/System/System.h"
 #include "Song.h"
 
 Table::Table() {

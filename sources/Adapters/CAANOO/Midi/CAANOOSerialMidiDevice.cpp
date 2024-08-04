@@ -1,12 +1,12 @@
 
 #include "CAANOOSerialMidiDevice.h"
-#include "Application/Model/Config.h"
-#include <stdio.h>
-#include <unistd.h>
 #include <fcntl.h>
+#include <memory.h>
+#include <stdio.h>
 #include <sys/signal.h>
 #include <sys/types.h>
-#include <memory.h>
+#include <unistd.h>
+#include "Application/Model/Config.h"
 
 #define BAUDRATE B38400
 

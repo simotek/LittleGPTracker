@@ -1,8 +1,8 @@
 #include "MidiInstrument.h"
-#include "CommandList.h"
-#include "System/Console/Trace.h"
-#include <string.h>
 #include <cmath>
+#include <string.h>
+#include "System/Console/Trace.h"
+#include "CommandList.h"
 
 MidiService *MidiInstrument::svc_=0 ;
 

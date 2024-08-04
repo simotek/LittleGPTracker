@@ -1,8 +1,8 @@
 #ifndef _LINUX_SYSTEM_H_
 #define _LINUX_SYSTEM_H_
 
-#include <SDL/SDL.h>
 #include "System/System/System.h"
+#include <SDL/SDL.h>
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
 
 class LINUXSystem: public System {

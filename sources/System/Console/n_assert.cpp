@@ -1,7 +1,7 @@
 
 #include "System/Console/Trace.h"
-#include <string.h>
 #include <assert.h>
+#include <string.h>
 
 void __NAssert(const char *exp, const char *file, unsigned line) {
 	const char *filestr=file ;

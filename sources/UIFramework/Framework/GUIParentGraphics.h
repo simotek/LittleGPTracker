@@ -3,9 +3,8 @@
 #define _GUIPARENTGRAPHICS_H_
 
 #include "UIFramework/Interfaces/I_GUIGraphics.h"
-#include "UIFramework/Interfaces/I_GUIControl.h"
-
 #include <stdio.h>
+#include "UIFramework/Interfaces/I_GUIControl.h"
 
 class GUIParentGraphics: public I_GUIGraphics {
 public:

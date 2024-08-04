@@ -1,13 +1,13 @@
 #include "ProjectView.h"
-#include "BaseClasses/UIIntVarField.h"
-#include "BaseClasses/UIActionField.h"
-#include "BaseClasses/UITempoField.h"
 #include "Application/Persistency/PersistencyService.h"
-#include "System/System/System.h"
-#include "Services/Midi/MidiService.h"
 #include "Application/Views/ModalDialogs/MessageBox.h"
 #include "Application/Views/ModalDialogs/NewProjectDialog.h"
 #include "Application/Views/ModalDialogs/SelectProjectDialog.h"
+#include "BaseClasses/UIActionField.h"
+#include "BaseClasses/UIIntVarField.h"
+#include "BaseClasses/UITempoField.h"
+#include "Services/Midi/MidiService.h"
+#include "System/System/System.h"
 
 #define ACTION_PURGE            MAKE_FOURCC('P','U','R','G')
 #define ACTION_SAVE             MAKE_FOURCC('S','A','V','E')

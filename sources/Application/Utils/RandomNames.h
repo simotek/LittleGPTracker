@@ -1,9 +1,9 @@
 #ifndef _RANDOM_NAMES_H_
 #define _RANDOM_NAMES_H_
 
+#include <cstdlib>
 #include <string>
 #include <vector>
-#include <cstdlib>
 #include "time.h"
 
 static const std::string adj[] = {

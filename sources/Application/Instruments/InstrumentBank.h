@@ -2,8 +2,8 @@
 #define _INSTRUMENT_BANK_H_
 
 #include "Application/Persistency/Persistent.h"
-#include "Application/Model/Song.h"
 #include "Application/Instruments/I_Instrument.h"
+#include "Application/Model/Song.h"
 
 #define NO_MORE_INSTRUMENT 0x100
 

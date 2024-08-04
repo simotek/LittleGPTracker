@@ -1,7 +1,8 @@
 #include "KeyboardControllerSource.h"
-#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
-#include "System/Console/Trace.h"
 #include <string.h>
+#include "System/Console/Trace.h"
+#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
+
 
 KeyboardControllerSource::KeyboardControllerSource(const char *name):ControllerSource("key",name) {
 	memset(channel_,0,MAX_KEY*sizeof(Channel *)) ;

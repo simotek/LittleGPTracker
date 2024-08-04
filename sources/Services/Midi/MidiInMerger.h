@@ -3,9 +3,9 @@
 
 #include "MidiChannel.h"
 #include "MidiInDevice.h"
-
-#include <string>
 #include <map>
+#include <string>
+
 
 typedef std::map<std::string,Channel *> tChannelMap ;
 

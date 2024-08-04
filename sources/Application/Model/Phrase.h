@@ -2,6 +2,7 @@
 #define _PHRASE_H_
 
 #include "Foundation/Types/Types.h"
+
 #define PHRASE_COUNT 0xFF
 #define NO_MORE_PHRASE 0x100
 

@@ -1,7 +1,7 @@
 #include "TableView.h"
-#include "Application/Utils/char.h"
 #include "Application/Instruments/CommandList.h"
 #include "Application/Player/TablePlayback.h"
+#include "Application/Utils/char.h"
 #include "Application/Utils/HelpLegend.h"
 
 #define FCC_EDIT MAKE_FOURCC('T','B','E','D')

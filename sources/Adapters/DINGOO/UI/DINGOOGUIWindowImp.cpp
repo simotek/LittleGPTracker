@@ -1,13 +1,14 @@
 
 #include "DINGOOGUIWindowImp.h"
+#include <string.h>
 #include "Adapters/DINGOOSystem/DINGOOSystem.h"
 #include "Adapters/DINGOOSystem/DINGOOEventQueue.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
-#include "System/io/Trace.h"
-#include <string.h>
 #define NYI(s) n_assert("NYI: ##s##")
 #include "Application/Model/Config.h"
 #include "Application/Utils/char.h"
+#include "System/io/Trace.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+
 
 DINGOOGUIWindowImp *instance_ ;
 

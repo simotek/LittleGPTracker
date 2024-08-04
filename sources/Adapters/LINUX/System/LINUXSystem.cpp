@@ -1,17 +1,17 @@
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <libgen.h>
 #include "LINUXSystem.h"
+#include <libgen.h>
+#include <sys/time.h>
+#include <time.h>
+#include <unistd.h>
+#include "Adapters/SDL/GUI/GUIFactory.h"
+#include "Adapters/SDL/GUI/SDLEventManager.h"
+#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Adapters/SDL/Timer/SDLTimer.h"
+#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
+#include "Adapters/Unix/Process/UnixProcess.h"
 #include "Application/Controllers/ControlRoom.h"
 #include "Application/Commands/NodeList.h"
 #include "Application/Model/Config.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
-#include "Adapters/SDL/GUI/GUIFactory.h"
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include "Adapters/SDL/GUI/SDLEventManager.h"
-#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
-#include "Adapters/Unix/Process/UnixProcess.h"
 #include "System/Console/Logger.h"
 
 #ifdef DUMMYMIDI

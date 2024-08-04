@@ -1,13 +1,12 @@
 #include "NDSSystem.h"
-#include "Adapters/NDS/UI/GUIFactory.h"
-#include "Adapters/NDS/UI/NDSGUIWindowImp.h"
-#include "Adapters/NDS/Sound/NDSSound.h"
+#include <nds.h>
 #include "Adapters/Dummy/Midi/DummyMidi.h"
 #include "Adapters/NDS/FileSystem/NDSFileSystem.h"
+#include "Adapters/NDS/Sound/NDSSound.h"
+#include "Adapters/NDS/UI/GUIFactory.h"
+#include "Adapters/NDS/UI/NDSGUIWindowImp.h"
 #include "System/io/Trace.h"
 #include "NDSEventQueue.h"
-#include "Adapters/NDS/UI/NDSGUIWindowImp.h"
-#include "nds.h"
 
 bool NDSSystem::finished_=false ;
 bool NDSSystem::redrawing_=false ;

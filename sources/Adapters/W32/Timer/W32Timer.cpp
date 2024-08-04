@@ -1,8 +1,8 @@
 
 #include "W32Timer.h"
+#include <assert.h>
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
-#include <assert.h>
 
 static void CALLBACK TimerProc(UINT uiID, UINT uiMsg, DWORD
                                   dwUser, DWORD dw1, DWORD dw2) {

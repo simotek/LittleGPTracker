@@ -2,7 +2,7 @@
 #define _JACK_AUDIO_H_
 
 #include "Services/Audio/Audio.h"
-#include "jack/jack.h"
+#include <jack/jack.h>
 
 class JackAudio: public Audio {
 public:

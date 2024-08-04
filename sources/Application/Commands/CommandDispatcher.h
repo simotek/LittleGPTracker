@@ -1,8 +1,8 @@
 #ifndef _COMMAND_DISPATCHER_H_
 #define _COMMAND_DISPATCHER_H_
 
-#include "Foundation/T_Singleton.h"
 #include "Foundation/Observable.h"
+#include "Foundation/T_Singleton.h"
 #include "Foundation/T_SimpleList.h"
 #include "Foundation/Types/Types.h"
 #include "Services/Controllers/ControlNode.h"

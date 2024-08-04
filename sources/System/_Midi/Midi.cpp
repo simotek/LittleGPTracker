@@ -1,6 +1,6 @@
 #include "Midi.h"
-#include "System/io/Trace.h"
 #include "Application/Player/SyncMaster.h"
+#include "System/io/Trace.h"
 
 Midi::Midi() {
 	for (int i=0;i<MIDI_MAX_BUFFERS;i++) {

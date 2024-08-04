@@ -1,8 +1,8 @@
 
 #include "PlayerChannel.h"
-#include "Application/Player/SyncMaster.h"
 #include "Application/Mixer/MixerService.h"
 #include "Application/Model/Mixer.h"
+#include "Application/Player/SyncMaster.h"
 
 PlayerChannel::PlayerChannel(int index) {             
     index_=index ;

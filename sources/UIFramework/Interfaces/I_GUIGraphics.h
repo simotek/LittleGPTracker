@@ -1,8 +1,8 @@
 #ifndef _I_GUIGRAPHICS_H_
 #define _I_GUIGRAPHICS_H_
 
-#include "UIFramework/Framework/GUIColor.h"
 #include "UIFramework/BasicDatas/GUIRect.h"
+#include "UIFramework/Framework/GUIColor.h"
 #include "UIFramework/Framework/GUITextProperties.h"
 //#include "Engine/ENGBitmap.h"
 

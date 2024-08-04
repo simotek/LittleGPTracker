@@ -2,10 +2,10 @@
 #ifndef _GROOVE_H_
 #define _GROOVE_H_
 
-#include "Foundation/T_Singleton.h"
-#include "Application/Persistency/Persistent.h"
 #include "Application/Model/Song.h"
+#include "Application/Persistency/Persistent.h"
 #include "Application/Utils/HexBuffers.h"
+#include "Foundation/T_Singleton.h"
 
 #define MAX_GROOVES 0x20
 #define NO_GROOVE_DATA 0xFF

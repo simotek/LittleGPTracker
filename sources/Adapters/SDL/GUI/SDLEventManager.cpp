@@ -1,10 +1,11 @@
 
 #include "SDLEventManager.h"
 #include "Application/Application.h"
-#include "UIFramework/BasicDatas/GUIEvent.h"
-#include "SDLGUIWindowImp.h"
 #include "Application/Model/Config.h"
 #include "System/Console/Trace.h"
+#include "UIFramework/BasicDatas/GUIEvent.h"
+#include "SDLGUIWindowImp.h"
+
 bool SDLEventManager::finished_=false ;
 bool SDLEventManager::dumpEvent_=false ;
 

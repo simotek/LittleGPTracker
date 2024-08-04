@@ -1,11 +1,11 @@
 #include "MixerService.h"
+#include "Application/Audio/DummyAudioOut.h"
+#include "Application/Model/Config.h"
+#include "Application/Model/Mixer.h"
 #include "Services/Audio/Audio.h"
 #include "Services/Audio/AudioDriver.h"
 #include "Services/Midi/MidiService.h"
 #include "System/Console/Trace.h"
-#include "Application/Model/Config.h"
-#include "Application/Audio/DummyAudioOut.h"
-#include "Application/Model/Mixer.h"
 
 MixerService::MixerService():
 	out_(0),

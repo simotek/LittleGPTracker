@@ -1,8 +1,9 @@
 
 #include "UIIntField.h"
-#include "UIFramework/Interfaces/I_GUIGraphics.h"
-#include "System/Console/Trace.h"
 #include "Application/AppWindow.h"
+#include "System/Console/Trace.h"
+#include "UIFramework/Interfaces/I_GUIGraphics.h"
+
 
 #define abs(x) (x<0?-x:x)
 

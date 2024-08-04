@@ -3,8 +3,9 @@
 
 #include "AudioModule.h"
 #include "Foundation/T_SimpleList.h"
-#include "Application/Instruments/WavFileWriter.h"
 #include <string>
+#include "Application/Instruments/WavFileWriter.h"
+
 
 class AudioMixer: public AudioModule,public T_SimpleList<AudioModule> {
 public:

@@ -3,7 +3,7 @@
 
 #include "Foundation/Services/Service.h"
 #include "Foundation/T_Singleton.h"
- #include "Externals/TinyXML/tinyxml.h"
+#include "Externals/TinyXML/tinyxml.h"
 
 class PersistencyService: public Service,public T_Singleton<PersistencyService> {
 public:

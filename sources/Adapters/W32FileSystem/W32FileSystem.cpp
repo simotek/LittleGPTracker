@@ -1,10 +1,10 @@
 
 #include "W32FileSystem.h"
-#include "Adapters/WSDLSystem/WSDLSystem.h"
-#include "System/Console/Trace.h"
-#include <windows.h>
 #include <string.h>
 #include <stdarg.h>
+#include <windows.h>
+#include "Adapters/WSDLSystem/WSDLSystem.h"
+#include "System/Console/Trace.h"
 
 W32File::W32File(FILE *file) {
 	file_=file ;

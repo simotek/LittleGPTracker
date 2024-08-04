@@ -1,6 +1,6 @@
 #include "ImportSampleDialog.h"
-#include "Application/Instruments/SamplePool.h"
 #include "Application/Instruments/SampleInstrument.h"
+#include "Application/Instruments/SamplePool.h"
 
 #define LIST_SIZE 15
 #define LIST_WIDTH 28

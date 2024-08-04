@@ -2,8 +2,8 @@
 #define _GPSDL_SYSTEM_H_
 
 #include "System/System/System.h"
-#include "UIFramework/SimpleBaseClasses/EventManager.h"
 #include <SDL/SDL.h>
+#include "UIFramework/SimpleBaseClasses/EventManager.h"
 
 #define USEREVENT_TIMER 0
 #define USEREVENT_EXPOSE 1

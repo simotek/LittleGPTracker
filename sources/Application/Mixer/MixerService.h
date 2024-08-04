@@ -1,13 +1,13 @@
 #ifndef _MIXER_SERVICE_H_
 #define _MIXER_SERVICE_H_
 
-#include "Foundation/T_Singleton.h"
+#include <SDL/SDL.h>
+#include "Application/Commands/CommandDispatcher.h" // Would be better done externally and call an API here
 #include "Foundation/Observable.h"
+#include "Foundation/T_Singleton.h"
 #include "Services/Audio/AudioMixer.h"
 #include "Services/Audio/AudioOut.h"
-#include "Application/Commands/CommandDispatcher.h" // Would be better done externally and call an API here
 #include "MixBus.h"
-#include "SDL/SDL.h"
 
 enum MixerServiceMode {
 	MSM_AUDIO,

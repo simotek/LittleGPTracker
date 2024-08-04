@@ -1,7 +1,7 @@
 
 #include "MidiEvent.h"
-#include "System/System/System.h"
 #include <memory.h>
+#include "System/System/System.h"
 
 MidiEvent::MidiEvent(unsigned char status,unsigned char data1,unsigned char data2)
 {

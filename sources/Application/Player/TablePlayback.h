@@ -1,9 +1,9 @@
 #ifndef _TABLE_PLAYBACK_H_
 #define _TABLE_PLAYBACK_H_
 
-#include "Application/Model/Table.h"
-#include "Application/Model/Song.h"
 #include "Application/Model/Groove.h"
+#include "Application/Model/Song.h"
+#include "Application/Model/Table.h"
 
 class I_Instrument ;
 

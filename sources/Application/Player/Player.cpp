@@ -1,17 +1,16 @@
 #include "Player.h"
-#include "Application/Views/BaseClasses/ViewEvent.h"
-#include "System/io/Status.h"
-#include "System/System/System.h"
-#include "Application/Instruments/CommandList.h"
-#include "Application/Instruments/I_Instrument.h"
-#include "Application/Utils/char.h"
-#include "System/Console/n_assert.h"
-#include "Application/Player/TablePlayback.h"
-#include "Application/Model/Groove.h"
 #include <math.h>
 #include <string.h>
+#include "Application/Instruments/CommandList.h"
+#include "Application/Instruments/I_Instrument.h"
+#include "Application/Model/Groove.h"
+#include "Application/Player/TablePlayback.h"
+#include "Application/Utils/char.h"
+#include "Application/Views/BaseClasses/ViewEvent.h"
 #include "Services/Midi/MidiService.h"
-
+#include "System/Console/n_assert.h"
+#include "System/io/Status.h"
+#include "System/System/System.h"
 // Private constructor - Singleton
 
 Player::Player() {

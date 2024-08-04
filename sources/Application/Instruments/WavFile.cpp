@@ -1,10 +1,10 @@
 
 #include "WavFile.h"
-#include "System/Console/Trace.h"
+#include <stdlib.h>
+#include "Application/Model/Config.h"
 #include "Foundation/Types/Types.h"
 #include "Services/Time/TimeService.h"
-#include "Application/Model/Config.h"
-#include <stdlib.h>
+#include "System/Console/Trace.h"
 
 int WavFile::bufferChunkSize_=-1 ;
 bool WavFile::initChunkSize_=true ;

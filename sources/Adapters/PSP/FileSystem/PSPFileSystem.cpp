@@ -1,13 +1,12 @@
 
 #include "PSPFileSystem.h"
-#include "System/Console/Trace.h"
-#include <string.h>
 #include <stdarg.h>
 #include <string>
-#include <Application/Utils/wildcard.h>
-
+#include <string.h>
 #include <sys/dir.h>
 #include <sys/stat.h>
+#include "Application/Utils/wildcard.h"
+#include "System/Console/Trace.h"
 
 PSPFile::PSPFile(SceUID file) {
 	file_=file ;

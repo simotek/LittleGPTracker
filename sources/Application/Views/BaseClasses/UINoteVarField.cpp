@@ -1,7 +1,7 @@
 
 #include "UINoteVarField.h"
-#include "Application/Utils/char.h"
 #include "Application/AppWindow.h"
+#include "Application/Utils/char.h"
 
 UINoteVarField::UINoteVarField(GUIPoint &position,Variable &v,const char *format,int min,int max,int xOffset,int yOffset)
                :UIIntVarField(position,v,format,min,max,xOffset,yOffset) {

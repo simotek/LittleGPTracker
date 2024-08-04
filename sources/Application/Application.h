@@ -1,8 +1,8 @@
 #ifndef _APPLICATION_H_
 #define _APPLICATION_H_
 
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 #include "Foundation/T_Singleton.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 class Application:public T_Singleton<Application> {
 

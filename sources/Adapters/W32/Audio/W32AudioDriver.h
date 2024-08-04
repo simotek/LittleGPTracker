@@ -2,8 +2,8 @@
 #define _W32_SOUND_H_
 
 #include "Services/Audio/AudioDriver.h"
-#include "Foundation/T_Stack.h"
 #include <windows.h>
+#include "Foundation/T_Stack.h"
 
 struct W32SoundBuffer {
 	WAVEHDR *wavHeader_ ;

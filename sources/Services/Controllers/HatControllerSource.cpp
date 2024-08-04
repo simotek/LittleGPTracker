@@ -1,6 +1,6 @@
 #include "HatControllerSource.h"
-#include "System/Console/Trace.h"
 #include <cstring>
+#include "System/Console/Trace.h"
 
 HatControllerSource::HatControllerSource(const char *name):ControllerSource("hat",name) {
 } ;

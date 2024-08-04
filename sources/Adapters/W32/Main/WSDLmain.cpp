@@ -1,11 +1,10 @@
 // VC6GUI.cpp : Defines the entry point for the application.
 //
-
-#include "Application/Application.h"
-#include "Adapters/WSDLSystem/WSDLSystem.h"
+#include <string.h>
 #include "Externals/SDL/SDL.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include <string.h>
+#include "Adapters/WSDLSystem/WSDLSystem.h"
+#include "Application/Application.h"
 
 int main(int argc,char *argv[]) 
 {

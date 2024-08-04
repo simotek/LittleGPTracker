@@ -2,7 +2,6 @@
 #define _GP2X_SERIAL_MIDI_DEVICE_H_
 
 #include "Services/Midi/MidiOutDevice.h"
-
 #include <termios.h>
 
 class GP2XSerialMidiDevice: public MidiOutDevice {

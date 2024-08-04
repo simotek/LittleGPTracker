@@ -1,8 +1,8 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-#include "Foundation/T_Factory.h"
 #include "Foundation/Observable.h"
+#include "Foundation/T_Factory.h"
 
 typedef void (*timerCallback)() ;
 

@@ -1,9 +1,9 @@
 #ifndef _SONG_H_
 #define _SONG_H_
 
+#include "Application/Persistency/Persistent.h"
 #include "Chain.h"
 #include "Phrase.h"
-#include "Application/Persistency/Persistent.h"
 
 #define SONG_CHANNEL_COUNT 8
 #define SONG_ROW_COUNT 256

@@ -3,8 +3,8 @@
 
 #include "Services/Midi/MidiDevice.h"
 #include <jack/jack.h>
-#include "Adapters/Jack/Client/JackClient.h"
 #include <string.h>
+#include "Adapters/Jack/Client/JackClient.h"
 
 class JackMidiDevice: public MidiDevice {
 public:

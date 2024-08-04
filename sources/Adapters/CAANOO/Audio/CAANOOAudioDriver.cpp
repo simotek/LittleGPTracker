@@ -1,25 +1,23 @@
 #include "CAANOOAudioDriver.h"
-#include "System/System/System.h"
-#include "Services/Midi/MidiService.h"
-#include "Application/Model/Config.h"
-#include <stdlib.h>
-#include <string.h>
 
-#include <math.h>
 #include <fcntl.h>
 #include <linux/fb.h>
+#include <math.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <signal.h>
-#include <stdlib.h>
+#include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <sys/soundcard.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <stdarg.h>
-#include <semaphore.h>
+#include "Application/Model/Config.h"
+#include "Services/Midi/MidiService.h"
+#include "System/System/System.h"
 
 
 static unsigned long CAANOO_dev[2] ;

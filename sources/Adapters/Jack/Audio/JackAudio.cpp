@@ -1,10 +1,10 @@
 #ifndef _NO_JACK_
 #include "JackAudio.h"
 #include "JackAudioDriver.h"
+#include "Adapters/Jack/Client/JackClient.h"
 #include "Services/Audio/AudioOutDriver.h"
 #include "System/Console/Trace.h"
 #include "System/Console/n_assert.h"
-#include "Adapters/Jack/Client/JackClient.h"
 
 int jack_srate (jack_nframes_t nframes, void *arg) {
 	Trace::Debug("Jack sample rate is now %lu/sec\n", nframes);

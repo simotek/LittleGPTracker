@@ -1,15 +1,15 @@
 #include "InstrumentView.h"
-#include "System/System/System.h"
-#include "Application/Instruments/SampleInstrument.h"
 #include "Application/Instruments/MidiInstrument.h"
+#include "Application/Instruments/SampleInstrument.h"
 #include "Application/Instruments/SamplePool.h"
+#include "Application/Model/Config.h"
 #include "BaseClasses/UIBigHexVarField.h"
+#include "BaseClasses/UIIntVarOffField.h"
 #include "BaseClasses/UINoteVarField.h"
 #include "BaseClasses/UIStaticField.h"
-#include "BaseClasses/UIIntVarOffField.h"
-#include "ModalDialogs/MessageBox.h"
 #include "ModalDialogs/ImportSampleDialog.h"
-#include "Application/Model/Config.h"
+#include "ModalDialogs/MessageBox.h"
+#include "System/System/System.h"
 
 InstrumentView::InstrumentView(GUIWindow &w,ViewData *data):FieldView(w,data) {
 

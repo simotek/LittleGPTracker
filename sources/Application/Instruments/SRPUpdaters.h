@@ -1,9 +1,8 @@
 #ifndef _SRP_UPDATERS_H_
 #define _SRP_UPDATERS_H_
 
-#include "I_SRPUpdater.h"
 #include "Foundation/Types/Types.h"
-
+#include "I_SRPUpdater.h"
 
 class VolumeRamp: public I_SRPUpdater {
 public:

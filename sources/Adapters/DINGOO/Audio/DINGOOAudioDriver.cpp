@@ -1,22 +1,21 @@
 #include "DINGOOAudioDriver.h"
-#include "System/Console/Trace.h"
-#include "Application/Model/Config.h"
-
-#include <math.h>
 #include <fcntl.h>
 #include <linux/fb.h>
+#include <math.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <signal.h>
-#include <stdlib.h>
+#include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sys/mman.h>
 #include <sys/ioctl.h>
+#include <sys/mman.h>
 #include <sys/soundcard.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <stdarg.h>
-#include <semaphore.h>
+#include "System/Console/Trace.h"
+#include "Application/Model/Config.h"
 
 
 DINGOOAudioDriver::DINGOOAudioDriver(AudioSettings &settings):SDLAudioDriver(settings)

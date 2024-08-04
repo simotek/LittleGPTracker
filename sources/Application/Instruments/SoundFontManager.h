@@ -1,9 +1,9 @@
 #ifndef _SOUND_FONT_MANAGER_H_
 #define _SOUND_FONT_MANAGER_H_
 
-#include "Foundation/T_Singleton.h"
-#include "Externals/Soundfont/ENAB.H"
 #include <vector>
+#include "Externals/Soundfont/ENAB.H"
+#include "Foundation/T_Singleton.h"
 
 class SoundFontManager:public T_Singleton<SoundFontManager> {
 public:

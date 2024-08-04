@@ -1,13 +1,13 @@
 
 #include "CAANOOGUIWindowImp.h"
-#include "Adapters/CAANOOSystem/CAANOOSystem.h"
-#include "Adapters/CAANOOSystem/CAANOOEventQueue.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
-#include "System/io/Trace.h"
 #include <string.h>
+#include "Adapters/CAANOOSystem/CAANOOEventQueue.h"
+#include "Adapters/CAANOOSystem/CAANOOSystem.h"
 #define NYI(s) n_assert("NYI: ##s##")
 #include "Application/Model/Config.h"
 #include "Application/Utils/char.h"
+#include "System/io/Trace.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 CAANOOGUIWindowImp *instance_ ;
 

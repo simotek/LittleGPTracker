@@ -2,7 +2,7 @@
 #ifndef _JACK_CLIENT_H_
 #define _JACK_CLIENT_H_
 
-#include "jack/jack.h"
+#include <jack/jack.h>
 #include "Foundation/T_Singleton.h"
 #include "Foundation/T_SimpleList.h"
 

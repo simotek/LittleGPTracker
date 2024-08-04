@@ -1,7 +1,7 @@
 #include "AudioFileStreamer.h"
+#include "Application/Model/Config.h"
 #include "Application/Utils/fixed.h"
 #include "System/Console/Trace.h"
-#include "Application/Model/Config.h"
 
 AudioFileStreamer::AudioFileStreamer() {
 	wav_=0 ;

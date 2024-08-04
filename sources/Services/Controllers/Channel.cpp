@@ -1,8 +1,9 @@
 
 #include "Channel.h"
-#include "System/Console/Trace.h"
-#include <string.h>
 #include <assert.h>
+#include <string.h>
+#include "System/Console/Trace.h"
+
 Channel::Channel() {
 	name_="unnamed" ;
 } ;

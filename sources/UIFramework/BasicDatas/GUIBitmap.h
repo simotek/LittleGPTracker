@@ -1,8 +1,8 @@
 #ifndef _GUIBITMAP_H_
 #define _GUIBITMAP_H_
 
-#include "UIFramework/Interfaces/I_GUIBitmapImp.h"
 #include "UIFramework/BasicDatas/GUIResourceID.h"
+#include "UIFramework/Interfaces/I_GUIBitmapImp.h"
 
 // Class for Bitmap description in GUI. The bitmap is drawable so
 // it implements I_GUIGraphics

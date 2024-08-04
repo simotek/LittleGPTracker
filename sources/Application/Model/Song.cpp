@@ -1,12 +1,11 @@
 #include "Song.h"
-#include "System/io/Status.h"
-#include "Application/Utils/HexBuffers.h"
-#include "Application/Instruments/CommandList.h"
-#include "Table.h"
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-
+#include "Application/Instruments/CommandList.h"
+#include "Application/Utils/HexBuffers.h"
+#include "System/io/Status.h"
+#include "Table.h"
 
 Song::Song():Persistent("SONG") {
 

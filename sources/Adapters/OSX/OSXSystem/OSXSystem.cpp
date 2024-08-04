@@ -1,7 +1,12 @@
 
 #include "OSXSystem.h"
+#include <CoreFoundation/CoreFoundation.h>
+#include <memory.h>
+#include <sys/time.h>
+#include <time.h>
 #include "Adapters/RTMidi/RTMidiService.h"
 #include "Adapters/RTAudio/RTAudioStub.h"
+#include "Adapters/SDL/Timer/SDLTimer.h"
 #ifndef _USE_NCURSES_
 #include "Adapters/SDL/GUI/GUIFactory.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
@@ -11,13 +16,8 @@
 #include "Adapters/Unix/FileSystem/UnixFileSystem.h"
 #include "Adapters/Unix/Process/UnixProcess.h"
 #include "Application/Model/Config.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
 #include "System/Console/Trace.h"
 #include "System/Console/Logger.h"
-#include <time.h>
-#include <sys/time.h>
-#include <memory.h>
-#include <CoreFoundation/CoreFoundation.h>
 
 EventManager *OSXSystem::eventManager_ = NULL ;
 

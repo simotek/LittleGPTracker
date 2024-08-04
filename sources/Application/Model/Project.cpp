@@ -1,17 +1,16 @@
 #include "Project.h"
+#include <math.h>
+#include "Application/Instruments/SampleInstrument.h"
+#include "Application/Instruments/SamplePool.h"
+#include "Application/Persistency/PersistencyService.h"
+#include "Application/Player/SyncMaster.h"
+#include "Foundation/Variables/WatchedVariable.h"
 #include "Services/Midi/MidiService.h"
 #include "System/FileSystem/FileSystem.h"
 #include "System/Console/Trace.h"
 #include "System/io/Status.h"
-#include "Foundation/Variables/WatchedVariable.h"
-#include "Application/Player/SyncMaster.h"
 #include "Table.h"
 #include "Groove.h"
-#include "Application/Persistency/PersistencyService.h"
-#include "Application/Instruments/SamplePool.h"
-#include "Application/Instruments/SampleInstrument.h"
-
-#include <math.h>
 
 Project::Project()
 :Persistent("PROJECT")

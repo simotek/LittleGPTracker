@@ -1,13 +1,13 @@
 #include "SDLGUIWindowImp.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
-#include "System/System/System.h"
-#include "Application/Model/Config.h"
-#include "System/Console/Trace.h"
-#include <string.h>
-#include "System/Console/n_assert.h"
-#include "Application/Utils/char.h"
 #include <assert.h>
+#include <string.h>
+#include "Application/Model/Config.h"
+#include "Application/Utils/char.h"
+#include "System/Console/n_assert.h"
+#include "System/Console/Trace.h"
+#include "System/System/System.h"
 #include "UIFramework/BasicDatas/GUIEvent.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 #ifdef _SHOW_GP2X_
  #include <SDL/SDL_image.h>

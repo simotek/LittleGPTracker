@@ -1,8 +1,8 @@
 #ifndef _CHAR_H_
 #define _CHAR_H_
 
-#include "Foundation/Types/Types.h"
 #include <string.h>
+#include "Foundation/Types/Types.h"
 
 extern char h2c__[16] ;
 extern const char *notes__[12] ;

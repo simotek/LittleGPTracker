@@ -1,17 +1,14 @@
 // VC6GUI.cpp : Defines the entry point for the application.
 //
-
-#include "Application/Application.h"
-#include "Adapters/PSP/System/PSPSystem.h"
-#include "Foundation/T_Singleton.h"
-#include <SDL/SDL.h>
-#include <string.h>
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include "Application/Persistency/PersistencyService.h" 
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-
 #include <pspkernel.h>
 #include <pspdebug.h>
+#include <SDL/SDL.h>
+#include <string.h>
+#include "Application/Application.h"
+#include "Adapters/PSP/System/PSPSystem.h"
+#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Application/Persistency/PersistencyService.h"
+#include "Foundation/T_Singleton.h"
 
 /* Define the module info section */
 PSP_MODULE_INFO("AUDIOLIBDEMO", 0, 1, 1);

@@ -1,7 +1,7 @@
 #include "Services/Controllers/ControllerService.h"
 #include "ControlNode.h"
-#include "System/Console/Trace.h"
 #include <string.h>
+#include "System/Console/Trace.h"
 
 using namespace std;
 

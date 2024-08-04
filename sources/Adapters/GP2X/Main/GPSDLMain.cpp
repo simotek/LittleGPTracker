@@ -1,14 +1,12 @@
 // VC6GUI.cpp : Defines the entry point for the application.
 //
-
-#include "Application/Application.h"
-#include "Adapters/GP2X/System/GP2XSystem.h"
-#include "Foundation/T_Singleton.h"
 #include <SDL/SDL.h>
 #include <string.h>
+#include "Adapters/GP2X/System/GP2XSystem.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include "Application/Persistency/PersistencyService.h" 
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Application/Application.h"
+#include "Application/Persistency/PersistencyService.h"
+#include "Foundation/T_Singleton.h"
 
 int main(int argc,char *argv[]) 
 {

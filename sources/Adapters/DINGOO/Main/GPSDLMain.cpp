@@ -1,11 +1,11 @@
-#include "Application/Application.h"
-#include "Adapters/DINGOO/System/DINGOOSystem.h"
-#include "Foundation/T_Singleton.h"
 #include <SDL/SDL.h>
 #include <string.h>
+#include "Adapters/DINGOO/System/DINGOOSystem.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Application/Application.h"
 #include "Application/Persistency/PersistencyService.h" 
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+#include "Foundation/T_Singleton.h"
+
 
 int main(int argc,char *argv[]) 
 {

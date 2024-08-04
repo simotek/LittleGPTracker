@@ -1,10 +1,9 @@
 
 #include "RTAudioStub.h"
 #include "RTAudioDriver.h"
+#include <map>
 #include "Services/Audio/AudioOutDriver.h"
 #include "System/Console/Trace.h"
-#include <map>
-
 
 RTAudioStub::RTAudioStub(AudioSettings &h):Audio(h),
 	sampleRate_(0) 

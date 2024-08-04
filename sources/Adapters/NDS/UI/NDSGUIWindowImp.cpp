@@ -1,10 +1,10 @@
 
 #include "NDSGUIWindowImp.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include <nds.h>
+#include <string.h>
 #include "System/IO/Trace.h"
 #include "System/System/System.h"
-#include <string.h>
-#include <nds.h>
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 NDSGUIWindowImp *instance_ ;
 

@@ -1,22 +1,19 @@
 #include "SampleInstrument.h"
-#include "SamplePool.h"
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+#include "Application/Instruments/Filters.h"
+#include "Application/Model/Table.h"
+#include "Application/Player/PlayerMixer.h" // For MIX_BUFFER_SIZE.. kick out pls
+#include "Application/Player/SyncMaster.h"
+#include "Services/Audio/Audio.h"
 #include "System/Console/Trace.h"
 #include "System/io/Status.h"
 #include "CommandList.h"
-#include <assert.h>
-#include "Application/Player/PlayerMixer.h" // For MIX_BUFFER_SIZE.. kick out pls
-#include "Application/Player/SyncMaster.h"
-#include "Application/Instruments/Filters.h"
-#include "Application/Model/Table.h"
-#include "Services/Audio/Audio.h"
-#include "SampleVariable.h"
-
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
 #include "SampleInstrumentDatas.h"
-#include "Application/Player/SyncMaster.h"
+#include "SamplePool.h"
+#include "SampleVariable.h"
 
 fixed SampleInstrument::feedback_[SONG_CHANNEL_COUNT][FB_BUFFER_LENGTH*2] ;
 

@@ -1,8 +1,8 @@
 
 #include "SDLTimer.h"
+#include "System/Console/n_assert.h"
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
-#include "System/Console/n_assert.h"
 
 Uint32 SDLTimerCallback(Uint32 interval, void* param) {
 	SDLTimer *timer=(SDLTimer *)param ;

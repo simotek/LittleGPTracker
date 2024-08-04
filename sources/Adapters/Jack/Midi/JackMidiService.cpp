@@ -1,9 +1,9 @@
 
 #include "JackMidiService.h"
-#include "JackMidiDevice.h"
-#include "System/io/Trace.h"
-#include "Adapters/Jack/Client/JackClient.h"
 #include <jack/jack.h>
+#include "Adapters/Jack/Client/JackClient.h"
+#include "System/io/Trace.h"
+#include "JackMidiDevice.h"
 
 JackMidiService::JackMidiService() {
 } ;

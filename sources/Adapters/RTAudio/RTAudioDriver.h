@@ -3,10 +3,10 @@
 
 #include "Services/Audio/AudioDriver.h"
 #include "Externals/RTAudio/RtAudio.h"
-#include "System/Process/Process.h"
 #include "Foundation/Observable.h"
-#include "System/Timer/Timer.h"
 #include "Services/Midi/MidiService.h"
+#include "System/Process/Process.h"
+#include "System/Timer/Timer.h"
 
 class RTAudioDriver ;
 

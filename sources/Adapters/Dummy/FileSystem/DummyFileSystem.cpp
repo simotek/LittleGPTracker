@@ -1,8 +1,8 @@
 
 #include "DummyFileSystem.h"
+#include <ctype.h>
 #include "system/io/Trace.h"
 #include "Application/Utils/wildcard.h"	
-#include <ctype.h>
 
 
 

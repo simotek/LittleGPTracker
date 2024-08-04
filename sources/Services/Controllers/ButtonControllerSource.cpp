@@ -1,6 +1,6 @@
 #include "ButtonControllerSource.h"
-#include "System/Console/Trace.h"
 #include <stdlib.h>
+#include "System/Console/Trace.h"
 
 ButtonControllerSource::ButtonControllerSource(const char *name):ControllerSource("but",name) {
 } ;

@@ -1,14 +1,14 @@
 #include "SamplePool.h"
-#include <string.h>
 #include <stdlib.h>
-#include "System/Console/Trace.h"
-#include "Application/Persistency/PersistencyService.h" 
-#include "System/io/Status.h"
 #include <string>
+#include <string.h>
+#include "Application/Model/Config.h"
+#include "Application/Persistency/PersistencyService.h"
+#include "System/Console/Trace.h"
+#include "System/io/Status.h"
 #include "SoundFontSample.h"
 #include "SoundFontPreset.h"
 #include "SoundFontManager.h"
-#include "Application/Model/Config.h"
 
 #define SAMPLE_LIB "root:samplelib" 
 

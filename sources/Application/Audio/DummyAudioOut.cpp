@@ -1,7 +1,7 @@
 #include "DummyAudioOut.h"
 #include "Application/Player/SyncMaster.h" // Should be installable
-#include "Services/Time/TimeService.h"
 #include "Services/Audio/AudioDriver.h"
+#include "Services/Time/TimeService.h"
 
 static bool threadon=false ;
 

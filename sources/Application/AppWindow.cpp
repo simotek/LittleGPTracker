@@ -1,20 +1,20 @@
 #include "AppWindow.h"
-#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
-#include "System/Console/Trace.h"
-#include "Player/Player.h"
-#include "Foundation/Variables/WatchedVariable.h"
-#include "Views/UIController.h"
-#include "Application/Persistency/PersistencyService.h" 
-#include "Application/Instruments/SamplePool.h"
-#include "Application/Player/TablePlayback.h"
-#include "Services/Midi/MidiService.h"
-#include "Application/Views/ModalDialogs/MessageBox.h"
+#include <string.h>
 #include "Application/Commands/EventDispatcher.h"
 #include "Application/Commands/ApplicationCommandDispatcher.h"
-#include "Application/Views/ModalDialogs/SelectProjectDialog.h"
-#include "Application/Utils/char.h"
+#include "Application/Instruments/SamplePool.h"
 #include "Application/Mixer/MixerService.h"
-#include <string.h>
+#include "Application/Persistency/PersistencyService.h"
+#include "Application/Player/TablePlayback.h"
+#include "Application/Utils/char.h"
+#include "Application/Views/ModalDialogs/MessageBox.h"
+#include "Application/Views/ModalDialogs/SelectProjectDialog.h"
+#include "Foundation/Variables/WatchedVariable.h"
+#include "Player/Player.h"
+#include "Services/Midi/MidiService.h"
+#include "System/Console/Trace.h"
+#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
+#include "Views/UIController.h"
 
 AppWindow *instance=0 ;
 

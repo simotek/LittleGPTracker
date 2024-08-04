@@ -1,8 +1,8 @@
 #include "Variable.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h> 
 #include "System/Console/n_assert.h"
 #include "System/Console/Trace.h"
 
