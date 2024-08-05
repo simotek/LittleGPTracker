@@ -6,9 +6,9 @@ DEFINES := \
 	-D__LINUX_ALSA__ \
 	-D__LINUX_ALSASEQ__ \
 	-D_64BIT \
-	-DSDLAUDIO \
         -DSDL2 \
-	-DRTMIDI
+        -DSDLAUDIO \
+        -DDUMMYMIDI
 
 ALSA_CFLAGS := $(shell pkg-config alsa --cflags)
 ALSA_LIBS := $(shell pkg-config alsa --libs)

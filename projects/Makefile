@@ -60,13 +60,11 @@ COMMONDIRS := \
 #---------------------------------------------------------------------------------
 
 LINUXDIRS := \
-	../sources/Adapters/Unix/FileSystem \
 	../sources/Adapters/LINUX/Main \
+        ../sources/Adapters/LINUX/System \
+        ../sources/Adapters/Unix/FileSystem \
 	../sources/Adapters/Unix/Process \
-	../sources/System/Process \
-	../sources/Adapters/LINUX/System \
-	../sources/Adapters/SDL/Timer \
-	../sources/Adapters/SDL/GUI
+        ../sources/System/Process
 
 DUMMYMIDIDIRS := \
 	../sources/Adapters/Dummy/Midi
@@ -84,15 +82,27 @@ RTMIDIDIRS := \
 	../sources/Adapters/RTMidi \
 	../sources/Externals/RtMidi
 
+SDLDIRS := \
+        ../sources/Adapters/SDL/Timer \
+        ../sources/Adapters/SDL/GUI
+        
+SDL2DIRS := \
+        ../sources/Adapters/SDL2/Timer \
+        ../sources/Adapters/SDL2/GUI
+
 SDLAUDIODIRS := \
 	../sources/Adapters/SDL/Audio
+        
+SDL2AUDIODIRS := \
+        ../sources/Adapters/SDL2/Audio
 
-BEAGLEBOARDDIRS := $(LINUXDIRS) $(RTAUDIODIRS)
-DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
-RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
-STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
-X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDLAUDIODIRS)
-X86DIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS)
+BEAGLEBOARDDIRS := $(LINUXDIRS) $(RTAUDIODIRS) $(SDLDIRS)
+DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
+RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
+STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
+#X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDL2DIRS) $(SDL2AUDIODIRS)
+X64DIRS := $(LINUXDIRS) $(DUMMYMIDIDIRS) $(SDL2DIRS) $(SDL2AUDIODIRS)
+X86DIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
 
 #---------------------------------------------------------------------------------
 # Consoles/Embedded
@@ -286,7 +296,8 @@ DEBFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
 RASPIFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 STEAMFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
-X64FILES := $(LINUXFILES) $(SDLAUDIOFILES) $(RTMIDIFILES)
+#X64FILES := $(LINUXFILES) $(RTMIDIFILES) $(SDLAUDIOFILES)
+X64FILES := $(LINUXFILES) $(SDLAUDIOFILES) $(DUMMYMIDIFILES)
 X86FILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 
 #---------------------------------------------------------------------------------
