@@ -2,8 +2,8 @@
 #define _DEB_SYSTEM_H_
 
 #include "System/System/System.h"
-#include <SDL/SDL.h>
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
+#include <SDL/SDL.h>
 
 class DEBSystem: public System {
 public:

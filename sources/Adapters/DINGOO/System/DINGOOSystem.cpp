@@ -1,27 +1,27 @@
 #include "DINGOOSystem.h"
-#include <assert.h>
-#include <fcntl.h>
-#include <malloc.h>
-#include <memory.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <time.h>
-#include <unistd.h>
-#include "Externals/TinyXML/tinyxml.h"
-#include "Adapters/DINGOO/Audio/DINGOOAudio.h"
-#include "Adapters/Dummy/Midi/DummyMidi.h"
+#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
 #include "Adapters/SDL/GUI/GUIFactory.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Adapters/SDL/GUI/SDLEventManager.h"
 #include "Adapters/SDL/Process/SDLProcess.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
-#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
-#include "Application/Commands/NodeList.h"
-#include "Application/Controllers/ControlRoom.h"
+#include "Adapters/DINGOO/Audio/DINGOOAudio.h"
+#include "Adapters/Dummy/Midi/DummyMidi.h"
+#include "Externals/TinyXML/tinyxml.h"
 #include "Application/Model/Config.h"
+#include "Application/Controllers/ControlRoom.h"
 #include "Application/Player/SyncMaster.h"
+#include "Application/Commands/NodeList.h"
+#include "Adapters/SDL/Timer/SDLTimer.h"
 #include "System/Console/Logger.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <memory.h>
+#include <time.h>
+#include <assert.h>
+#include <stdio.h>
+#include <sys/time.h> 
+#include <malloc.h>
+#include <stdlib.h>
 
 EventManager *GPSDLSystem::eventManager_ = NULL ;
 bool GPSDLSystem::invert_=false ;

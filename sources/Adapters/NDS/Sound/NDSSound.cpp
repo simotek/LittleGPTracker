@@ -1,8 +1,8 @@
 
 #include "NDSSound.h"
 #include <nds.h>
-#include "System/io/Trace.h"
 #include "System/System/System.h"
+#include "System/io/Trace.h"
 
 
 // Called when we need to fill the buffer

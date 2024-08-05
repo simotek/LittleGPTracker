@@ -1,7 +1,7 @@
 #include "Phrase.h"
+#include "System/System/System.h"
 #include <stdlib.h>
 #include <string.h>
-#include "System/System/System.h"
 
 Phrase::Phrase() {
 

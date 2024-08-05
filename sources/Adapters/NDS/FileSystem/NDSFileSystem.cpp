@@ -1,11 +1,10 @@
 
 #include "NDSFileSystem.h"
-#include <ctype.h>
-#include <fat.h>
-#include <sys/dir.h>
-#include "Application/Utils/wildcard.h"
 #include "System/io/Trace.h"
-
+#include "Application/Utils/wildcard.h"
+#include <sys/dir.h>
+#include <fat.h>
+#include <ctype.h>
 #include <stdarg.h>
 
 NDSDir::NDSDir(const char *path):I_Dir(path) {

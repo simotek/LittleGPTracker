@@ -1,10 +1,10 @@
 
 #include "ControlRoom.h"
-#include <string>
-#include "Externals/TinyXML/tinyxml.h"
 #include "Services/Controllers/ControllerService.h"
 #include "Services/Controllers/MultiChannelAdapter.h"
 #include "System/Console/Trace.h"
+#include "Externals/TinyXML/tinyxml.h"
+#include <string>
 
 
 ControlRoom::ControlRoom():ControlNode("",0)  {

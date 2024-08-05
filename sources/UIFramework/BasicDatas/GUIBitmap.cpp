@@ -1,9 +1,9 @@
 
 #include "GUIBitmap.h"
-#include <stdio.h>
 #include "UIFramework/Interfaces/I_GUIWindowFactory.h"
 //#include "Engine/ENGBitmap.h"
 #define ENGBitmap int 
+#include <stdio.h>
 
 // This constructor. We wrap the class around an Implementation class
 // That way, we can change the imps we use without changing the core code

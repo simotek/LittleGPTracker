@@ -2,8 +2,8 @@
 #ifndef _WAV_FILE_H_
 #define _WAV_FILE_H_
 
-#include "SoundSource.h"
 #include "System/FileSystem/FileSystem.h"
+#include "SoundSource.h"
 
 class WavFile:public SoundSource {
 

@@ -2,10 +2,10 @@
 #define _EVENT_DISPATCHER_H_
 
 #include "CommandDispatcher.h"
-#include "Application/AppWindow.h"
-#include "Foundation/Observable.h"
 #include "Foundation/T_Singleton.h"
+#include "Application/AppWindow.h"
 #include "System/Timer/Timer.h"
+#include "Foundation/Observable.h"
 
 class EventDispatcher: public T_Singleton<EventDispatcher>,public CommandExecuter,public I_Observer {
 public:

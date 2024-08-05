@@ -1,7 +1,7 @@
 
 #include "GUIParentGraphics.h"
-#include "Application/utils/assert.h"
 #include "UIFramework/BasicDatas/GUIBitmap.h"
+#include "Application/utils/assert.h"
 
 GUIParentGraphics::GUIParentGraphics()
 {

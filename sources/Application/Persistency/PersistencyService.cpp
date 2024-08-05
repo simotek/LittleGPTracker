@@ -1,8 +1,8 @@
 #include "PersistencyService.h"
 #include "Persistent.h"
 #include "Externals/Compression/lz.h"
-#include "Foundation/Types/Types.h"
 #include "System/Console/Trace.h"
+#include "Foundation/Types/Types.h"
 
 PersistencyService::PersistencyService():Service(MAKE_FOURCC('S','V','P','S')) {
 } ;

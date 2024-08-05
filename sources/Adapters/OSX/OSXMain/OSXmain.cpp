@@ -1,7 +1,8 @@
-#include <string.h>
 #include "Application/Application.h"
 #include "Adapters/OSX/OSXSystem/OSXSystem.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
+
+#include <string.h>
 
 int main(int argc,char *argv[]) 
 {

@@ -1,6 +1,6 @@
 #include "Status.h"
-#include <stdarg.h>
 #include <stdio.h>
+#include <stdarg.h>
 //#include <windows.h>
 
 void Status::Set(char *fmt, ...) {

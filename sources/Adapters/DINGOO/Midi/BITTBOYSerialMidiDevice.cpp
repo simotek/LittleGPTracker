@@ -1,11 +1,11 @@
 
 #include "DINGOOSerialMidiDevice.h"
-#include <fcntl.h>
-#include <memory.h>
-#include <signal.h>
 #include <stdio.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/types.h>
+#include <memory.h>
 
 #ifdef USB_TTY
 const char *port="/dev/usb/tts/0" ;

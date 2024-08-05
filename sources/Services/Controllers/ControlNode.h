@@ -3,8 +3,8 @@
 #define _CONTROL_NODE_H_
 
 #include "Foundation/T_SimpleList.h"
-#include "Foundation/Observable.h"
 #include "Services/Controllers/Channel.h"
+#include "Foundation/Observable.h"
 #include "Services/Controllers/ControllerService.h"
 
 enum ControlNodeType {

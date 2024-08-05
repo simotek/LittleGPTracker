@@ -1,13 +1,13 @@
 #include "SongView.h"
-#include <iostream>
-#include <sstream>
-#include <stdlib.h>
-#include <string>
-#include "Application/Player/Player.h"
-#include "Application/Utils/char.h"
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
+#include "Application/Utils/char.h"
+#include "Application/Player/Player.h"
 #include "UIController.h" 
+#include <stdlib.h>
+#include <string>
+#include <iostream>
+#include <sstream>
 
 /****************
  Constructor

@@ -2,8 +2,8 @@
 #define _AUDIO_FILE_STREAMER_H_
 
 #include "Services/Audio/AudioModule.h"
-#include "Application/Instruments/WavFile.h"
 #include "System/FileSystem/FileSystem.h"
+#include "Application/Instruments/WavFile.h"
 
 enum AudioFileStreamerMode {
 	AFSM_STOPPED,

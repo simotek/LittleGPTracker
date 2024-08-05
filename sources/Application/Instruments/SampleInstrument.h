@@ -2,14 +2,14 @@
 #define _SAMPLE_INSTRUMENT_H_
 
 #include "I_Instrument.h"
-#include "Application/Model/Song.h"
+#include "SampleRenderingParams.h"
+#include "SRPUpdaters.h"
+
+#include "SoundSource.h"
+#include "Application/Model/Song.h" 
 #include "Foundation/Observable.h"
 #include "Foundation/Types/Types.h"
 #include "Foundation/Variables/WatchedVariable.h"
-#include "SampleRenderingParams.h"
-#include "SRPUpdaters.h"
-#include "SoundSource.h"
-
 
 enum SampleInstrumentLoopMode {
 	SILM_ONESHOT=0,

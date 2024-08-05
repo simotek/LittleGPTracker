@@ -1,12 +1,12 @@
 #ifndef _PROJECT_H_
 #define _PROJECT_H_
 
+#include "Song.h"
+#include "Application/Instruments/InstrumentBank.h"
 #include "Application/Persistency/Persistent.h"
 #include "Foundation/Variables/VariableContainer.h"
-#include "Application/Instruments/InstrumentBank.h"
 #include "Foundation/Types/Types.h"
 #include "Foundation/Observable.h"
-#include "Song.h"
 
 
 #define VAR_TEMPO       MAKE_FOURCC('T','M','P','O')

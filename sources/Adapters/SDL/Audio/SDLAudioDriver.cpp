@@ -1,8 +1,8 @@
 #include "SDLAudioDriver.h"
-#include "Services/Midi/MidiService.h"
-#include "Services/Time/TimeService.h"
 #include "System/Console/Trace.h"
+#include "Services/Time/TimeService.h"
 #include "System/System/System.h"
+#include "Services/Midi/MidiService.h"
 
 void sdl_callback(void *userdata, Uint8 *stream, int len) {
 	SDLAudioDriver *sound=(SDLAudioDriver *)userdata ;

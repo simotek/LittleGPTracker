@@ -1,20 +1,20 @@
 
 #include "PSPSystem.h"
-#include <malloc.h>
-#include <pspdebug.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <time.h>
 #include "Adapters/Dummy/Midi/DummyMidi.h"
-#include "Adapters/PSP/FileSystem/PSPFileSystem.h"
 #include "Adapters/SDL/Audio/SDLAudio.h"
 #include "Adapters/SDL/GUI/SDLEventManager.h"
 #include "Adapters/SDL/GUI/GUIFactory.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Adapters/SDL/Process/SDLProcess.h"
+#include "Adapters/PSP/FileSystem/PSPFileSystem.h"
 #include "Adapters/SDL/Timer/SDLTimer.h"
 #include "Application/Model/Config.h"
 #include "System/Console/Logger.h"
+#include <time.h>
+#include <pspdebug.h>
+#include <sys/time.h>
+#include <malloc.h>
+#include <stdlib.h>
 
 EventManager *PSPSystem::eventManager_ = NULL ;
 

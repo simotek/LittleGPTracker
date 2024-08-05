@@ -1,7 +1,7 @@
 #include "FileSystem.h"
-#include <algorithm>
 #include "Application/Utils/wildcard.h"	
 #include "System/Console/Trace.h"
+#include <algorithm>
 
 T_SimpleList<Path::Alias> Path::aliases_(true) ;
 

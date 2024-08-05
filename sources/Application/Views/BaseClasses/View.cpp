@@ -1,9 +1,9 @@
 #include "View.h"
-#include "Application/AppWindow.h"
-#include "Application/Model/Config.h"
+#include "System/Console/Trace.h"
 #include "Application/Player/Player.h"
 #include "Application/Utils/char.h"
-#include "System/Console/Trace.h"
+#include "Application/AppWindow.h"
+#include "Application/Model/Config.h"
 #include "ModalView.h"
 
 bool View::initPrivate_=false ;

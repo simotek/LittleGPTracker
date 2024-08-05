@@ -1,6 +1,7 @@
 #include "CommandDispatcher.h"
 #include "EventDispatcher.h"
 #include "ApplicationCommandDispatcher.h"
+
 #include "Application/Controllers/ControlRoom.h"
 #include "Application/Mixer/MixerService.h"
 #include "System/Console/Trace.h"

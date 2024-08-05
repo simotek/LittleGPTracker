@@ -1,8 +1,8 @@
 #ifndef _WAV_FILE_WRITER_H_
 #define _WAV_FILE_WRITER_H_
 
-#include "Application/Utils/fixed.h"
 #include "System/FileSystem/FileSystem.h"
+#include "Application/Utils/fixed.h"
 
 class WavFileWriter {
 public:

@@ -1,7 +1,7 @@
 
 #include "Process.h"
-#include "System/Console/n_assert.h"
 #include "System/Console/Trace.h"
+#include "System/Console/n_assert.h"
 
 bool SysThread::Start() {
 	return SysProcessFactory::GetInstance()->BeginThread(*this) ;

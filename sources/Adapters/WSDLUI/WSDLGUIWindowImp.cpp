@@ -1,10 +1,10 @@
 
 #include "WSDLGUIWindowImp.h"
+#include "Adapters/WSDLSystem/WSDLSystem.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include "System/IO/Trace.h"
 #include <string.h>
 #include <windows.h>
-#include "Adapters/WSDLSystem/WSDLSystem.h"
-#include "System/IO/Trace.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 #define NYI(s) n_assert("NYI: ##s##")
 

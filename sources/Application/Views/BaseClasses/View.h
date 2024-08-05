@@ -2,15 +2,14 @@
 #ifndef _VIEW_H_
 #define _VIEW_H_
 
-#include "Application/Model/Config.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include "UIFramework/Interfaces/I_GUIGraphics.h"
+#include "ViewEvent.h"
 #include "Application/Model/Project.h"
 #include "Application/Player/Player.h"
 #include "Foundation/T_SimpleList.h"
-#include "UIFramework/Interfaces/I_GUIGraphics.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include "Application/Model/Config.h"
 #include "I_Action.h"
-#include "ViewEvent.h"
-
 
 enum GUIEventPadButtonMasks {
 EPBM_LEFT=1,

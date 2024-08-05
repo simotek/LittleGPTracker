@@ -2,8 +2,8 @@
 #define _APPLICATION_COMMAND_DISPATCHER_H_
 
 #include "CommandDispatcher.h"
-#include "Application/Model/Project.h"
 #include "Foundation/T_Singleton.h"
+#include "Application/Model/Project.h"
 
 class ApplicationCommandDispatcher: public T_Singleton<ApplicationCommandDispatcher>,public CommandExecuter {
 public:

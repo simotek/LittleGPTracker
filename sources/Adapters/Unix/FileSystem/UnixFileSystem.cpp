@@ -1,18 +1,19 @@
 
 #include "UnixFileSystem.h"
-#include <ctype.h>
-#include <errno.h>
-#include <stdarg.h>
+#include "System/Console/Trace.h"
 #include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
 #ifdef _64BIT
 #include <dirent.h>
 #else
 #include <sys/dir.h>
 #endif
 #include <sys/stat.h>
-#include <unistd.h>
-#include "Application/Utils/wildcard.h"
-#include "System/Console/Trace.h"
+#include <ctype.h>
+#include <errno.h>
+
+#include "Application/Utils/wildcard.h"	
 
 UnixDir::UnixDir(const char *path):I_Dir(path) {
 } ;

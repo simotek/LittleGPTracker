@@ -1,12 +1,12 @@
 
 #include "DINGOOFileSystem.h"
-#include <ctype.h>
-#include <stdarg.h>
 #include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
 #include <sys/dir.h>
 #include <sys/stat.h>
+#include <ctype.h>
 //#include <sys/dirent.h>
-#include <unistd.h>
 #include "Application/Utils/wildcard.h"	
 
 DINGOODir::DINGOODir(const char *path):I_Dir(path) {

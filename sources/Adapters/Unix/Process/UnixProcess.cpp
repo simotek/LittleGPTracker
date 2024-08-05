@@ -1,9 +1,8 @@
 
 #include "UnixProcess.h"
-#include <fcntl.h>
-#include <stdio.h>
 #include "System/Console/Trace.h"
-
+#include <stdio.h>
+#include <fcntl.h>
 
 void *_UnixStartThread(void *p) {
 	SysThread *play=(SysThread *)p ;

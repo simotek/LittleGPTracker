@@ -1,10 +1,11 @@
 #ifndef _I_INSTRUMENT_H_
 #define _I_INSTRUMENT_H_
 
-#include "Application/Player/TablePlayback.h"
-#include "Application/Utils/fixed.h"
-#include "Foundation/Observable.h"
 #include "Foundation/Variables/VariableContainer.h"
+#include "Foundation/Observable.h"
+#include "Application/Utils/fixed.h"
+
+#include "Application/Player/TablePlayback.h"
 
 enum InstrumentType {
 	IT_SAMPLE=0,

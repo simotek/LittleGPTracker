@@ -1,8 +1,9 @@
-#include "Trace.h"
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
 #include "System/System/System.h"
+#include "Trace.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+
 
 Trace::Trace() 
 :logger_(0)

@@ -3,8 +3,8 @@
 
 #include "Services/Audio/AudioDriver.h"
 #include <jack/jack.h>
-#include "Adapters/Jack/Client/JackClient.h"
 #include "System/Process/Process.h"
+#include "Adapters/Jack/Client/JackClient.h"
 
 class JackAudioDriver ;
 

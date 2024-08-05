@@ -1,10 +1,10 @@
 #ifndef _TABLE_VIEW_H_
 #define _TABLE_VIEW_H_
 
-#include "BaseClasses/View.h"
-#include "Application/Model/Table.h"
 #include "BaseClasses/UIBigHexVarField.h"
+#include "BaseClasses/View.h"
 #include "ViewData.h"
+#include "Application/Model/Table.h"
 
 class TableView: public View {
 public:

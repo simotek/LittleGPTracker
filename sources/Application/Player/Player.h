@@ -1,11 +1,10 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
-
-#include "Foundation/Observable.h"
 #include "Foundation/T_Singleton.h"
+#include "Foundation/Observable.h"
+#include "System/Timer/Timer.h"
 #include "Application/Views/ViewData.h"
 #include "Application/Views/BaseClasses/ViewEvent.h"
-#include "System/Timer/Timer.h"
 #include "PlayerMixer.h"
 #include "SyncMaster.h"
 

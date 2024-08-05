@@ -1,8 +1,8 @@
 #include "RTMidiService.h"
+#include "RTMidiOutDevice.h"
+#include "RTMidiInDevice.h"
 #include "System/Console/Trace.h"
 #include "Application/Model/Config.h"
-#include "RTMidiInDevice.h"
-#include "RTMidiOutDevice.h"
 
 //static void CALLBACK MidiFlushProc(UINT uiID, UINT uiMsg, DWORD
 //                                  dwUser, DWORD dw1, DWORD dw2) {

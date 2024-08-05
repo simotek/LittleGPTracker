@@ -3,10 +3,10 @@
 #include "Application/Instruments/SampleInstrument.h"
 #include "Application/Instruments/SamplePool.h"
 #include "Application/Instruments/MidiInstrument.h"
+#include "System/io/Status.h"
+#include "Application/Utils/char.h"
 #include "Application/Model/Config.h"
 #include "Application/Persistency/PersistencyService.h"
-#include "Application/Utils/char.h"
-#include "System/io/Status.h"
 #include "Filters.h"
 
 char *InstrumentTypeData[IT_LAST]= {

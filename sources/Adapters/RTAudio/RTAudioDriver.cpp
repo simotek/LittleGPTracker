@@ -1,12 +1,12 @@
 
 #include "RTAudioDriver.h"
-#include <string.h>
-#include "Adapters/W32/Midi/W32MidiService.h"
-#include "Application/Player/SyncMaster.h"
-#include "Services/Audio/Audio.h"
-#include "Services/Time/TimeService.h"
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
+#include "Services/Time/TimeService.h"
+#include "Services/Audio/Audio.h"
+#include "Application/Player/SyncMaster.h"
+#include "Adapters/W32/Midi/W32MidiService.h"
+#include <string.h>
 
 int callback( void *outputBuffer, void *inputBuffer, unsigned int nBufferFrames,
          double streamTime, RtAudioStreamStatus status, void *userData )

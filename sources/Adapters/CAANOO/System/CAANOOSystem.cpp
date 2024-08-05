@@ -1,28 +1,27 @@
 
 #include "CAANOOSystem.h"
-#include <assert.h>
-#include <fcntl.h>
-#include <malloc.h>
-#include <memory.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <time.h>
-#include <unistd.h>
-#include "Externals/TinyXML/tinyxml.h"
-#include "Adapters/CAANOO/Audio/CAANOOAudio.h"
-#include "Adapters/CAANOO/Midi/CAANOOMidiService.h"
+#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
 #include "Adapters/SDL/GUI/GUIFactory.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Adapters/SDL/GUI/SDLEventManager.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
-#include "Adapters/Unix/FileSystem/UnixFileSystem.h"
-#include "Application/Commands/NodeList.h"
-#include "Application/Controllers/ControlRoom.h"
+#include "Adapters/CAANOO/Audio/CAANOOAudio.h"
+#include "Adapters/CAANOO/Midi/CAANOOMidiService.h"
+#include "Externals/TinyXML/tinyxml.h"
 #include "Application/Model/Config.h"
+#include "Application/Controllers/ControlRoom.h"
 #include "Application/Player/SyncMaster.h"
+#include "Application/Commands/NodeList.h"
+#include "Adapters/SDL/Timer/SDLTimer.h"
 #include "System/Console/Logger.h"
-
+#include <unistd.h>
+#include <fcntl.h>
+#include <memory.h>
+#include <time.h>
+#include <assert.h>
+#include <stdio.h>
+#include <sys/time.h> 
+#include <malloc.h>
+#include <stdlib.h>
 
 #ifdef fopen
 #undef fopen

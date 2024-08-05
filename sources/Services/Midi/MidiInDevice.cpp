@@ -1,7 +1,7 @@
 #include "MidiInDevice.h"
-#include "Application/Model/Config.h"
-#include "System/Console/Trace.h"
 #include "System/System/System.h"
+#include "System/Console/Trace.h"
+#include "Application/Model/Config.h"
 
 using namespace std;
 

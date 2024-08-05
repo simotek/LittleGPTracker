@@ -2,6 +2,7 @@
 #define _CAANOO_SERIAL_MIDI_DEVICE_H_
 
 #include "Services/Midi/MidiOutDevice.h"
+
 #include <termios.h>
 
 class CAANOOSerialMidiDevice: public MidiOutDevice {

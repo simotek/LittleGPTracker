@@ -8,9 +8,9 @@
  */
 
 #include "EventManager.h"
-#include "Application/Commands/NodeList.h"
-#include "Application/Controllers/ControlRoom.h"
 #include "Application/Model/Config.h"
+#include "Application/Controllers/ControlRoom.h"
+#include "Application/Commands/NodeList.h"
 
 bool EventManager::Init() {
 	return true ;

@@ -1,8 +1,8 @@
 #include "DEBGUIWindowImp.h"
-#include <string.h>
-#include "System/io/Trace.h"
-#include "System/System/System.h"
 #include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include "System/System/System.h"
+#include "System/io/Trace.h"
+#include <string.h>
 
 #define NYI(s) n_assert("NYI: ##s##")
 

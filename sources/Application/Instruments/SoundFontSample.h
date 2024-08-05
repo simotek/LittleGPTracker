@@ -2,8 +2,8 @@
 #define _SOUND_FONT_SAMPLE_H_
 
 #include "SoundSource.h"
-#include "Externals/Soundfont/ENAB.H"
 #include "System/FileSystem/FileSystem.h"
+#include "Externals/Soundfont/ENAB.H"
 
 class SoundFontSample: public SoundSource {
 public:

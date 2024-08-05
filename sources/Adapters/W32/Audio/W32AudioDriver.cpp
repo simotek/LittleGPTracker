@@ -1,10 +1,10 @@
 
 #include "W32AudioDriver.h"
-#include <assert.h>
 #include <math.h>
-#include "Services/Midi/MidiService.h"
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
+#include "Services/Midi/MidiService.h"
+#include <assert.h>
 
 void CALLBACK winmm_cback(HWAVEOUT hwo, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2) {
 

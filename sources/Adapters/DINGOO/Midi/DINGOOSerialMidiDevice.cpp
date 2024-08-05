@@ -1,12 +1,12 @@
 
 #include "DINGOOSerialMidiDevice.h"
-#include <fcntl.h>
-#include <memory.h>
+#include "System/io/Trace.h"
 #include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <sys/signal.h>
 #include <sys/types.h>
-#include <unistd.h>
-#include "System/io/Trace.h"
+#include <memory.h>
 
 const char *port="/dev/ttyS0" ;
 //const char *port="/dev/usb/tts/0" ;

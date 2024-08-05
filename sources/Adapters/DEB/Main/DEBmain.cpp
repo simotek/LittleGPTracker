@@ -1,7 +1,7 @@
-#include <string.h>
-#include "Adapters/DEB/System/DEBSystem.h"
-#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 #include "Application/Application.h"
+#include "Adapters/DEB/System/DEBSystem.h"
+#include <string.h>
+#include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
 
 int main(int argc,char *argv[]) 
 {

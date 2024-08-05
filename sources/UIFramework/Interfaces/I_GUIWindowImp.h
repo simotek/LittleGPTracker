@@ -1,9 +1,9 @@
 #ifndef _I_GUIWINDOWIMP_H_
 #define _I_GUIWINDOWIMP_H_
 
-#include "UIFramework/BasicDatas/GUIEvent.h"
 #include "UIFramework/BasicDatas/GUICreateWindowParams.h"
 #include "I_GUIGraphics.h"
+#include "UIFramework/BasicDatas/GUIEvent.h"
 
 class I_GUIWindowFactory ; // forward declaration
 class GUIWindow ;

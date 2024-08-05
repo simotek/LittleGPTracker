@@ -1,13 +1,13 @@
 
 #include "GP2XGUIWindowImp.h"
-#include <string.h>
-#include "Adapters/GP2XSystem/GP2XEventQueue.h"
 #include "Adapters/GP2XSystem/GP2XSystem.h"
+#include "Adapters/GP2XSystem/GP2XEventQueue.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
+#include "System/io/Trace.h"
+#include <string.h>
 #define NYI(s) n_assert("NYI: ##s##")
 #include "Application/Model/Config.h"
 #include "Application/Utils/char.h"
-#include "System/io/Trace.h"
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 GP2XGUIWindowImp *instance_ ;
 

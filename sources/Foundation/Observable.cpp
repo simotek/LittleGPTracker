@@ -1,5 +1,6 @@
 
 #include "Observable.h"
+
 #include "T_SimpleList.h"
 
 Observable::Observable() {

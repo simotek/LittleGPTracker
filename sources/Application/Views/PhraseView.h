@@ -2,8 +2,8 @@
 #ifndef _PHRASE_VIEW_H_
 #define _PHRASE_VIEW_H_
 
-#include "BaseClasses/View.h"
 #include "BaseClasses/UIBigHexVarField.h"
+#include "BaseClasses/View.h"
 #include "ViewData.h"
 
 #define FCC_EDIT MAKE_FOURCC('V','O','L','M')

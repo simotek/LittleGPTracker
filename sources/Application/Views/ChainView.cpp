@@ -1,6 +1,6 @@
 #include "ChainView.h"
-#include "Application/Utils/char.h"
 #include "System/Console/Trace.h"
+#include "Application/Utils/char.h"
 #include "UIController.h"
 
  

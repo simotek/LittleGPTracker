@@ -1,9 +1,10 @@
 #include "SoundFontManager.h"
+#include "System/System/System.h"
+#include "System/FileSystem/FileSystem.h"
+
 #ifdef _64BIT
 #include <stdint.h>
 #endif
-#include "System/FileSystem/FileSystem.h"
-#include "System/System/System.h"
 
 SoundFontManager::SoundFontManager() {
 } ;

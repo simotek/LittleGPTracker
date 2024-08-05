@@ -1,10 +1,10 @@
 
 #include "SelectProjectDialog.h"
 #include "NewProjectDialog.h"
-#include "Application/Views/ModalDialogs/MessageBox.h"
-#include <algorithm>
 #include "System/Console/Trace.h"
+#include "Application/Views/ModalDialogs/MessageBox.h"
 
+#include <algorithm>
 
 #define LIST_SIZE 20
 #define LIST_WIDTH 32

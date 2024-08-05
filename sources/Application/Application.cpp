@@ -1,12 +1,12 @@
 #include "Application/Application.h" 
-#include "Application/AppWindow.h"
+#include "Application/AppWindow.h" 
+#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
+#include "Application/Persistency/PersistencyService.h" 
+#include "Services/Audio/Audio.h"
 #include "Application/Commands/CommandDispatcher.h"
 #include "Application/Controllers/ControlRoom.h"
 #include "Application/Model/Config.h"
-#include "Application/Persistency/PersistencyService.h"
-#include "Services/Audio/Audio.h"
 #include "Services/Midi/MidiService.h"
-#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
 
 #include <math.h>
 

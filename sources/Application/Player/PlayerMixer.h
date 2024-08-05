@@ -3,13 +3,13 @@
 #define _APPLICATION_MIXER_H_
 
 #include "Foundation/T_Singleton.h"
-#include "Foundation/Observable.h"
-#include "Application/Audio/AudioFileStreamer.h"
 #include "Application/Model/Project.h"
-#include "Application/Utils/fixed.h"
 #include "Application/Views/ViewData.h"
-#include "Services/Audio/AudioOut.h"
+#include "Application/Utils/fixed.h"
+#include "Application/Audio/AudioFileStreamer.h"
 #include "PlayerChannel.h"
+#include "Foundation/Observable.h"
+#include "Services/Audio/AudioOut.h"
 
 #define STREAM_MIX_BUS 8
 

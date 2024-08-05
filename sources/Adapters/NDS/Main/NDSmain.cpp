@@ -1,8 +1,8 @@
-#include <nds.h>
-#include <stdio.h>
-#include <string.h>
 #include "Application/Application.h"
 #include "Adapters/NDS/System/NDSSystem.h"
+#include <string.h>
+#include <nds.h>
+#include <stdio.h>
 
 int main(int argc,char *argv[]) 
 {

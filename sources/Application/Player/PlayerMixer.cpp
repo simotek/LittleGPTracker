@@ -1,15 +1,17 @@
 
+
 #include "PlayerMixer.h"
-#include <math.h>
-#include <stdlib.h>
-#include "Application/Mixer/MixerService.h"
-#include "Application/Model/Mixer.h"
-#include "Application/Utils/char.h"
-#include "Application/Utils/fixed.h"
-#include "Services/Midi/MidiService.h"
+#include "SyncMaster.h"
 #include "System/Console/Trace.h"
 #include "System/System/System.h"
-#include "SyncMaster.h"
+#include "Application/Utils/fixed.h"
+#include "Application/Utils/char.h"
+#include "Services/Midi/MidiService.h"
+#include "Application/Mixer/MixerService.h"
+#include "Application/Utils/char.h"
+#include "Application/Model/Mixer.h"
+#include <stdlib.h>
+#include <math.h>
 
 PlayerMixer::PlayerMixer() {
 

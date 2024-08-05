@@ -2,8 +2,8 @@
 #define _WSDL_SYSTEM_H_
 
 #include "System/System/System.h"
-#include <string>
 #include "Externals/SDL/SDL.h"
+#include <string>
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
 
 class WSDLSystem: public System {

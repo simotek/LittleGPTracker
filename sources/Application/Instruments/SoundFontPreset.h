@@ -2,8 +2,8 @@
 #define _SOUNDFONT_PRESET_H_
 
 #include "SoundSource.h"
-#include "Externals/Soundfont/ENAB.H"
 #include "Externals/Soundfont/SFNAV.H"
+#include "Externals/Soundfont/ENAB.H"
 
 class SoundFontPreset: public SoundSource {
 public:

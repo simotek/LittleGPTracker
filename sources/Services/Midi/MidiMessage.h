@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Foundation/Observable.h"
 #include "Foundation/Types/Types.h"
+#include "Foundation/Observable.h"
 #include "MidiMessage.h"
 
 struct MidiMessage:public I_ObservableData

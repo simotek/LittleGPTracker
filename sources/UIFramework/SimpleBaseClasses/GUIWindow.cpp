@@ -1,7 +1,7 @@
 
 #include "GUIWindow.h"
-#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
 #include "UIFramework/Interfaces/I_GUIWindowImp.h"
+#include "UIFramework/Interfaces/I_GUIWindowFactory.h"
 
 // Constructor: We wrap the window around an implementation that
 // will be used to provide system functionalities

@@ -1,10 +1,10 @@
 #ifndef _UI_FIELD_H_
 #define _UI_FIELD_H_
 
-#include "System/Console/Trace.h"
 #include "UIFramework/BasicDatas/GUIPoint.h"
 #include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 #include "View.h"
+#include "System/Console/Trace.h"
 
 class UIField {
 public:

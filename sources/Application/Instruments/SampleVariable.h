@@ -2,8 +2,8 @@
 #ifndef _SAMPLE_VARIABLE_H_
 #define _SAMPLE_VARIABLE_H_
 
-#include "Foundation/Observable.h"
 #include "Foundation/Variables/WatchedVariable.h"
+#include "Foundation/Observable.h"
 
 class SampleVariable:public WatchedVariable,public I_Observer {
 public:

@@ -2,8 +2,8 @@
 #define _SELECT_PROJECT_DIALOG_H_
 
 #include "Application/Views/BaseClasses/ModalView.h"
-#include "System/Errors/Result.h"
 #include "System/FileSystem/FileSystem.h"
+#include "System/Errors/Result.h"
 
 class SelectProjectDialog:public ModalView {
 public:

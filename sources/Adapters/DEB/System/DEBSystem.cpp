@@ -1,26 +1,27 @@
 
 #include "DEBSystem.h"
-#include <libgen.h>
-#include <sys/time.h>
-#include <time.h>
-#include <unistd.h>
+#include "Adapters/RTMidi/RTMidiService.h"
 #ifndef _NO_JACK_
 #include "Adapters/Jack/Audio/JackAudio.h"
 #include "Adapters/Jack/Midi/JackMidiService.h"
 #include "Adapters/Jack/Client/JackClient.h"
 #endif
 #include "Adapters/RTAudio/RTAudioStub.h"
-#include "Adapters/RTMidi/RTMidiService.h"
 #include "Adapters/SDL/GUI/GUIFactory.h"
-#include "Adapters/SDL/GUI/SDLEventManager.h"
 #include "Adapters/SDL/GUI/SDLGUIWindowImp.h"
-#include "Adapters/SDL/Timer/SDLTimer.h"
+#include "Adapters/SDL/GUI/SDLEventManager.h"
 #include "Adapters/Unix/FileSystem/UnixFileSystem.h"
 #include "Adapters/Unix/Process/UnixProcess.h"
-#include "Application/Commands/NodeList.h"
-#include "Application/Controllers/ControlRoom.h"
 #include "Application/Model/Config.h"
 #include "System/Console/Logger.h"
+#include <time.h>
+#include <sys/time.h>
+#include <unistd.h>
+#include <libgen.h>
+#include "Application/Model/Config.h"
+#include "Application/Controllers/ControlRoom.h"
+#include "Application/Commands/NodeList.h"
+#include "Adapters/SDL/Timer/SDLTimer.h"
 
 EventManager *DEBSystem::eventManager_ = NULL ;
 

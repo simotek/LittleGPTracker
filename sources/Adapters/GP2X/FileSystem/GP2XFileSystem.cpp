@@ -1,15 +1,15 @@
 
 #include "GP2XFileSystem.h"
+#include "System/Console/Trace.h"
+#include <string.h>
+#include <stdarg.h>
+#include <unistd.h>
+#include <sys/dir.h>
+#include <sys/stat.h>
 #include <ctype.h>
 #include <errno.h>
-#include <stdarg.h>
-#include <string.h>
-#include <sys/dir.h>
 //#include <sys/dirent.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include "Application/Utils/wildcard.h"
-#include "System/Console/Trace.h"
+#include "Application/Utils/wildcard.h"	
 
 GP2XDir::GP2XDir(const char *path):I_Dir(path) {
 } ;

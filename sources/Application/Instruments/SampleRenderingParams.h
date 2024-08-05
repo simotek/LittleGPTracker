@@ -2,9 +2,9 @@
 #ifndef _SAMPLE_RENDER_PARAMS_H_
 #define _SAMPLE_RENDER_PARAMS_H_
 
-#include <vector>
 #include "Foundation/Types/Types.h"
 #include "SRPUpdaters.h"
+#include <vector>
 
 enum FeedbackMode {
 	FB_NONE,

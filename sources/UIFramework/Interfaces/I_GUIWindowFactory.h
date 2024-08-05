@@ -3,8 +3,9 @@
 #define _I_GUIWINDOWFACTORY_H_
 
 #include "I_GUIWindowImp.h"
-#include "UIFramework/BasicDatas/GUICreateWindowParams.h"
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
+
+#include "UIFramework/BasicDatas/GUICreateWindowParams.h"
 #include "Foundation/T_Factory.h"
 
 // The GUI factory. This object is responsible for the creation of all

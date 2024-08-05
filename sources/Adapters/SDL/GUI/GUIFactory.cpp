@@ -1,6 +1,6 @@
 #include "GUIFactory.h"
-#include "SDLEventManager.h"
 #include "SDLGUIWindowImp.h"
+#include "SDLEventManager.h"
 #ifndef _USE_NCURSES_
 
 

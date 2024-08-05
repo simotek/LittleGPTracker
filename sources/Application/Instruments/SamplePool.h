@@ -2,10 +2,10 @@
 #ifndef _SAMPLE_POOL_H_
 #define _SAMPLE_POOL_H_
 
-#include "Application/Model/Song.h"
-#include "Foundation/Observable.h"
 #include "Foundation/T_Singleton.h"
 #include "WavFile.h"
+#include "Application/Model/Song.h"
+#include "Foundation/Observable.h"
 
 #define MAX_PIG_SAMPLES MAX_SAMPLEINSTRUMENT_COUNT
 

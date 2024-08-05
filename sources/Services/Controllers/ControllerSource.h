@@ -1,9 +1,9 @@
 #ifndef _CONTROLLER_SOURCE_H_
 #define _CONTROLLER_SOURCE_H_
 
+#include "Channel.h"
 #include <string>
 #include "Services/Time/TimeService.h"
-#include "Channel.h"
 
 class ControllerSource {
 public:

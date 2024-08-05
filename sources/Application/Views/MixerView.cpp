@@ -1,9 +1,9 @@
 #include "MixerView.h"
-#include <iostream>
-#include <sstream>
-#include <string>
 #include "Application/Model/Mixer.h"
 #include "Application/Utils/char.h"
+#include <string>
+#include <iostream>
+#include <sstream>
 
 MixerView::MixerView(GUIWindow &w,ViewData *viewData):View(w,viewData) {
 	clipboard_.active_=false ;

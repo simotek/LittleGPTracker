@@ -1,11 +1,10 @@
 
 #include "AudioOutDriver.h"
+#include "System/System/System.h"
 #include "AudioDriver.h"
 #include "Application/Player/SyncMaster.h" // Should be installable
-#include "Services/Time/TimeService.h"
 #include "System/Console/Trace.h"
-#include "System/System/System.h"
-
+#include "Services/Time/TimeService.h"
 
 AudioOutDriver::AudioOutDriver(AudioDriver &driver) {
     driver_=&driver ;
