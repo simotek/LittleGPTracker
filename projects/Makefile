@@ -4,7 +4,7 @@
 .SUFFIXES:
 #---------------------------------------------------------------------------------
 
-PLATFORM := RASPI
+PLATFORM := X64
 FONT := original.bmp
 include $(PWD)/Makefile.$(PLATFORM)
 
@@ -65,6 +65,13 @@ LINUXDIRS := \
         ../sources/Adapters/Unix/FileSystem \
 	../sources/Adapters/Unix/Process \
         ../sources/System/Process
+        
+DBDIRS := \
+	../sources/Adapters/DEB/Main \
+        ../sources/Adapters/DEB/System \
+        ../sources/Adapters/Unix/FileSystem \
+	../sources/Adapters/Unix/Process \
+        ../sources/System/Process
 
 DUMMYMIDIDIRS := \
 	../sources/Adapters/Dummy/Midi
@@ -96,8 +103,8 @@ SDLAUDIODIRS := \
 SDL2AUDIODIRS := \
         ../sources/Adapters/SDL2/Audio
 
-BEAGLEBOARDDIRS := $(LINUXDIRS) $(RTAUDIODIRS) $(SDLDIRS)
-DEBDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
+BEAGLEBOARDDIRS := $(LINUXDIRS) $(DUMMYMIDIDIRS) $(RTAUDIODIRS) $(SDLDIRS)
+DEBDIRS := $(DBDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
 RASPIDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
 STEAMDIRS := $(LINUXDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
 #X64DIRS := $(LINUXDIRS) $(RTMIDIDIRS) $(SDL2DIRS) $(SDL2AUDIODIRS)
@@ -268,6 +275,17 @@ LINUXFILES := \
 	Process.o \
 	UnixProcess.o \
 	SDLTimer.o
+	
+DBFILES := \
+	UnixFileSystem.o \
+	DEBmain.o \
+	DEBSystem.o \
+	GUIFactory.o \
+	SDLGUIWindowImp.o \
+	SDLEventManager.o \
+	Process.o \
+	UnixProcess.o \
+	SDLTimer.o
 
 DUMMYMIDIFILES := \
 	DummyMidi.o
@@ -292,7 +310,7 @@ SDLAUDIOFILES := \
 	SDLAudioDriver.o \
 	SDLAudio.o
 
-DEBFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
+DEBFILES := $(DBFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
 RASPIFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 STEAMFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
