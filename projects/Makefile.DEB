@@ -7,12 +7,15 @@ DEFINES := \
 	-D__LINUX_ALSA__ \
 	-D__LINUX_ALSASEQ__
 
-ALSA_CFLAGS := $(shell pkg-config alsa --cflags)
-ALSA_LIBS := $(shell pkg-config alsa --libs)
-JACK_CFLAGS := $(shell pkg-config jack --cflags)
-JACK_LIBS := $(shell pkg-config jack --libs)
-SDL_CFLAGS := $(shell pkg-config sdl --cflags)
-SDL_LIBS := $(shell pkg-config sdl --libs)
+# When cross compiling on the CI we need to specify the correct path.
+PKG_CONFIG_PATH := /usr/lib/i386-linux-gnu/pkgconfig
+
+ALSA_CFLAGS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config alsa --cflags)
+ALSA_LIBS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config alsa --libs)
+JACK_CFLAGS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config jack --cflags)
+JACK_LIBS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config jack --libs)
+SDL_CFLAGS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config sdl --cflags)
+SDL_LIBS := $(shell PKG_CONFIG_PATH='$(PKG_CONFIG_PATH)' pkg-config sdl --libs)
 
 # optimization
 OPT_FLAGS := -O3 -m32
