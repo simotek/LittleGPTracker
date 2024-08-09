@@ -276,3 +276,17 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./workspace/LittleGPTracker/projects/*.zip
+          
+build-rg35xxS:
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Clone and build LGPT
+      run: |
+        apt-add-repository --list
+        sudo chmod -R 777 ./workspace/LittleGPTracker/projects
+        sudo chown -R root:root ./workspace/LittleGPTracker/projects
+
