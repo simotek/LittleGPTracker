@@ -236,7 +236,7 @@ jobs:
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
-  build-rg35xx:
+  build-rg35xxg:
     runs-on: ubuntu-latest
 
     steps:
@@ -250,7 +250,7 @@ jobs:
             apt update && apt install -y python3 python3-pillow
             git clone https://github.com/djdiskmachine/LittleGPTracker.git
             cd LittleGPTracker/projects
-            make PLATFORM=RG35XX
+            make PLATFORM=RG35XXG
           "
           sudo chmod -R 777 ./workspace/LittleGPTracker/projects
           sudo chown -R root:root ./workspace/LittleGPTracker/projects
@@ -276,4 +276,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./workspace/LittleGPTracker/projects/*.zip
+          
 
