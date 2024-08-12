@@ -182,7 +182,7 @@ RG35XXDIRS      :=    . \
 # ../sources/Adapters/RTMidi \ # Disabled for now
 # ../sources/Externals/RtMidi
 
-RG35XXHDIRS      :=    . \
+RG35XXPLUSDIRS      :=    . \
 				../sources/Adapters/DINGOO/Main \
 				../sources/Adapters/Unix/FileSystem \
 				../sources/System/Process \
@@ -341,12 +341,12 @@ RG35XXFILES    :=  GPSDLMain.o \
 					SDLEventManager.o \
 					DummyMidi.o \
 					SDLGUIWindowImp.o
-# RtMidi.o \  #Disabled for now
+# RtMidi.o \	#Disabled for now
 # RTMidiService.o \
 # RTMidiOutDevice.o \
 # RTMidiInDevice.o \
 
-RG35XXHFILES    :=  GPSDLMain.o \
+RG35XXPLUSFILES    :=  GPSDLMain.o \
 					UnixFileSystem.o \
 					SDLAudio.o \
 					Process.o \

@@ -5,10 +5,10 @@ STRIP = $(CROSS_COMPILE)strip
 	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 	@$(STRIP) $@
 
-# compiled using the https://github.com/shauninman/union-rg35xx-toolchain
+# compiled using the https://github.com/shauninman/union-rg35xxplus-toolchain
 # Docker image
 
-DEVKIT = /opt/rg35xx-toolchain/usr/
+DEVKIT = /opt/rg35xxplus-toolchain/usr/
 CROSS_COMPILE=$(DEVKIT)bin/arm-buildroot-linux-gnueabihf-
 
 CC = $(CROSS_COMPILE)gcc
@@ -21,16 +21,16 @@ DEFINES = -DHAVE_STDINT_H -D_NDEBUG -D_NO_JACK_ -I$(PWD)/../sources -DCPP_MEMORY
 INCLUDES = -Iinclude $(SDL_CFLAGS)
 OPT_FLAGS  = -O3 -Ofast -fdata-sections -fdata-sections -fno-common -fno-PIC -flto -marm -mtune=cortex-a53 -mfpu=neon-vfpv4 -mfloat-abi=hard -march=armv8-a
 
-OUTPUT = ../lgpt-rg35xxh
+OUTPUT = ../lgpt-rg35xxplus
 
 TOOLPATH=$(DEVKIT)/usr/bin
 PREFIX		:=	arm-linux-gnueabihf-
 
-CFLAGS	:=	$(DEFINES) $(INCLUDES) $(OPT_FLAGS) -Wall  
-CXXFLAGS:=	$(CFLAGS) -std=gnu++03 
+CFLAGS	:=	$(DEFINES) $(INCLUDES) $(OPT_FLAGS) -Wall
+CXXFLAGS:=	$(CFLAGS) -std=gnu++03
 
 EXTENSION:= elf
 
-LIBS	:=  -lSDL -lpthread 
+LIBS	:=  -lSDL -lpthread
 LIBDIRS	:=	$(DEKVIT)/usr/lib
-LIBDIRS	+=	$(DEKVIT)/usr/include 
+LIBDIRS	+=	$(DEKVIT)/usr/include
