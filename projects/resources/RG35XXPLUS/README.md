@@ -12,6 +12,8 @@ Open "Consoles -> Apps -> LittleGPTracker".
 
 # muOS
 
+## Installation
+
 1. Copy lgpt-rg35xxplus.elf, config.xml, samplelib, lgpt_BETA to /mnt/mmc/MUOS/application/.lgpt/
 3. Copy muos/LittleGPTracker.sh to /mnt/mmc/MUOS/application/
 
