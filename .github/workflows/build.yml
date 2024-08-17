@@ -110,6 +110,85 @@ jobs:
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
+  build-x86:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Install required libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y make pkgconf gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
+
+      - name: Build X86
+        working-directory: projects
+        run: make PLATFORM=X86
+
+      - name: Package build
+        working-directory: projects
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources*
+          ./resources/packaging/lgpt_package.sh
+
+      - name: Extract Git tag name
+        id: extract_tag
+        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
+          files: ./projects/*.zip
+
+  build-x64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Install required libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
+          sudo apt update
+          sudo apt install -y make pkgconf libsdl2-dev libasound2-plugins libjack-dev
+
+      - name: Build X64
+        working-directory: projects
+        run: make PLATFORM=X64
+
+      - name: Package build
+        working-directory: projects
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources*
+          ./resources/packaging/lgpt_package.sh
+
+      - name: Extract Git tag name
+        id: extract_tag
+        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
+          files: ./projects/*.zip
+
   build-psp:
     runs-on: ubuntu-latest
     env:
