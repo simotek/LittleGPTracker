@@ -38,6 +38,7 @@ collect_resources W32 lgpt-W32.exe
 collect_resources RASPI lgpt.rpi-exe
 collect_resources CHIP lgpt.chip-exe
 collect_resources BITTBOY lgpt-bittboy.elf
-collect_resources RG35XX lgpt-rg35xx.elf
+collect_resources RG35XXG lgpt-rg35xxG.elf
+collect_resources RG35XXS lgpt-rg35xxS.elf
 # collect_resources RS97 lgpt.dge
 # collect_resources STEAM lgpt.steam-exe
