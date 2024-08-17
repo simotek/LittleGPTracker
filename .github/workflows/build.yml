@@ -372,7 +372,7 @@ jobs:
 
       - name: Build rg35xx Stock
         working-directory: projects
-        run: make PLATFORM=rg35xxS
+        run: make PLATFORM=RG35XXS
 
       - name: Package build
         working-directory: ./workspace/LittleGPTracker/projects
