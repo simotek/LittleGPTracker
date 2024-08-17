@@ -355,42 +355,43 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./workspace/LittleGPTracker/projects/*.zip
-          
-build-rg35xxS:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
 
-    - name: Install rg35xx Stock Toolchain
-      run: |
+  build-rg35xxS:
+    runs-on: ubuntu-latest
 
-        wget -O /tmp/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz https://github.com/simotek/rg35xx-plus-aarch64-SDL2-SDK/releases/download/0.1.0/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz
-        mkdir /opt/rg35xx-plus-aarch64-SDL2-SDK-0.1.0
-        tar -xvf /tmp/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz -C /opt/rg35xx-plus-aarch64-SDL2-SDK-0.1.0  --strip-components=1
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Build rg35xx Stock
-      working-directory: projects
-      run: make PLATFORM=rg35xxS
+      - name: Install rg35xx Stock Toolchain
+        run: |
 
-    - name: Package build
-      working-directory: projects
-      run: |
-        curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
-        unzip lgpt-resources.zip
-        mv lgpt-resources-1.0/*/ ./resources/packaging
-        rm -rf lgpt-resources*
-        ./resources/packaging/lgpt_package.sh
+          wget -O /tmp/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz https://github.com/simotek/rg35xx-plus-aarch64-SDL2-SDK/releases/download/0.1.0/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz
+          mkdir /opt/rg35xx-plus-aarch64-SDL2-SDK-0.1.0
+          tar -xvf /tmp/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz -C /opt/rg35xx-plus-aarch64-SDL2-SDK-0.1.0  --strip-components=1
 
-    - name: Extract Git tag name
-      id: extract_tag
-      run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
-      env:
-        GITHUB_REF: ${{ github.ref }}
+      - name: Build rg35xx Stock
+        working-directory: projects
+        run: make PLATFORM=rg35xxS
 
-    - name: Upload build release
-      uses: softprops/action-gh-release@v2
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-        files: ./projects/*.zip
+      - name: Package build
+        working-directory: ./workspace/LittleGPTracker/projects
+        run: |
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
+          unzip lgpt-resources.zip
+          mv lgpt-resources-1.0/*/ ./resources/packaging
+          rm -rf lgpt-resources*
+          ./resources/packaging/lgpt_package.sh
+
+      - name: Extract Git tag name
+        id: extract_tag
+        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
+          files: ./workspace/LittleGPTracker/projects/*.zip
