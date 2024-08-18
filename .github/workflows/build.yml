@@ -122,7 +122,7 @@ jobs:
           pip install Pillow
           sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y make pkgconf gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
+          sudo apt install -y make pkgconf gcc-multilib g++-multilib libsdl2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
 
       - name: Build X86
         working-directory: projects
