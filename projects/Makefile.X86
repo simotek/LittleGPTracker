@@ -9,12 +9,12 @@ DEFINES := \
         -DSDLAUDIO \
         -DDUMMYMIDI
 
-ALSA_CFLAGS := $(shell pkg-config alsa --cflags)
-ALSA_LIBS := $(shell pkg-config alsa --libs)
-JACK_CFLAGS := $(shell pkg-config jack --cflags)
-JACK_LIBS := $(shell pkg-config jack --libs)
-SDL_CFLAGS := $(shell pkg-config sdl2 --cflags)
-SDL_LIBS := $(shell pkg-config sdl2 --libs)
+ALSA_CFLAGS := $(shell i686-linux-gnu-pkg-config alsa --cflags)
+ALSA_LIBS := $(shell i686-linux-gnu-pkg-config alsa --libs)
+JACK_CFLAGS := $(shell i686-linux-gnu-pkg-config jack --cflags)
+JACK_LIBS := $(shell i686-linux-gnu-pkg-config jack --libs)
+SDL_CFLAGS := $(shell i686-linux-gnu-pkg-config sdl2 --cflags)
+SDL_LIBS := $(shell i686-linux-gnu-pkg-config sdl2 --libs)
 
 # optimization
 OPT_FLAGS := -O3 -m32
