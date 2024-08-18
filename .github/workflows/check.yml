@@ -58,3 +58,22 @@ jobs:
         working-directory: projects
         run: |
           make PLATFORM=MIYOO
+
+  x64:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Install required libraries
+        run: |
+          python -m pip install --upgrade pip
+          pip install Pillow
+          sudo apt update
+          sudo apt install -y make pkgconf libsdl2-dev libasound2-plugins libjack-dev
+
+      - name: Build X64
+        working-directory: projects
+        run: |
+          make PLATFORM=X64
