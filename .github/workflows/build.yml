@@ -328,12 +328,13 @@ jobs:
           docker exec rg35xx-container bash -c "
             apt update && apt install -y python3 python3-pillow
             echo "$PWD"
+            cd /root/workspace
             echo "ls"
             ls
             echo "ls /root/workspace"
             ls /root/workspace
-            git clone https://github.com/djdiskmachine/LittleGPTracker.git
-            cd LittleGPTracker/projects
+            #git clone https://github.com/djdiskmachine/LittleGPTracker.git
+            #cd LittleGPTracker/projects
             make PLATFORM=RG35XXG
           "
           sudo chmod -R 777 ./workspace/LittleGPTracker/projects
