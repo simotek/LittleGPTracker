@@ -8,7 +8,7 @@ DEFINES := \
 	-DHAVE_STDINT_H \
 	-D_NO_JACK_  
 
-PLATFORM	:= RG35XX
+PLATFORM	:= RG35XXG
 
 DEVKIT = /opt/miyoo/
 CROSS_COMPILE=$(DEVKIT)bin/arm-miyoo-linux-uclibcgnueabi-
