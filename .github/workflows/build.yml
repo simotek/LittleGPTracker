@@ -1,10 +1,6 @@
 name: Multi platform build
 
 on:
-  push:
-    branches:
-      - "workflow-test"
-  
   workflow_dispatch:
 
 jobs:
