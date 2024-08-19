@@ -4,7 +4,7 @@
 .SUFFIXES:
 #---------------------------------------------------------------------------------
 
-PLATFORM := RASPI
+PLATFORM:=  RASPI
 FONT := original.bmp
 include $(PWD)/Makefile.$(PLATFORM)
 
@@ -12,10 +12,10 @@ include $(PWD)/Makefile.$(PLATFORM)
 # options for FXE
 #---------------------------------------------------------------------------------
 
-AUTHOR := n0s
-TITLE := lgpt
-NAME := LittleGPTracker
-ICON := lgpt_icon.bmp
+AUTHOR	:=	n0s
+TITLE	:=	lgpt
+NAME    :=  LittleGPTracker
+ICON    :=  lgpt_icon.bmp
 
 #---------------------------------------------------------------------------------
 # Directory definitions
@@ -54,7 +54,7 @@ COMMONDIRS := \
 	../sources/Externals/Compression \
 	../sources/Externals/Soundfont \
 	../sources/Externals/TinyXML
-
+				
 #---------------------------------------------------------------------------------
 # Linux
 #---------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ LINUXDIRS := \
         ../sources/Adapters/Unix/FileSystem \
 	../sources/Adapters/Unix/Process \
         ../sources/System/Process
-        
+
 DBDIRS := \
 	../sources/Adapters/DEB/Main \
         ../sources/Adapters/DEB/System \
@@ -77,31 +77,31 @@ DUMMYMIDIDIRS := \
 	../sources/Adapters/Dummy/Midi
 
 JACKDIRS := \
-	../sources/Adapters/Jack/Audio \
-	../sources/Adapters/Jack/Midi \
+	../sources/Adapters/Jack/Audio\
+	../sources/Adapters/Jack/Midi\
 	../sources/Adapters/Jack/Client
 
 RTAUDIODIRS := \
-	../sources/Adapters/RTAudio \
+	../sources/Adapters/RTAudio\
 	../sources/Externals/RTAudio
 
 RTMIDIDIRS := \
-	../sources/Adapters/RTMidi \
+	../sources/Adapters/RTMidi\
 	../sources/Externals/RtMidi
 
 SDLDIRS := \
-        ../sources/Adapters/SDL/Timer \
-        ../sources/Adapters/SDL/GUI
-        
+	../sources/Adapters/SDL/Timer\
+	../sources/Adapters/SDL/GUI
+
 SDL2DIRS := \
-        ../sources/Adapters/SDL2/Timer \
-        ../sources/Adapters/SDL2/GUI
+	../sources/Adapters/SDL2/Timer \
+	../sources/Adapters/SDL2/GUI
 
 SDLAUDIODIRS := \
 	../sources/Adapters/SDL/Audio
-        
+	
 SDL2AUDIODIRS := \
-        ../sources/Adapters/SDL2/Audio
+	../sources/Adapters/SDL2/Audio
 
 BEAGLEBOARDDIRS := $(LINUXDIRS) $(DUMMYMIDIDIRS) $(RTAUDIODIRS) $(SDLDIRS)
 DEBDIRS := $(DBDIRS) $(JACKDIRS) $(RTAUDIODIRS) $(RTMIDIDIRS) $(SDLDIRS)
@@ -125,8 +125,8 @@ CAANOODIRS := \
 	../sources/Adapters/CAANOO/System \
 	../sources/Adapters/CAANOO/Midi \
 	../sources/Adapters/CAANOO/Audio \
-	../sources/Adapters/SDL/GUI \
-	../sources/Adapters/SDL/Timer
+	../sources/Adapters/SDL/GUI\
+	../sources/Adapters/SDL/Timer 
 
 DINGUXDIRS := \
 	. \
@@ -141,11 +141,11 @@ DINGUXDIRS := \
 	../sources/Adapters/SDL/Process \
 	../sources/Adapters/SDL/GUI \
 	../sources/Adapters/SDL/Timer
-	
+
 DINGUXAUDIODIRS := \
 	../sources/Adapters/DINGOO/Midi \
 	../sources/Adapters/DINGOO/Audio
-	
+				
 DUMMYMIDIDIRS := \
 	../sources/Adapters/Dummy/Midi
 
@@ -197,12 +197,15 @@ PSPDIRS := \
 	../sources/Adapters/SDL/GUI \
 	../sources/Adapters/SDL/Timer
 
-#---------------------------------------------------------------------------------
-# Windows
-#---------------------------------------------------------------------------------
+GP32DIRS	:=	.\
+				../sources/Adapters/GP32FileSystem \
+				../sources/Adapters/GP32Midi \
+				../sources/Adapters/GP32/Main \
+				../sources/Adapters/GP32System \
+				../sources/Adapters/GP32Timer \
+				../sources/Adapters/GP32UI
 
-W32DIRS := \
-	.\
+W32DIRS     :=  .\
 	../sources/Adapters/W32FileSystem \
 	../sources/Adapters/W32Midi \
 	../sources/Adapters/W32Sound \
@@ -316,9 +319,9 @@ JACKFILES := \
 	JackAudio.o
 
 SDLAUDIOFILES := \
-	SDLAudioDriver.o \
+					SDLAudioDriver.o \
 	SDLAudio.o
-
+					
 DEBFILES := $(DBFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
 BEAGLEBOARDFILES := $(LINUXFILES) $(DUMMYMIDIFILES)
 RASPIFILES := $(LINUXFILES) $(RTAUDIOFILES) $(RTMIDIFILES) $(JACKFILES)
@@ -434,7 +437,7 @@ PSPFILES := \
 	SDLProcess.o \
 	SDLTimer.o \
 	PSPSystem.o
-
+					
 #---------------------------------------------------------------------------------
 # Windows
 #---------------------------------------------------------------------------------
@@ -459,16 +462,16 @@ W32FILES := \
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
 
-TARGET := $(TITLE)
-BUILD := build$(PLATFORM)
-SOURCES := $($(PLATFORM)DIRS) $(COMMONDIRS)
-INCLUDES :=
+TARGET		:=	$(TITLE)
+BUILD		:=	build$(PLATFORM)
+SOURCES		:=	$($(PLATFORM)DIRS) $(COMMONDIRS)
+INCLUDES	:=
 
 #---------------------------------------------------------------------------------
 # path to tools - this can be deleted if you set the path in windows
 #---------------------------------------------------------------------------------
 
-export PATH := $(DEVKITARM)/bin:$(PATH)
+export PATH		:=	$(DEVKITARM)/bin:$(PATH)
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
@@ -486,22 +489,22 @@ export PATH := $(DEVKITARM)/bin:$(PATH)
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
 
-export OUTPUT := $(CURDIR)/$(TARGET)
-export VPATH := $(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
-export DEPSDIR := $(CURDIR)/$(BUILD)
+export OUTPUT	:=	$(CURDIR)/$(TARGET)
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir))
+export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
 #---------------------------------------------------------------------------------
 
-export LD := $(CXX)
-export OFILES := $(COMMONFILES) $($(PLATFORM)FILES) 
+export LD	:=	$(CXX)
+export OFILES	:=	$(COMMONFILES) $($(PLATFORM)FILES) 
 export OBJS := $(OFILES)
 export INCLUDE := \
 	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
-	$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
-	-I$(CURDIR)/$(BUILD)
-export LIBPATHS := $(foreach dir,$(LIBDIRS),-L$(dir)/lib)
+					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+					-I$(CURDIR)/$(BUILD)
+export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
 .PHONY: $(BUILD) clean
 
@@ -522,7 +525,7 @@ clean:
 
 else
 
-DEPENDS := $(OFILES:.o=.d)
+DEPENDS	:=	$(OFILES:.o=.d)
 
 ifeq ($(PLATFORM),PSP)
 include $(PSPSDK)/lib/build.mak
@@ -534,20 +537,20 @@ endif
 
 all: $(OUTPUT).$(EXTENSION)
 
-$(OUTPUT).exe : $(OFILES)
+$(OUTPUT).exe   :   $(OFILES)
 	@echo "linking result.."
 	@$(LD) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
+	
+$(OUTPUT).fxe	:	$(OUTPUT).gxb
 
-$(OUTPUT).fxe : $(OUTPUT).gxb
+$(OUTPUT).gxb	:	$(OUTPUT).elf
 
-$(OUTPUT).gxb : $(OUTPUT).elf
+$(OUTPUT).elf	:	$(OFILES)
 
-$(OUTPUT).elf : $(OFILES)
-
-$(OUTPUT).deb-exe : $(OFILES)
+$(OUTPUT).deb-exe	:	$(OFILES)
 	$(LD) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 
-$(OUTPUT).beagle-exe : $(OFILES)
+$(OUTPUT).beagle-exe	:	$(OFILES)
 	$(LD) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 
 -include $(DEPENDS)
