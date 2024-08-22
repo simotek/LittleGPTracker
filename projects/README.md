@@ -70,10 +70,10 @@
 		apt install -y python3 python3-pillow
 		make PLATFORM=RG35XX
 
-##### RG35XXPLUS: Compile in shauninman toolchain docker
+##### GARLICPLUS: Compile in shauninman toolchain docker
     clone:
         https://github.com/shauninman/union-rg35xxplus-toolchain
     enter docker:
         make shell
     Build with:
-        make PLATFORM=RG35XXPLUS
+        make PLATFORM=GARLICPLUS
