@@ -16,7 +16,7 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
   echo "-=-=Packaging $PACKAGE=-=-"
   CONTENTS="./resources/$1/*"
   CONTENTS+=" $(find -iname $2)"
-  if [ "$1" == "PSP" ] || [ "$1" == "GARLIC" ] || [ "$1" == "RG35XXS" ]; then # All files go in the root folder
+  if [ "$1" == "PSP" ] || [ "$1" == "GARLIC" ] || [ "$1" == "RG35XXPLUS" ]; then # All files go in the root folder
     zip -9 $PACKAGE -j $CONTENTS
   else # all the others go in the bin
     mkdir bin ; cp $CONTENTS bin
@@ -41,6 +41,6 @@ collect_resources RASPI lgpt.rpi-exe
 collect_resources CHIP lgpt.chip-exe
 collect_resources BITTBOY lgpt-bittboy.elf
 collect_resources GARLIC lgpt-garlic.elf
-collect_resources RG35XXS lgpt-rg35xxS.elf
+collect_resources RG35XXPLUS lgpt-rg35xxplus.elf
 # collect_resources RS97 lgpt.dge
 # collect_resources STEAM lgpt.steam-exe

@@ -27,7 +27,7 @@ INCLUDES = -Iinclude $(SDL_CFLAGS) -I$(DEVKIT)/$(TRIPLET)/include -I$(DEVKIT)/$(
 CFLAGS	:=	$(DEFINES) $(INCLUDES) $(OPT_FLAGS) -Wall  
 CXXFLAGS:=	$(CFLAGS) -std=gnu++03 
 LIBS	:= -Wl,-rpath-link,$(DEVKIT)/$(TRIPLET)/lib -Wl,-rpath-link,$(DEVKIT)/$(TRIPLET)/lib/pulseaudio $(SDL_LIBS) -lpthread
-OUTPUT = ../lgpt-rg35xxS
+OUTPUT = ../lgpt-rg35xxplus
 EXTENSION:= elf
 
 %.elf: $(OFILES)

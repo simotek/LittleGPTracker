@@ -352,7 +352,7 @@ jobs:
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./workspace/LittleGPTracker/projects/*.zip
 
-  build-rg35xxS:
+  build-rg35xxplus:
     runs-on: ubuntu-latest
 
     steps:
@@ -369,7 +369,7 @@ jobs:
 
       - name: Build rg35xx Stock
         working-directory: projects
-        run: make PLATFORM=RG35XXS
+        run: make PLATFORM=RG35XXPLUS
 
       - name: Package build
         working-directory: ./workspace/LittleGPTracker/projects
