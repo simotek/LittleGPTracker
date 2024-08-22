@@ -27,7 +27,7 @@ CXXFLAGS:=	$(CFLAGS) -std=gnu++03
 LIBS	:=	$(SDL_LIBS) -lpthread
 LIBDIRS	:=	$(DEKVIT)/usr/lib
 LIBDIRS	+=	$(DEKVIT)/usr/include
-OUTPUT := ../lgpt-rg35xxG
+OUTPUT := ../lgpt-garlic
 EXTENSION:= elf
 
 %.elf: $(OFILES)

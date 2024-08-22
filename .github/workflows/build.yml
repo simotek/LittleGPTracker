@@ -311,7 +311,7 @@ jobs:
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
-  build-rg35xxG:
+  build-garlic:
     runs-on: ubuntu-latest
 
     steps:
@@ -325,7 +325,7 @@ jobs:
           docker exec rg35xx-container bash -c "
             apt update && apt install -y python3 python3-pillow
             cd projects
-            make PLATFORM=RG35XXG
+            make PLATFORM=GARLIC
           "
           sudo chmod -R 777 ./workspace/projects
           sudo chown -R root:root ./workspace/projects
