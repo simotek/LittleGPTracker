@@ -78,6 +78,7 @@
 		make PLATFORM=RS97
 
 ##### GARLIC: Compile in edemirkans toolchain docker
+	For older Anbernic RG35XX Devices running GarlicOS
 	clone:
 		https://github.com/edemirkan/rg35xx-toolchain
 	enter docker:
@@ -87,6 +88,8 @@
 		make PLATFORM=GARLIC
 
 ##### GARLICPLUS: Compile in shauninman toolchain docker
+        For newer Anbernic RG35XX Platform devices (SP, Plus, H, 2024)
+        running either Garlic or muOS
         clone:
             https://github.com/shauninman/union-rg35xxplus-toolchain
         enter docker:
@@ -95,6 +98,8 @@
             make PLATFORM=GARLICPLUS
         
 ##### RG35XXPLUS: Compile with simotek toolchain
+        For newer Anbernic RG35XX Platform devices (SP, Plus, H, 2024)
+        running the latest 64bit stock or stock modified firmware.
         download:
             https://github.com/simotek/rg35xx-plus-aarch64-SDL2-SDK/releases/download/0.1.0/rg35xx-plus-aarch64-SDL2-SDK-0.1.0.tar.xz
         extract:
