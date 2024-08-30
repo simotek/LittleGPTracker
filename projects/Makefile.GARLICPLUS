@@ -1,6 +1,8 @@
 -include $(PWD)/rules_base
 STRIP = $(CROSS_COMPILE)strip
 
+export LD_LIBRARY_PATH = $LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/rg35xxplus-toolchain/usr/lib
+
 %.elf: $(OFILES)
 	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
 	@$(STRIP) $@
@@ -8,8 +10,8 @@ STRIP = $(CROSS_COMPILE)strip
 # compiled using the https://github.com/shauninman/union-rg35xxplus-toolchain
 # Docker image
 
-DEVKIT = /opt/rg35xxplus-toolchain/usr/
-CROSS_COMPILE=$(DEVKIT)bin/arm-buildroot-linux-gnueabihf-
+DEVKIT = /opt/rg35xxplus-toolchain/
+CROSS_COMPILE=$(DEVKIT)/usr/bin/arm-buildroot-linux-gnueabihf-
 
 CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
