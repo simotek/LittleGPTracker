@@ -362,18 +362,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Clone and build LGPT
+      - name: Install Garlic Plus toolchain
         run: |
-          ln -s /home/runner/work/LittleGPTracker/LittleGPTracker workspace
-          git clone https://github.com/simotek/union-rg35xxplus-toolchain
-          cd union-rg35xxplus-toolchain
-          make shell
-          apt update && apt install -y python3 python3-pillow
-          cd projects
-          make PLATFORM=GARLICPLUS
-          
-          sudo chmod -R 777 ./workspace/projects
-          sudo chown -R root:root ./workspace/projects
+          python -m pip install --upgrade pip
+          pip install Pillow
+          wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/simotek/union-rg35xxplus-toolchain/releases/download/20240830/rg35xxplus-toolchain.tar.xz
+          mkdir /opt/rg35xxplus-toolchain
+          tar -xvf /tmp/rg35xxplus-toolchain.tar.xz -C /opt/rg35xxplus-toolchain  --strip-components=1
+
+      - name: Build Garlic Plus
+        working-directory: projects
+        run: make PLATFORM=GARLICPLUS
 
       - name: Package build
         working-directory: ./workspace/projects
