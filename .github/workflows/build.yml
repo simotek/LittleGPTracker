@@ -375,7 +375,7 @@ jobs:
         run: make PLATFORM=GARLICPLUS
 
       - name: Package build
-        working-directory: ./workspace/projects
+        working-directory: projects
         run: |
           curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
           unzip lgpt-resources.zip
@@ -416,7 +416,7 @@ jobs:
         run: make PLATFORM=RG35XXPLUS
 
       - name: Package build
-        working-directory: ./workspace/LittleGPTracker/projects
+        working-directory: projects
         run: |
           curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
           unzip lgpt-resources.zip
