@@ -3,36 +3,37 @@ STRIP = $(CROSS_COMPILE)strip
 
 export LD_LIBRARY_PATH = $LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/rg35xxplus-toolchain/usr/lib
 
-%.elf: $(OFILES)
-	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
-	@$(STRIP) $@
+DEFINES := \
+	-DBUFFERED \
+	-DCPP_MEMORY \
+	-D_NDEBUG \
+	-DHAVE_STDINT_H \
+	-D_NO_JACK_  
 
 # compiled using the https://github.com/shauninman/union-rg35xxplus-toolchain
-# Docker image
 
 DEVKIT = /opt/rg35xxplus-toolchain/
 CROSS_COMPILE=$(DEVKIT)/usr/bin/arm-buildroot-linux-gnueabihf-
-
 CC = $(CROSS_COMPILE)gcc
 CXX = $(CROSS_COMPILE)g++
+TOOLPATH=$(DEVKIT)/usr/bin
 SYSROOT     := $(shell $(CROSS_COMPILE)gcc --print-sysroot)
+
 SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
-DEFINES = -DHAVE_STDINT_H -D_NDEBUG -D_NO_JACK_ -I$(PWD)/../sources -DCPP_MEMORY $(SDL_CFLAGS) $(SDL_LIBS) -DBUFFERED
-INCLUDES = -Iinclude $(SDL_CFLAGS)
-OPT_FLAGS  = -O3 -Ofast -fdata-sections -fdata-sections -fno-common -fno-PIC -flto -marm -mtune=cortex-a53 -mfpu=neon-vfpv4 -mfloat-abi=hard -march=armv8-a
-
-OUTPUT = ../lgpt-rg35xxplus
-
-TOOLPATH=$(DEVKIT)/usr/bin
-PREFIX		:=	arm-linux-gnueabihf-
-
-CFLAGS	:=	$(DEFINES) $(INCLUDES) $(OPT_FLAGS) -Wall
-CXXFLAGS:=	$(CFLAGS) -std=gnu++03
-
-EXTENSION:= elf
-
+# optimization
+OPT_FLAGS  = -O3 -Ofast -fdata-sections -fdata-sections -fno-common -fno-PIC -flto -marm -mtune=cortex-a53 -mfpu=neon-vfpv4 -mfloat-abi=hard
+PREFIX	:=	arm-linux-gnueabihf-
+INCLUDES = -Iinclude $(SDL_CFLAGS) -I$(PWD)/../sources
+CFLAGS	:=	$(DEFINES) $(INCLUDES) $(OPT_FLAGS) -Wall  
+CXXFLAGS:=	$(CFLAGS) -std=gnu++03 
 LIBS	:=  -lSDL -lpthread
 LIBDIRS	:=	$(DEKVIT)/usr/lib
 LIBDIRS	+=	$(DEKVIT)/usr/include
+OUTPUT = ../lgpt-rg35xxplus
+EXTENSION:= elf
+
+%.elf: $(OFILES)
+	$(CXX) $(LDFLAGS) -o $@ $(OFILES) $(LIBS)
+	@$(STRIP) $@
