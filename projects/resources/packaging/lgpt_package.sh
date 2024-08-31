@@ -41,6 +41,7 @@ collect_resources RASPI lgpt.rpi-exe
 collect_resources CHIP lgpt.chip-exe
 collect_resources BITTBOY lgpt-bittboy.elf
 collect_resources GARLIC lgpt-garlic.elf
+collect_resources GARLICPLUS lgpt-garlicplus.elf
 collect_resources RG35XXPLUS lgpt-rg35xxplus.elf
 # collect_resources RS97 lgpt.dge
 # collect_resources STEAM lgpt.steam-exe

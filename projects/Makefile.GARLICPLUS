@@ -31,7 +31,7 @@ CXXFLAGS:=	$(CFLAGS) -std=gnu++03
 LIBS	:=  -lSDL -lpthread
 LIBDIRS	:=	$(DEKVIT)/usr/lib
 LIBDIRS	+=	$(DEKVIT)/usr/include
-OUTPUT = ../lgpt-rg35xxplus
+OUTPUT = ../lgpt-garlicplus
 EXTENSION:= elf
 
 %.elf: $(OFILES)
