@@ -10,7 +10,7 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
     echo "Build for $2!" # Found it
   else
     echo "-->file $2 not found<---"
-    return 1;
+    return;
   fi
   PACKAGE=LGPT-$1-$VERSION.zip
   echo "-=-=Packaging $PACKAGE=-=-"
