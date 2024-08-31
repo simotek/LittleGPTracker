@@ -353,7 +353,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-          files: ./workspace/LittleGPTracker/projects/*.zip
+          files: ./workspace/projects/*.zip
 
   build-garlicplus:
     runs-on: ubuntu-latest
@@ -394,7 +394,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-          files: ./workspace/LittleGPTracker/projects/*.zip
+          files: ./projects/*.zip
 
   build-rg35xxplus:
     runs-on: ubuntu-latest
@@ -435,4 +435,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-          files: ./workspace/LittleGPTracker/projects/*.zip
+          files: ./projects/*.zip
