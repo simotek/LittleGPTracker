@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef _SYS_MUTEX_H_
+#define _SYS_MUTEX_H_
+
 #ifdef SDL2
 #include <SDL2/SDL.h>
 #else
@@ -30,3 +33,5 @@ public:
 private:
 	SysMutex *mutex_ ;
 } ;
+
+#endif // _SYS_MUTEX_H_
