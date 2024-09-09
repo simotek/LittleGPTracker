@@ -24,6 +24,7 @@ sfBankID SoundFontManager::LoadBank(const char *path) {
 
 	sfBankID id=sfReadSFBFile((char *)path) ; 
 	if (id==-1) {
+		Trace::Debug("SoundFontManager", "SoundFont failed to load!");
 		return -1 ;
 	} 
 	// open the file
