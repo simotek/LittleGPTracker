@@ -73,6 +73,7 @@ void MidiService::Stop() {
 
 void MidiService::QueueMessage(MidiMessage &m) {
 	if (device_) {
+        SysMutexLocker locker(queueMutex_) ;
 		T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
 		MidiMessage *ms=new MidiMessage(m.status_,m.data1_,m.data2_);
 		queue->Insert(ms);
@@ -94,6 +95,7 @@ void MidiService::Trigger() {
 
 void MidiService::AdvancePlayQueue() {
  	currentPlayQueue_=(currentPlayQueue_+1)%MIDI_MAX_BUFFERS;
+    SysMutexLocker locker(queueMutex_) ;
 	T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
 	queue->Empty();
 }
@@ -123,6 +125,7 @@ void MidiService::Flush() {
 void MidiService::flushOutQueue() {
   // Move queue positions
   currentOutQueue_ = (currentOutQueue_+1) % MIDI_MAX_BUFFERS;
+  SysMutexLocker locker(queueMutex_) ;
 	T_SimpleList<MidiMessage> *flushQueue=queues_[currentOutQueue_];
   
 	if (device_) {
