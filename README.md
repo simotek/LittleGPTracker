@@ -40,7 +40,7 @@ Join our [Discord server](https://discord.gg/e4N2VM7sz6)
 
 All the relevant documentation can be found in [Docs](docs) directory.
 
-This is a small list of interesting documents:
+Recommended reading to get you started:
 
 - [What is Little Piggy Tracker](docs/wiki/What-is-LittlePiggyTracker.md)
 - [The config.xml file](docs/wiki/config_xml.md)
