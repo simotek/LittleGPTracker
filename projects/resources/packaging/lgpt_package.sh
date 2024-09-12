@@ -38,6 +38,7 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
   zip -9 -r ../../$PACKAGE $CONTENTS
   CONTENTS="../../../docs/wiki/What-is-LittlePiggyTracker.md"
   CONTENTS+=" ../../../docs/wiki/config_xml.md"
+  CONTENTS+=" ../../../docs/wiki/tips_and_tricks.md"
   CONTENTS+=" ../$1/*.txt"
   zip -9 ../../$PACKAGE -jq $CONTENTS && cd -
 }

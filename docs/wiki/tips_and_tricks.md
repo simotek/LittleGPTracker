@@ -69,7 +69,7 @@ Using the principle of wave scanning, you can take a long sample (a whole musica
 See for example the [PeteyDroney](http://www.hexawe.net/lgptwiki/lgpt-%20PeteyDroney.rar) sample
 
 ## Breakz !
-### Loop choppin'
+### Loop choppin' (old method)
 Loop chopping is really easy in LGPT through the PLOF command. PLOF sees the whole sample as 256 chunks of the same length. It allows to put the current playback head to the beginning of any of those chunks. To get it, we'll take a really simple drum loop sample going like this:
 
 ```
@@ -81,9 +81,14 @@ You can see by combining a lot of LPOF command one after the other, you can re-o
 
 Here's a nice example, courtesy of jonbro, chopping drums he had recorded previously:
 
-[Jonbro - the thing is the thing](http://battleofthebits.org/tracks/botb_1513%20JonBro%20-%20the%20thing%20is%20the%20thing.zip.mp3)
+[Jonbro - the thing is the thing](https://battleofthebits.com/arena/Entry/the+thing+is+the+thing/1479/)
+
+### Slice! (new chopping method)
+Since version 1.3o there is a new loop mode called Slice
+Using this, you can assign up to 256 individual slices from C-2 (C minus two) up to the amount of slices you set. How handy!
 
 Of course, you are not limited to drum loops. Just chop anything away !
+The example project BETA uses Slice mode to chop up a dank AF sample by Basscarrier
 
 #Autorun your Pig on GP2X
 

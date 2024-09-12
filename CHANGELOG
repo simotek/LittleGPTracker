@@ -1,3 +1,29 @@
+1.4.2
+    Contributions:
+    koisignal
+        Config option feature for loading embedded and custom fonts (#107)
+        * Possibility to select font in config.xml
+    clsource
+        MacOS 64 Build (#108)
+    Simotek
+        RG35XX +/H builds + SDL2 + X64 Support (#95)
+        * add support for rg35xx-plus boards, tested on RG35XX-H
+        ---------
+        Co-authored-by: emartinez
+        Co-authored-by: Nine-H
+        Co-authored-by: igavrilov
+
+        Platform Makefile Cleanup (#114)
+
+    Other stuff:
+        PPSSPP install instructions (#124)
+        Added packaging resources for bittboy (#123)
+        Allow warping over empty chains (#99)
+        * Jump over empty neighbors in chain or phrase view instead of forcing you to go back to song screen.
+        Deep clone hint (#98)
+        * Adds a 1 second notification when deep cloning
+        Install instructions for PocketCHIP (#111)
+
 1.4.1
     Adds:
         Play chain offset

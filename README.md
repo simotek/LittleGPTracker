@@ -53,7 +53,7 @@ Recommended reading to get you started:
 |-------------|---------------|--------------|------------|--------------------------------------|
 | PSP         | NO            | NO           | YES        | [See notes](projects/resources/PSP/INSTALL_HOW_TO.txt) |
 | DEB         | YES           | YES          | YES        |                                      |
-| X64         | YES           | NO           | NO         |                                      |
+| X64         | YES           | YES          | NO         |                                      |
 | X86         | YES           | YES          | YES        |                                      |
 | MIYOO       | NO            | NO           | YES        | Port by [Nine-H](https://ninethehacker.xyz) |
 | W32         | YES           | YES          | YES        | Built in VS2008 with love            |
