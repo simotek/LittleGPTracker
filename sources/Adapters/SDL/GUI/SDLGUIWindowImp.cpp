@@ -2,6 +2,7 @@
 #include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 #include "System/System/System.h"
 #include "Application/Model/Config.h"
+#include "UIFramework/BasicDatas/FontConfig.h"
 #include "System/Console/Trace.h"
 #include <string.h>
 #include "System/Console/n_assert.h"
@@ -47,6 +48,7 @@ int gp2xAnchorY=90 ;
 
 unsigned short appWidth=320 ;
 unsigned short appHeight=240 ;
+
 
 SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p) 
 {
@@ -165,6 +167,7 @@ SDLGUIWindowImp::SDLGUIWindowImp(GUICreateWindowParams &p)
 	backgroundColor_=0 ;
 	SDL_ShowCursor(SDL_DISABLE);
 
+	FontConfig();
 	
 	if (cacheFonts_)
   {
@@ -282,11 +285,6 @@ void SDLGUIWindowImp::prepareBitmaps() {
 }
 #endif
 
-#define FONT_WIDTH 1024
-#define FONT_COUNT 127
-static const unsigned char font[]= {
-	#include "Resources/font.h"
-};
 
 static SDL_Surface *fonts[FONT_COUNT] ;
 

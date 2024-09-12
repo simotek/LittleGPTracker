@@ -4,6 +4,8 @@
 #include "System/IO/Trace.h"
 #include "System/System/System.h"
 #include <string.h>
+#include "Application/Model/Config.h"
+#include "UIFramework/BasicDatas/FontConfig.h"
 #include <nds.h>
 
 NDSGUIWindowImp *instance_ ;
@@ -14,6 +16,7 @@ NDSGUIWindowImp::NDSGUIWindowImp(GUICreateWindowParams &p) {
 	rect_=windowRect ;
 	instance_=this ;
 	framebuffer_=VRAM_A ;
+	FontConfig();
 
 } ;
 
@@ -29,13 +32,6 @@ void NDSGUIWindowImp::Clear(GUIColor &c) {
 
      
 } 
-
-#define FONT_WIDTH 1024
-#define FONT_COUNT 127
-
-static const unsigned char font[]= {
-	#include "Resources/font.h"
-};
 
 void NDSGUIWindowImp::DrawString(char *string,GUIPoint &pos,GUITextProperties& p) {
 
