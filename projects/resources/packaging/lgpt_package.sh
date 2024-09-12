@@ -26,9 +26,11 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
   if [ "$1" == "PSP" ] ||
   [ "$1" == "GARLIC" ] ||
   [ "$1" == "RG35XXPLUS" ] ||
-  [ "$1" == "MACOS" ] ||
   [ "$1" == "BITTBOY" ]; then # All files go in the root folder
     zip -9 $PACKAGE -j $CONTENTS
+  elif [ "$1" == "MACOS" ]; then # .app is a folder
+        zip -9 $PACKAGE -j $CONTENTS
+        zip -9yr $PACKAGE LittleGPTracker.app/
   else # all the others go in the bin
     mkdir bin ; cp $CONTENTS bin
     zip -9 $PACKAGE bin/* && rm -r bin/
