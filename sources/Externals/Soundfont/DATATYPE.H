@@ -86,11 +86,11 @@
 * Typedefs
 *************/
 
-#ifdef _64BIT
-  typedef signed char CHAR;      /*  8 bit signed value          */
-#else
-  typedef char   CHAR;
-#endif
+//#ifdef _64BIT
+//  typedef signed char CHAR;      /*  8 bit signed value          */
+//#else
+    typedef char   CHAR;  
+//#endif
 typedef short               SHORT;     /* 16 bit signed value was: INT */
 
 #ifdef EMU_WINDOWS

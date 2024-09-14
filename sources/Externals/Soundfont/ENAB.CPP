@@ -24,6 +24,8 @@ PURPOSE.
 #include "SFDETECT.H"
 #include "ENAB.H"
 
+#define DEBUG_ENAB 1
+
 using namespace::std ;
 using namespace::soundfont ;
 
