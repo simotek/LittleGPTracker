@@ -47,11 +47,11 @@ protected:
 	// Callbacks from driver
 
 	void onDriverMessage(MidiMessage &event) ;
-/*	void onMidiTempoTick() ;
+	void onMidiTempoTick() ;
 	void onMidiStart() ;
 	void onMidiStop() ;
-	void queueEvent(MidiEvent &event) ;
-*/
+	// void queueEvent(MidiEvent &event) ;
+
 private:
   static bool dumpEvents_;
 	// MIDI Channel dependant channels

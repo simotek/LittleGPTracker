@@ -61,7 +61,7 @@ void MidiInDevice::Stop() {
 bool MidiInDevice::IsRunning() {
 	return isRunning_ ;
 } ;
-/*
+
 void MidiInDevice::onMidiStart() {
 	MidiSyncData data(MSM_START) ;
 	SetChanged() ;
@@ -80,6 +80,7 @@ void MidiInDevice::onMidiTempoTick() {
 	NotifyObservers() ;
 } ;
 
+/*
 void MidiInDevice::queueEvent(MidiEvent &event) {
 	T_Stack<MidiEvent>::Insert(event) ;
 } ;
