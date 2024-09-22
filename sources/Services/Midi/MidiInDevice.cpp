@@ -68,6 +68,12 @@ void MidiInDevice::onMidiStart() {
 	NotifyObservers() ;
 } ;
 
+void MidiInDevice::onMidiContinue() {
+	MidiSyncData data(MSM_CONTINUE) ;
+	SetChanged() ;
+	NotifyObservers() ;
+} ;
+
 void MidiInDevice::onMidiStop() {
 	MidiSyncData data(MSM_STOP) ;
 	SetChanged() ;
@@ -238,6 +244,24 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
         channel->Trigger();
 			} ;
 		}
+        case MidiMessage::MIDI_START:
+        {
+            Trace::Log("EVENT","midi:start") ;
+            onMidiStart();
+            break;
+        }
+        case MidiMessage::MIDI_CONTINUE:
+        {
+            Trace::Log("EVENT","midi:continue") ;
+            onMidiContinue();
+            break;
+        }
+        case MidiMessage::MIDI_STOP:
+        {
+            Trace::Log("EVENT","midi:stop") ;
+            onMidiStop();
+            break;
+        }
 		case 0xF0: // Midi clock
 			break ;
 		default:

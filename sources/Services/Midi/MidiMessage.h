@@ -16,6 +16,9 @@ struct MidiMessage:public I_ObservableData
     MIDI_CHANNEL_AFTERTOUCH = 0xD0,
     MIDI_PITCH_BEND = 0xE0,
     MIDI_MIDI_CLOCK = 0xF0,
+    MIDI_START = 0xFA,
+    MIDI_CONTINUE = 0xFB,
+    MIDI_STOP = 0xFC,
   };
   
  static const unsigned char UNUSED_BYTE = 255;

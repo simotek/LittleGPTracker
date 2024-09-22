@@ -9,6 +9,7 @@
 
 enum MidiSyncMessage {
 	MSM_START,
+    MSM_CONTINUE,
 	MSM_STOP,
 	MSM_TEMPOTICK
 } ;
@@ -49,6 +50,7 @@ protected:
 	void onDriverMessage(MidiMessage &event) ;
 	void onMidiTempoTick() ;
 	void onMidiStart() ;
+    void onMidiContinue() ;
 	void onMidiStop() ;
 	// void queueEvent(MidiEvent &event) ;
 
