@@ -1,7 +1,9 @@
 #include "MidiInDevice.h"
+
+#include "Application/Model/Config.h"
+#include "Application/Player/Player.h"
 #include "System/System/System.h"
 #include "System/Console/Trace.h"
-#include "Application/Model/Config.h"
 
 using namespace std;
 
@@ -63,21 +65,35 @@ bool MidiInDevice::IsRunning() {
 } ;
 
 void MidiInDevice::onMidiStart() {
-	MidiSyncData data(MSM_START) ;
-	SetChanged() ;
-	NotifyObservers() ;
+    MidiSyncData data(MSM_START) ;
+    SetChanged() ;
+    NotifyObservers() ;
+    
+    // SL: Question: Should this use Notifiers?
+    Player *player=Player::GetInstance() ;
+    player->Start(PM_SONG, true) ;
 } ;
 
 void MidiInDevice::onMidiContinue() {
-	MidiSyncData data(MSM_CONTINUE) ;
-	SetChanged() ;
-	NotifyObservers() ;
+    MidiSyncData data(MSM_CONTINUE) ;
+    SetChanged() ;
+    NotifyObservers() ;
+    
+    // SL: Question: Should this use Notifiers?
+    Player *player=Player::GetInstance() ;
+    // Todo: Start currently restarts playback according to
+    //       the standard it shouldn't do that.
+    player->Start(PM_SONG, false) ;
 } ;
 
 void MidiInDevice::onMidiStop() {
-	MidiSyncData data(MSM_STOP) ;
-	SetChanged() ;
-	NotifyObservers() ;
+    MidiSyncData data(MSM_STOP) ;
+    SetChanged() ;
+    NotifyObservers() ;
+    
+    // SL: Question: Should this use Notifiers?
+    Player *player=Player::GetInstance() ;
+    player->Stop() ;
 } ;
 
 void MidiInDevice::onMidiTempoTick() {
