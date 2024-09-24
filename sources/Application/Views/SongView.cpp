@@ -178,7 +178,10 @@ void SongView::deepClonePosition() {
 	unsigned char *pos = viewData_->GetCurrentSongPointer();
 	unsigned char curChainNum = *pos;
 
-	if (curChainNum == CHAIN_COUNT) return;
+	if (curChainNum == CHAIN_COUNT) {
+		View::SetNotification("no more chains!");
+		return;
+	}
 
 	unsigned char *srcChain = ch->data_ + 16 * curChainNum;
 	unsigned char *dstChain = ch->data_ + 16 * curChainNum;
@@ -213,7 +216,10 @@ void SongView::deepClonePosition() {
 		if (newPhraseNum == NO_MORE_CHAIN)
 		{
 			newPhraseNum = ph->GetNext();
-			if (newPhraseNum == NO_MORE_PHRASE) return;
+			if (newPhraseNum == NO_MORE_PHRASE) {
+				View::SetNotification("no more phrases!");
+				return;
+			}
 			for (int k = 0; k < 16; k++) {
 				*(ph->note_ + 16 * newPhraseNum + k)
 					= *(ph->note_ + 16 * srcPhraseNum + k);
@@ -235,10 +241,9 @@ void SongView::deepClonePosition() {
 		srcChain++;
 		dstChain++;
 	}
-
+	View::SetNotification("deep clone");
 
 	setChain((unsigned char) curChainNum);
-	isDirty_ = true;
 }
 
 void SongView::extendSelection() {
@@ -329,7 +334,7 @@ void SongView::copySelection() {
     viewData_->songX_=saveX_ ;
     viewData_->songY_=saveY_ ;
     viewData_->songOffset_=saveOffset_ ;
-    isDirty_=true ;     
+	View::SetNotification("copied selection");
 }
 
 /******************************************************
@@ -597,7 +602,6 @@ void SongView::ProcessButtonMask(unsigned short mask,bool pressed) {
 		deepClonePosition();
 		mask&=(0xFFFF-(EPBM_A|EPBM_L));
 		canDeepClone_ = false;
-		deepCloneTime = SDL_GetTicks();
 	}
 	if (clipboard_.active_) {
 		viewMode_=VM_SELECTION ;
@@ -852,6 +856,7 @@ void SongView::processSelectionButtonMask(unsigned int mask) {
 void SongView::DrawView() {
 
 	Clear() ;
+	View::EnableNotification();
 
 	GUITextProperties props ;
 	GUIPoint pos=GetTitlePosition() ;
@@ -881,11 +886,7 @@ void SongView::DrawView() {
 
 	DrawString(pos._x,pos._y,buffer.c_str(),props) ;
 
-	uint32_t elapsedTime = (SDL_GetTicks() - deepCloneTime);
-	if(elapsedTime <= 1000) {
-		DrawString(pos._x+10, pos._y+2, "Deep clone", props);
-	}
-// Compute song grid location
+	// Compute song grid location
 
 	GUIPoint anchor=GetAnchor() ;
 	
