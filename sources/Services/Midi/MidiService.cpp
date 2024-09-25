@@ -13,7 +13,7 @@
 MidiService::MidiService():
     T_SimpleList<MidiOutDevice>(true),
     inList_(true),
-    device_(0),
+    outDevice_(NULL),
     sendSync_(true)
 {
     for (int i=0;i<MIDI_MAX_BUFFERS;i++) {
@@ -67,11 +67,11 @@ bool MidiService::Start() {
 }
 
 void MidiService::Stop() {
-    stopDevice();
+    stopOutDevice();
 }
 
 void MidiService::QueueMessage(MidiMessage &m) {
-    if (device_) {
+    if (outDevice_) {
         SysMutexLocker locker(queueMutex_) ;
         T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
         MidiMessage *ms=new MidiMessage(m.status_,m.data1_,m.data2_);
@@ -82,7 +82,7 @@ void MidiService::QueueMessage(MidiMessage &m) {
 void MidiService::Trigger() {
     AdvancePlayQueue();
 
-    if (device_&&sendSync_) {
+    if (outDevice_&&sendSync_) {
         SyncMaster *sm=SyncMaster::GetInstance();
         if (sm->MidiSlice()) {
             MidiMessage msg;
@@ -127,9 +127,9 @@ void MidiService::flushOutQueue() {
     SysMutexLocker locker(queueMutex_) ;
     T_SimpleList<MidiMessage> *flushQueue=queues_[currentOutQueue_];
   
-    if (device_) {
+    if (outDevice_) {
         // Send whatever is on the out queue
-        device_->SendQueue(*flushQueue);
+        outDevice_->SendQueue(*flushQueue);
     }
     flushQueue->Empty();
 }
@@ -137,7 +137,7 @@ void MidiService::flushOutQueue() {
 /*
  * starts midi device
  */
-void MidiService::startDevice() {
+void MidiService::startOutDevice() {
     IteratorPtr<MidiOutDevice>it(GetIterator()) ;
 
     for (it->Begin(); !it->IsDone(); it->Next()) {
@@ -146,7 +146,7 @@ void MidiService::startDevice() {
             if (current.Init()) {
                 if (current.Start()) {
                     Trace::Log("MidiService", "midi device %s started", deviceName_.c_str());
-                    device_ = &current;
+                    outDevice_ = &current;
                 } else {
                     Trace::Log("MidiService", "midi device %s failed to start", deviceName_.c_str());
                     current.Close();
@@ -160,12 +160,12 @@ void MidiService::startDevice() {
 /*
  * closes midi device
  */
-void MidiService::stopDevice() {
-    if (device_) {
-        device_->Stop() ;
-        device_->Close() ;
+void MidiService::stopOutDevice() {
+    if (outDevice_) {
+        outDevice_->Stop() ;
+        outDevice_->Close() ;
     }
-    device_=0 ;
+    outDevice_=0 ;
 }
 
 /*
@@ -173,11 +173,11 @@ void MidiService::stopDevice() {
  */
 void MidiService::OnPlayerStart() {
     if (deviceName_.size()!=0) {
-        stopDevice();
-        startDevice();
+        stopOutDevice();
+        startOutDevice();
         deviceName_="";
     } else {
-        startDevice();
+        startOutDevice();
     }
 
     if (sendSync_) {
