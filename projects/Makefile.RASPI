@@ -6,11 +6,13 @@ DEFINES := \
 	-D_NDEBUG \
 	-D_NO_JACK_ \
 	-D__LINUX_ALSA__ \
-	-D__LINUX_ALSASEQ__
+	-D__LINUX_ALSASEQ__ \
+	-DSDL2 \
+        -DSDLAUDIO
 
 CFLAGS := -O3  -Wall $(DEFINES) -I/usr/local/include -I$(PWD)/../sources
 CXXFLAGS:= $(CFLAGS)
-LIBS	:= -lasound -lSDL -lpthread
+LIBS	:= -lasound -lSDL2 -lpthread
 EXTENSION:= rpi-exe
 
 %.rpi-exe: $(OFILES)
