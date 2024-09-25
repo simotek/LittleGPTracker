@@ -6,8 +6,8 @@
 -->
 <MAPPINGS>
 
-        <MAP src="but:0:5" dst="/event/lshoulder" />
-        <MAP src="but:0:4" dst="/event/rshoulder" />
+        <MAP src="but:0:5" dst="/event/rshoulder" />
+        <MAP src="but:0:4" dst="/event/lshoulder" />
 
         <MAP src="hat:0:0:0" dst="/event/up" />
         <MAP src="hat:0:0:2" dst="/event/down" />
