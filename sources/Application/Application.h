@@ -1,25 +1,25 @@
 #ifndef _APPLICATION_H_
 #define _APPLICATION_H_
 
-#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 #include "Foundation/T_Singleton.h"
+#include "UIFramework/SimpleBaseClasses/GUIWindow.h"
 
 class Application:public T_Singleton<Application> {
 
 public:
-	Application() ;
-	~Application() ;
-	bool Init(GUICreateWindowParams &params) ;
+    Application() ;
+    ~Application() ;
+    bool Init(GUICreateWindowParams &params) ;
 
-	GUIWindow *GetWindow() ;
+    GUIWindow *GetWindow() ;
 protected:
-  void initMidiInput();
+    void initMidiInput();
 
 private:
-	GUIWindow *window_ ;
+    GUIWindow *window_ ;
 private:
-	static Application* instance_ ;
+    static Application* instance_ ;
 } ;
 
-#endif
+#endif // _APPLICATION_H_
 
