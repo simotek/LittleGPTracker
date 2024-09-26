@@ -3,14 +3,14 @@
 #define _MIDI_SERVICE_H_
 
 #include <string>
-#include "Foundation/T_Factory.h"
 #include "Foundation/Observable.h"
-#include "System/Timer/Timer.h"
+#include "Foundation/T_Factory.h"
 #include "System/Process/SysMutex.h"
-#include "MidiOutDevice.h"
-#include "MidiInDevice.h"
+#include "System/Timer/Timer.h"
 #include "MidiInDevice.h"
 #include "MidiInMerger.h"
+#include "MidiOutDevice.h"
+
 
 #define MIDI_MAX_BUFFERS 20
 
