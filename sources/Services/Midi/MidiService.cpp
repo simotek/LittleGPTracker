@@ -12,6 +12,7 @@
 MidiService::MidiService():
     T_SimpleList<MidiOutDevice>(true),
     inList_(true),
+    inDevice_(NULL),
     outDevice_(NULL),
     sendSync_(true)
 {
@@ -49,6 +50,8 @@ bool MidiService::Init() {
 
 void MidiService::Close() {
     Stop();
+    inDevice_->Stop();
+    inDevice_->Close();
 }
 
 I_Iterator<MidiInDevice> *MidiService::GetInIterator() {
@@ -56,7 +59,51 @@ I_Iterator<MidiInDevice> *MidiService::GetInIterator() {
 }
 
 void MidiService::SelectDevice(const std::string &name) {
-    deviceName_ = name;
+    
+    deviceName_ = name;    
+    
+    // MidiIn is always running for the current device.
+    // If the selected device is the same as the current device
+    // then we don't need to stop and start it again
+    bool skipStart = false;
+    if (inDevice_) {
+        if ( deviceName_ != std::string(inDevice_->GetName())) {
+            inDevice_->Stop();
+            inDevice_->Close();
+            inDevice_ = NULL;
+        }
+        else
+        {
+            skipStart = true;
+        }
+    }
+    if (!skipStart) {
+        // Start new inDevice, the outDevice starts when play starts
+        IteratorPtr<MidiInDevice>it(GetInIterator());
+        for(it->Begin();!it->IsDone();it->Next())
+        {
+            MidiInDevice &in=it->CurrentItem();
+            if (deviceName_ == std::string(in.GetName()))
+            {
+                if (in.Init())
+                {
+                    inDevice_ = &in;
+                    if (inDevice_->Start())
+                    {
+                        Trace::Log("MIDI","Controlling activated for MIDI interface %s",in.GetName());
+                    }
+                    else
+                    {
+                        Trace::Log("MIDI","Failed to start input for MIDI interface %s",in.GetName());
+                        inDevice_->Close();
+                    }
+                }
+            }
+        }
+    }
+    if (inDevice_ == NULL) {
+        Trace::Log("MIDI","MIDI interface %s not found", deviceName_.c_str());
+    }
 }
 
 bool MidiService::Start() {

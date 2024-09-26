@@ -18,27 +18,10 @@ Application::Application() {
 
 void Application::initMidiInput()
 {
-    const char *preferedDevice=Config::GetInstance()->GetValue("MIDICTRLDEVICE");
-
-    IteratorPtr<MidiInDevice>it(MidiService::GetInstance()->GetInIterator()) ;
-    for(it->Begin();!it->IsDone();it->Next())
-    {
-        MidiInDevice &in=it->CurrentItem() ;
-        if ((preferedDevice) && (!strncmp(in.GetName(), preferedDevice, strlen(preferedDevice))))
-        {
-            if (in.Init())
-            {
-                if (in.Start())
-                {
-                    Trace::Log("MIDI","Controlling activated for MIDI interface %s",in.GetName()) ;
-                }
-            else
-            {
-                in.Close() ;
-            }
-        }
+    const char * preferedDevice=Config::GetInstance()->GetValue("MIDICTRLDEVICE");
+    if (preferedDevice) {
+        MidiService::GetInstance()->SelectDevice(preferedDevice);
     }
-  }
 }
 
 bool Application::Init(GUICreateWindowParams &params) {

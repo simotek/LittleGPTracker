@@ -61,10 +61,12 @@ protected:
 
     //! start the selected midi device
 
+    void startInDevice() ;
     void startOutDevice() ;
 
     //! stop the selected midi device
 
+    void stopInDevice() ;
     void stopOutDevice() ;
 
     //! build the list of available drivers
@@ -75,6 +77,7 @@ private:
     void flushOutQueue();
 private:
     std::string deviceName_ ;
+    MidiInDevice *inDevice_ ;
     MidiOutDevice *outDevice_ ;
 
     T_SimpleList<MidiMessage> *queues_[MIDI_MAX_BUFFERS] ;
