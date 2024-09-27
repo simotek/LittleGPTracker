@@ -149,8 +149,17 @@ void MidiInDevice::Trigger(Time time) {
 void MidiInDevice::treatChannelEvent(MidiMessage &event) {
 
     int midiChannel = event.status_ & 0x0F;
-
     bool isMidiClockEvent = (event.status_ == 0xF8);
+    
+    // Midi clock events happen alot so handle them first to make the codepath shorter
+    if (isMidiClockEvent) {
+        // Todo: SL implement midi clock
+        return;
+    }
+    
+    if (!isMidiClockEvent) {
+        Trace::Debug("midi in:%X:%X:%X",event.status_, event.data1_, event.data2_);
+    }
 
     switch (event.GetType())
     {
@@ -255,25 +264,31 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
                 channel->Trigger();
             }
         }
-        case MidiMessage::MIDI_START:
-        {
-            Trace::Log("EVENT","midi:start");
-            onMidiStart();
-            break;
-        }
-        case MidiMessage::MIDI_CONTINUE:
-        {
-            Trace::Log("EVENT","midi:continue");
-            onMidiContinue();
-            break;
-        }
-        case MidiMessage::MIDI_STOP:
-        {
-            Trace::Log("EVENT","midi:stop");
-            onMidiStop();
-            break;
-        }
-        case 0xF0: // Midi clock
+        case MidiMessage::MIDI_MIDI_CLOCK: // Midi clock
+            // MIDI_START = 0xFA,
+            // MIDI_CONTINUE = 0xFB,
+            // MIDI_STOP = 0xFC,
+            switch (event.status_)
+            {
+                case 0xFA:
+                {
+                    Trace::Log("EVENT","midi:start");
+                    onMidiStart();
+                    break;
+                }
+                case 0xFB:
+                {
+                    Trace::Log("EVENT","midi:continue");
+                    onMidiContinue();
+                    break;
+                }
+                case 0xFC:
+                {
+                    Trace::Log("EVENT","midi:stop");
+                    onMidiStop();
+                    break;
+                }
+            }
             break;
         default:
             break;
