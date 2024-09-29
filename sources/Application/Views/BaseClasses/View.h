@@ -55,10 +55,13 @@ enum ViewMode {
 enum ColorDefinition {
 	CD_BACKGROUND,
 	CD_NORMAL,
+    CD_BORDER,
 	CD_HILITE1,
 	CD_HILITE2,
 	CD_CONSOLE,
 	CD_CURSOR,
+    CD_PLAY,
+    CD_MUTE,
 	CD_SONGVIEWFE,
 	CD_SONGVIEW00,
 	CD_ROW,

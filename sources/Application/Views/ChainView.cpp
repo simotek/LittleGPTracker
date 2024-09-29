@@ -725,11 +725,13 @@ void ChainView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 		            viewData_->playMode_ != PM_AUDITION) {
     				pos._y=anchor._y+viewData_->chainPlayPos_[i] ;
     				if (!player->IsChannelMuted(i)) {
-						SetColor(CD_CURSOR) ;
-    					DrawString(pos._x,pos._y,">",props) ;
-    					SetColor(CD_NORMAL) ;
+						SetColor(CD_PLAY);
+						DrawString(pos._x,pos._y,">",props);
+    					SetColor(CD_NORMAL);
     				} else {
-    					DrawString(pos._x,pos._y,"-",props) ;
+                        SetColor(CD_MUTE);
+						DrawString(pos._x,pos._y,"-",props);
+						SetColor(CD_NORMAL);
     				}
     				lastPlayingPos_=viewData_->chainPlayPos_[i] ;
     				break ;

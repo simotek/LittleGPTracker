@@ -1034,11 +1034,14 @@ void SongView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
 					if (y>=0 && y<View::songRowCount_) {
 						pos._y=anchor._y+y ;
 						if (!player->IsChannelMuted(i)) {
-							DrawString(pos._x,pos._y,">",props) ;
+                            SetColor(CD_PLAY);
+							DrawString(pos._x,pos._y,">",props);
 						} else {
-							DrawString(pos._x,pos._y,"-",props) ;
+                            SetColor(CD_MUTE);
+							DrawString(pos._x,pos._y,"-",props);
 						}
-						lastPlayedPosition_[i]=viewData_->songPlayPos_[i] ;
+                        SetColor(CD_CURSOR);
+						lastPlayedPosition_[i]=viewData_->songPlayPos_[i];
 					}
 				}
 			}

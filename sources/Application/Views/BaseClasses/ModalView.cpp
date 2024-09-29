@@ -46,7 +46,7 @@ void ModalView::SetWindow(int width,int height) {
 	}
 	ClearRect(-1,-1,width+2,height+2) ;
 
-	SetColor(CD_HILITE2) ;
+	SetColor(CD_BORDER) ;
 	GUITextProperties props ;
 	props.invert_=true ;
 	char line[41] ;

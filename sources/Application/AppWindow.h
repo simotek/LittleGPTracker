@@ -91,12 +91,15 @@ private:
 
     static GUIColor backgroundColor_ ;
     static GUIColor normalColor_ ;
+    static GUIColor borderColor_ ;
 	static GUIColor songviewfeColor_ ;
 	static GUIColor songview00Color_ ;
     static GUIColor highlight2Color_;
     static GUIColor highlightColor_;
     static GUIColor consoleColor_;
     static GUIColor cursorColor_;
+    static GUIColor playColor_ ;
+    static GUIColor muteColor_ ;
     static GUIColor rownumberColor_;
     static GUIColor rownumber2Color_;
 	static GUIColor majorbeatColor_;

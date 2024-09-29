@@ -20,12 +20,15 @@ AppWindow *instance=0 ;
 
 GUIColor AppWindow::backgroundColor_(0x1D,0x0A,0x1F); 
 GUIColor AppWindow::normalColor_    (0xF5,0xEB,0xFF);
+GUIColor AppWindow::borderColor_    (0xFF,0x00,0x8C);
 GUIColor AppWindow::songviewfeColor_(0xA5,0x5B,0x8F);
 GUIColor AppWindow::songview00Color_(0x85,0x3B,0x6F);
 GUIColor AppWindow::highlightColor_ (0xB7,0x50,0xD1);
 GUIColor AppWindow::highlight2Color_(0xDB,0x33,0xDB);
 GUIColor AppWindow::consoleColor_   (0x00,0xFF,0x00);
 GUIColor AppWindow::cursorColor_    (0xFF,0x00,0x8C);
+GUIColor AppWindow::playColor_      (0xFF,0x00,0x8C);
+GUIColor AppWindow::muteColor_      (0xF5,0xEB,0xFF);
 GUIColor AppWindow::rownumberColor_ (0xBA,0x28,0xF9);
 GUIColor AppWindow::rownumber2Color_(0xFF,0x00,0xFF);
 GUIColor AppWindow::majorbeatColor_ (0xBA,0x28,0xF9);
@@ -98,16 +101,19 @@ AppWindow::AppWindow(I_GUIWindowImp &imp):GUIWindow(imp)  {
 	// Init midi services
 	MidiService::GetInstance()->Init() ;
 
-    defineColor("BACKGROUND",backgroundColor_) ;
-    defineColor("FOREGROUND",normalColor_) ;
-	defineColor("SONGVIEW_FE",songviewfeColor_) ;
-	defineColor("SONGVIEW_00",songview00Color_) ;
-    defineColor("HICOLOR1",highlightColor_) ;
-    defineColor("HICOLOR2",highlight2Color_) ;
-    defineColor("CURSORCOLOR",cursorColor_) ;
+    defineColor("BACKGROUND",backgroundColor_);
+    defineColor("FOREGROUND",normalColor_);
+    defineColor("BORDER",borderColor_);
+    defineColor("SONGVIEW_FE",songviewfeColor_);
+    defineColor("SONGVIEW_00",songview00Color_);
+    defineColor("HICOLOR1",highlightColor_);
+    defineColor("HICOLOR2",highlight2Color_);
+    defineColor("CURSORCOLOR",cursorColor_);
+    defineColor("PLAYCOLOR",playColor_);
+    defineColor("MUTECOLOR",muteColor_);
     defineColor("ROWCOLOR1",rownumberColor_);
     defineColor("ROWCOLOR2",rownumber2Color_);
-	defineColor("MAJORBEAT",majorbeatColor_);
+    defineColor("MAJORBEAT",majorbeatColor_);
 	
 
 	GUIWindow::Clear(backgroundColor_) ;
@@ -220,55 +226,64 @@ void AppWindow::Flush() {
 	unsigned char *previous=_preScreen ;
 	unsigned char *currentProp=_charScreenProp ;
 	unsigned char *previousProp=_preScreenProp ;
-	for (int y=0;y<30;y++) {
-		for (int x=0;x<40;x++) {
+    for (int y=0;y<30;y++) {
+        for (int x=0;x<40;x++) {
 #ifndef _LGPT_NO_SCREEN_CACHE_
-			if ((*current!=*previous)||(*currentProp!=*previousProp)) {
+            if ((*current!=*previous)||(*currentProp!=*previousProp)) {
 #endif
-				props.invert_=(*currentProp&PROP_INVERT)!=0 ;
-				if (((*currentProp)&0x7F)!=color) {
-					color=(ColorDefinition)((*currentProp)&0x7F) ;
-					GUIColor gcolor=normalColor_ ;
-					switch (color) {
-						case CD_BACKGROUND:
-							gcolor=backgroundColor_ ;
-							break ;
-						case CD_NORMAL:
-							break ;
+                props.invert_=(*currentProp&PROP_INVERT)!=0 ;
+                if (((*currentProp)&0x7F)!=color) {
+                    color=(ColorDefinition)((*currentProp)&0x7F) ;
+                    GUIColor gcolor=normalColor_;
+                    switch (color) {
+                        case CD_BACKGROUND:
+                            gcolor=backgroundColor_;
+                            break;
+                        case CD_NORMAL:
+                            break;
+                        case CD_BORDER:
+                            gcolor=borderColor_;
+                            break;
 						case CD_HILITE1:
-							gcolor=highlightColor_ ;
-							break ;
-						case CD_HILITE2:
-							gcolor=highlight2Color_ ;
-							break ;
-						case CD_CONSOLE:
-							gcolor=consoleColor_ ;
-							break ;
-						case CD_CURSOR:
-							gcolor=cursorColor_ ;
-							break ;
+                            gcolor=highlightColor_;
+                            break;
+                        case CD_HILITE2:
+                            gcolor=highlight2Color_;
+                            break;
+                        case CD_CONSOLE:
+                            gcolor=consoleColor_;
+                            break;
+                        case CD_CURSOR:
+                            gcolor=cursorColor_;
+                            break;
+                        case CD_PLAY:
+                            gcolor = playColor_;
+                            break;
+                        case CD_MUTE:
+                            gcolor = muteColor_;
+                            break;
 						case CD_SONGVIEWFE:
-							gcolor = songviewfeColor_;
+                            gcolor = songviewfeColor_;
+                            break;
+                        case CD_SONGVIEW00:
+                            gcolor = songview00Color_;
+                            break;
+                        case CD_ROW:
+                            gcolor = rownumberColor_;
+                            break;
+                        case CD_ROW2:
+                            gcolor = rownumber2Color_;
+                            break;
+                        case CD_MAJORBEAT:
+                            gcolor = majorbeatColor_;
+                            break;
+                        default:
+                            NAssert(0);
 							break;
-						case CD_SONGVIEW00:
-							gcolor = songview00Color_;
-							break;
-						case CD_ROW:
-							gcolor = rownumberColor_;
-							break;
-						case CD_ROW2:
-							gcolor = rownumber2Color_;
-							break;
-						case CD_MAJORBEAT:
-							gcolor = majorbeatColor_;
-							break;
-						default:
-							NAssert(0) ;
-							break ;
-					}
-					GUIWindow::SetColor(gcolor) ;
-				}
-				GUIWindow::DrawChar(*current,pos,props) ;
+                    }
+                    GUIWindow::SetColor(gcolor);
+                }
+				GUIWindow::DrawChar(*current,pos,props);
 				count++ ;
 #ifndef _LGPT_NO_SCREEN_CACHE_
 			}

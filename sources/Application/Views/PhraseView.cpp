@@ -1238,15 +1238,16 @@ void PhraseView::OnPlayerUpdate(PlayerEventType eventType,unsigned int tick) {
     			if (viewData_->currentPlayPhrase_[i]==viewData_->currentPhrase_ &&
 		            viewData_->playMode_ != PM_AUDITION) {
     				pos._y=anchor._y+viewData_->phrasePlayPos_[i] ;
-    				if (!player->IsChannelMuted(i)) {
-						SetColor(CD_CURSOR) ;
-						DrawString(pos._x,pos._y,">",props) ;
-						SetColor(CD_NORMAL) ;
-    				} else {
-    					DrawString(pos._x,pos._y,"-",props) ;
-    				}
-    				lastPlayingPos_=viewData_->phrasePlayPos_[i] ;
-    				break ;
+                    if (!player->IsChannelMuted(i)) {
+						SetColor(CD_PLAY);
+                        DrawString(pos._x,pos._y,">",props);
+                    } else {
+                        SetColor(CD_MUTE);
+                        DrawString(pos._x,pos._y,"-",props);
+                    }
+                    SetColor(CD_NORMAL);                    
+                    lastPlayingPos_=viewData_->phrasePlayPos_[i] ;
+                    break ;
     			}
     		}
         }
