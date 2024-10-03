@@ -1,9 +1,9 @@
 #include "ModalView.h"
 
 ModalView::ModalView(View &v)
-    : View(v.w_, v.viewData_), finished_(false), returnCode_(0) {};
+    : View(v.w_, v.viewData_), finished_(false), returnCode_(0){};
 
-ModalView::~ModalView() {};
+ModalView::~ModalView(){};
 
 int ModalView::GetReturnCode() { return returnCode_; };
 
