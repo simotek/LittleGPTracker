@@ -48,6 +48,7 @@ enum SampleInstrumentLoopMode {
 #define SIP_TABLEAUTO		MAKE_FOURCC('T','B','L','A')
 #define SIP_FBTUNE			MAKE_FOURCC('F','B','T','U')
 #define SIP_FBMIX			MAKE_FOURCC('F','B','M','X')
+#define SIP_PRINTFX MAKE_FOURCC('P', 'R', 'F', 'X')
 
 #define FB_BUFFER_LENGTH 3500 // (in samples)
 
@@ -130,7 +131,8 @@ private:
 	   Variable *loopMode_ ;
 	   Variable *slices_ ;
 	   Variable *interpolation_ ;
-	   
-  static bool useDirtyDownsampling_;
+       Variable *printFx_;
+
+       static bool useDirtyDownsampling_;
 } ;
 #endif
