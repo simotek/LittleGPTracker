@@ -1,4 +1,5 @@
 #include "ProjectView.h"
+#include "Application/Model/Scale.h"
 #include "Application/Persistency/PersistencyService.h"
 #include "Application/Views/ModalDialogs/MessageBox.h"
 #include "Application/Views/ModalDialogs/NewProjectDialog.h"
@@ -108,25 +109,35 @@ ProjectView::ProjectView(GUIWindow &w,ViewData *data):FieldView(w,data) {
 
 	v=project_->FindVariable(VAR_MASTERVOL) ;
 	position._y+=1 ;
-	UIIntVarField *f1=new UIIntVarField(position,*v,"master: %d",10,200,1,10) ;
-	T_SimpleList<UIField>::Insert(f1) ;
-
-	v=project_->FindVariable(VAR_TRANSPOSE) ;
-	position._y+=1 ;
-	UIIntVarField *f2=new UIIntVarField(position,*v,"transpose: %3.2d",-48,48,0x1,0xC) ;
-	T_SimpleList<UIField>::Insert(f2) ;
+    UIIntVarField *field =
+        new UIIntVarField(position, *v, "master: %d", 10, 200, 1, 10);
+    T_SimpleList<UIField>::Insert(field) ;
 
     v = project_->FindVariable(VAR_SOFTCLIP);
     position._y += 1;
-    UIIntVarField *f3 =
-        new UIIntVarField(position, *v, "soft clip: %s", 0, 4, 1, 3);
-    T_SimpleList<UIField>::Insert(f3);
+    field = new UIIntVarField(position, *v, "soft clip: %s", 0, 4, 1, 3);
+    T_SimpleList<UIField>::Insert(field);
 
     v = project_->FindVariable(VAR_CLIP_ATTENUATION);
     position._x += 18;
-    f3 = new UIIntVarField(position, *v, "post: %d", 1, 100, 1, 10);
-    T_SimpleList<UIField>::Insert(f3);
+    field = new UIIntVarField(position, *v, "post: %d", 1, 100, 1, 10);
+    T_SimpleList<UIField>::Insert(field);
     position._x -= 18;
+
+    v = project_->FindVariable(VAR_TRANSPOSE);
+    position._y+=2 ;
+	UIIntVarField *f2=new UIIntVarField(position,*v,"transpose: %3.2d",-48,48,0x1,0xC) ;
+	T_SimpleList<UIField>::Insert(f2) ;
+	
+	v = project_->FindVariable(VAR_SCALE);
+	// if scale name is not found, set the default chromatic scale
+	if (v->GetInt() < 0) {
+		v->SetInt(0);
+    }
+    position._y += 1;
+    field =
+        new UIIntVarField(position, *v, "scale: %s", 0, scaleCount - 1, 1, 10);
+    T_SimpleList<UIField>::Insert(field);
 
     position._y += 2;
     UIActionField *a1 =
@@ -158,9 +169,9 @@ ProjectView::ProjectView(GUIWindow &w,ViewData *data):FieldView(w,data) {
     v = project_->FindVariable(VAR_MIDIDEVICE);
     NAssert(v);
     position._y += 2;
-    UIIntVarField *f4 = new UIIntVarField(
-        position, *v, "MIDI: %s", 0, MidiService::GetInstance()->Size(), 1, 1);
-    T_SimpleList<UIField>::Insert(f4);
+    field = new UIIntVarField(position, *v, "MIDI: %s", 0,
+                              MidiService::GetInstance()->Size(), 1, 1);
+    T_SimpleList<UIField>::Insert(field);
 
     position._y += 2;
     a1 = new UIActionField("Exit", ACTION_QUIT, position);
