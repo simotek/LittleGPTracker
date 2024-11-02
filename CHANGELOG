@@ -27,6 +27,9 @@
     isage
         Vita port
 
+    mrtnvgr
+        Hide lgpt_ prefix for songs
+
     Copy columns (#141)
     * Enables copying fx+params into any column in tables and phrases
       Pasting fx into notes column etc does nothing
