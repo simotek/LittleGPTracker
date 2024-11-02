@@ -911,7 +911,7 @@ void SongView::DrawView() {
     std::ostringstream os;
 
     os << ((player->GetSequencerMode() == SM_SONG) ? "Song" : "Live");
-    os << " - ";
+    os << ": ";
 
     if (songname_.substr(0, 5) == "lgpt_") {
         os << songname_.substr(5);

@@ -24,11 +24,10 @@
         Enable skipping JUNK section for WAVs
         * Load more old sample pack CD rips!
 
-    isage
-        Vita port
-
     mrtnvgr
-        Hide lgpt_ prefix for songs
+        Hide lgpt_ prefix for songs #165
+        Consistent view title separators #166
+
 
     Copy columns (#141)
     * Enables copying fx+params into any column in tables and phrases
