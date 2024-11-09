@@ -1,6 +1,6 @@
 ---
 name: Issue template
-about: Help users create descriptive issues
+about: Create issue from template
 title: "[BUG] - short description of your issue"
 labels: bug
 assignees: ''
