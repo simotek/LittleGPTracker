@@ -47,6 +47,9 @@ tempoNudge_(0)
 	WatchedVariable *midi=new WatchedVariable("midi",VAR_MIDIDEVICE,midiDeviceList_,midiDeviceListSize_) ;
 	this->Insert(midi) ;
 	midi->AddObserver(*this) ;
+	Variable *midisync =
+        new Variable("midisync", VAR_MIDISYNC, midiSyncStates, 4, 0);
+    this->Insert(midisync);
 
 
 	song_=new Song() ;

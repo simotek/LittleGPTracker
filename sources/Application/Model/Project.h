@@ -13,6 +13,7 @@
 #define VAR_MASTERVOL   MAKE_FOURCC('M','S','T','R')
 #define VAR_WRAP        MAKE_FOURCC('W','R','A','P')
 #define VAR_MIDIDEVICE  MAKE_FOURCC('M','I','D','I')
+#define VAR_MIDISYNC    MAKE_FOURCC('S','Y','N','C')
 #define VAR_TRANSPOSE   MAKE_FOURCC('T','R','S','P')
 #define VAR_SOFTCLIP MAKE_FOURCC('S', 'F', 'T', 'C')
 #define VAR_CLIP_ATTENUATION MAKE_FOURCC('C', 'A', 'T', 'N')

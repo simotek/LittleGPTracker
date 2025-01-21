@@ -173,6 +173,12 @@ ProjectView::ProjectView(GUIWindow &w,ViewData *data):FieldView(w,data) {
                               MidiService::GetInstance()->Size(), 1, 1);
     T_SimpleList<UIField>::Insert(field);
 
+    v = project_->FindVariable(VAR_MIDISYNC);
+    NAssert(v);
+    position._y += 2;
+    field = new UIIntVarField(position, *v, "MIDI Sync: %s", 0, 3, 1, 3);
+    T_SimpleList<UIField>::Insert(field);
+
     position._y += 2;
     a1 = new UIActionField("Exit", ACTION_QUIT, position);
     a1->AddObserver(*this);
