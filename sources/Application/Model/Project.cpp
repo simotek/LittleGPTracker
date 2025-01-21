@@ -1,16 +1,18 @@
 #include "Project.h"
-#include "Services/Midi/MidiService.h"
-#include "System/FileSystem/FileSystem.h"
-#include "System/Console/Trace.h"
-#include "System/io/Status.h"
-#include "Foundation/Variables/WatchedVariable.h"
-#include "Application/Player/SyncMaster.h"
-#include "Table.h"
-#include "Groove.h"
-#include "Application/Persistency/PersistencyService.h"
-#include "Application/Instruments/SamplePool.h"
 #include "Application/Instruments/SampleInstrument.h"
+#include "Application/Instruments/SamplePool.h"
+#include "Application/Persistency/PersistencyService.h"
+#include "Application/Player/SyncMaster.h"
+#include "Foundation/Variables/WatchedVariable.h"
+#include "Groove.h"
+#include "Scale.h"
+#include "Services/Midi/MidiService.h"
+#include "System/Console/Trace.h"
+#include "System/FileSystem/FileSystem.h"
+#include "System/io/Status.h"
+#include "Table.h"
 
+#include "ProjectDatas.h"
 #include <math.h>
 
 Project::Project()
@@ -27,6 +29,16 @@ tempoNudge_(0)
 	this->Insert(wrap) ;
 	Variable *transpose=new Variable("transpose",VAR_TRANSPOSE,0) ;
 	this->Insert(transpose) ;
+    Variable *softclip =
+        new Variable("softclip", VAR_SOFTCLIP, softclipStates, 5, 0);
+    this->Insert(softclip);
+    Variable *clipAttenuation =
+        new Variable("clipAttenuation", VAR_CLIP_ATTENUATION, 100);
+    this->Insert(clipAttenuation);
+    Variable *scale =
+        new Variable("scale", VAR_SCALE, scaleNames, scaleCount, 0);
+    this->Insert(scale);
+    scale->SetInt(0);
 
 // Reload the midi device list
 
@@ -59,6 +71,12 @@ Project::~Project() {
 	delete instrumentBank_ ;
 } ;
 
+int Project::GetScale() {
+    Variable *v = FindVariable(VAR_SCALE);
+    NAssert(v);
+    return v->GetInt();
+}
+
 int Project::GetTempo() {
 	Variable *v=FindVariable(VAR_TEMPO) ;
 	NAssert(v) ;
@@ -67,10 +85,22 @@ int Project::GetTempo() {
 } ;
 
 int Project::GetMasterVolume() {
-	Variable *v=FindVariable(VAR_MASTERVOL) ;
-	NAssert(v) ;
-	return v->GetInt() ;
+    Variable *v = FindVariable(VAR_MASTERVOL);
+    NAssert(v);
+	return v->GetInt();
 } ;
+
+int Project::GetSoftclip() {
+    Variable *v = FindVariable(VAR_SOFTCLIP);
+    NAssert(v);
+	return v->GetInt();
+}
+
+int Project::GetAttenuation() {
+    Variable *v = FindVariable(VAR_CLIP_ATTENUATION);
+    NAssert(v);
+	return v->GetInt();
+}
 
 void Project::NudgeTempo(int value) {
 	if((GetTempo() + tempoNudge_) > 0)

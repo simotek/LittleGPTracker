@@ -789,6 +789,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\sources\Application\Model\Scale.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\Application\Model\Scale.h"
+						>
+					</File>
+					<File
 						RelativePath="..\sources\Application\Model\Table.cpp"
 						>
 					</File>
@@ -1070,6 +1078,18 @@
 					</File>
 					<File
 						RelativePath="..\sources\Application\Utils\wildcard.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="FX"
+					>
+					<File
+						RelativePath="..\sources\Application\FX\FxPrinter.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\sources\Application\FX\FxPrinter.h"
 						>
 					</File>
 				</Filter>

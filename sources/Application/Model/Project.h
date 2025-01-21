@@ -14,11 +14,13 @@
 #define VAR_WRAP        MAKE_FOURCC('W','R','A','P')
 #define VAR_MIDIDEVICE  MAKE_FOURCC('M','I','D','I')
 #define VAR_TRANSPOSE   MAKE_FOURCC('T','R','S','P')
+#define VAR_SOFTCLIP MAKE_FOURCC('S', 'F', 'T', 'C')
+#define VAR_CLIP_ATTENUATION MAKE_FOURCC('C', 'A', 'T', 'N')
+#define VAR_SCALE MAKE_FOURCC('S', 'C', 'A', 'L')
 
 #define PROJECT_NUMBER "1"
 #define PROJECT_RELEASE "4"
-#define BUILD_COUNT "3-bacon0"
-
+#define BUILD_COUNT "3-bacon3"
 
 #define MAX_TAP 3
 
@@ -35,12 +37,15 @@ public:
 	bool Wrap() ;
 	void OnTempoTap();
 	void NudgeTempo(int value) ;
-	int GetTempo() ; // Takes nudging into account
+    int GetScale();
+    int GetTempo() ; // Takes nudging into account
 	int GetTranspose() ;
+    int GetSoftclip();
+    int GetAttenuation();
 
-	void Trigger() ;
+    void Trigger();
 
-	// I_Observer
+    // I_Observer
     virtual void Update(Observable &o,I_ObservableData *d);
  
 	InstrumentBank* GetInstrumentBank() ;

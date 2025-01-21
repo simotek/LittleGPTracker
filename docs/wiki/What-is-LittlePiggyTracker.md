@@ -49,7 +49,7 @@ After that you can copy additional wavs to the lgptRoot/lgptProject/samples dire
 **Piggy now supports .sf2 Soundfonts. You must add these by hand to your SAMPLES directory, use PROGRAM CHANGE commands to load different patches. Loop points are automatically loaded, but you'll need to make VOLM setting to adjust decay.**
 
 ## New project
-When creating a new project, a random name is selected for you. Generate a new name with Regen or edit it manually selecting characters with A and pressing up/down
+When creating a new project, use the regen button to generate a random name. Generate a new name with Regen or edit it manually selecting characters with A and pressing up/down
 
 ## Multiple Projects
 
@@ -261,6 +261,8 @@ To move from one screen to the other, press the RTrigger combined with the direc
 - **Tempo:**: Can be set between 60bpm [0x3c] and 400bpm [0x190]. Resolution aligned to LSDJ. (nudge with b + left / right)
 - **Master:** Main volume goes from 10% to 200%. Piggy is loud now!
 - **Transpose:** Live transposition of every triggered instruments.
+- **Soft clip:** Master channel with 5 preset levels of saturation.
+- **Post:** Master channel attenuation post saturation.
 - **Compact Sequencer:** Free all unused chain/phrases.
 - **Compact Instruments:** All unused instruments get their sample set to (null), old parameter settings stick. A dialog offers to remove unused samples.
 - **Load Song:** Brings you back to the Selector Screen.
@@ -316,6 +318,21 @@ To move from one screen to the other, press the RTrigger combined with the direc
 ![](https://d2mxuefqeaa7sj.cloudfront.net/s_B9C92C3440E8671360862F10CAB0FE70873BFE49CFB51CA246C781C17506C258_1522140478226_instrument_1.1f.png)
 
 - **sample:** selects the .wav file to associate with the instrument. you can select the same sample in more than one instrument. if you tap A,A here it will take you to the Sample Import Screen (which lets you load new .WAV into your project).
+- **FX selector:** Select between 4 impulse responses to print to the currently selected sample
+- **Wet:** How much of the effect to print 0 = nothing, 10 = probably too much
+- **Pad** For short samples, add up to 5000 ms silence to the end of the sample to let the reverb tail ring out.
+FX section uses ffmpeg to process audio
+Select which reverb you want by holding A+Left/Right. Apply it by double-tapping A
+Reverbs created by using ffmpegs convolution filter [Impulse response](https://en.wikipedia.org/wiki/Convolution)
+Convolution wraps the audio file from start to end. If the sample is very short, you can get
+a longer reverb tail by setting the pad parameter.
+If applied to the sample Kick.wav the audio file with reverb applied will be called Kick_.wav
+IR credits:
+    Room by [Uzbanur](https://freesound.org/people/Uzbazur/sounds/382907/)
+    Hall by [NoiseCollector](https://freesound.org/people/NoiseCollector/sounds/184127/)
+    Spring by [recordinghopkins](https://freesound.org/people/recordinghopkins/sounds/175302/)
+    Church by [jotarrl](https://freesound.org/people/jotarrl/sounds/725443/)
+
 - **volume:**
 - **pan:** pans the instrument left or right (0x7F is center)
 - **root note**
