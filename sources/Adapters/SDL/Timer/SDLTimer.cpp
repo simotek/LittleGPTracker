@@ -66,3 +66,8 @@ I_Timer *SDLTimerService::CreateTimer() { return new SDLTimer(); };
 void SDLTimerService::TriggerCallback(int msec, timerCallback cb) {
     SDL_AddTimer(msec, SDLTriggerCallback, (void *)cb);
 }
+
+unsigned int SDLTimerService::GetApplicationTicks()
+{
+    return SDL_GetTicks();
+}

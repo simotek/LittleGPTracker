@@ -24,6 +24,9 @@ class TimerService : public T_Factory<TimerService> {
   public:
     virtual I_Timer *CreateTimer() = 0; // Returns a timer
     virtual void TriggerCallback(int msec, timerCallback cb) = 0;
+    // Returns ms since Application started
+    // resets every 49 days on most platforms
+    virtual unsigned int GetApplicationTicks()=0;
 };
 
 #endif
