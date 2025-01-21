@@ -27,6 +27,7 @@ class SDLTimerService : public TimerService {
   public:
     virtual I_Timer *CreateTimer(); // Returns a timer
     virtual void TriggerCallback(int msec, timerCallback cb);
+    virtual unsigned int GetApplicationTicks();
 };
 
 #endif
