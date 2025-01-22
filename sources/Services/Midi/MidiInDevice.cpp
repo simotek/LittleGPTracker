@@ -146,9 +146,15 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
     int midiChannel = event.status_ & 0x0F;
     bool isMidiClockEvent = (event.status_ == 0xF8);
 
+    // 0 - None
+    // 1 - Trasnport Only
+    // 2 - Tempo Sync
+    // 3 - All
+    int midiSyncSetting = Config::GetInstance()->GetValue("MIDISENDSYNC");
+
     // Midi clock events happen alot so handle them first to make the codepath
     // shorter
-    if (isMidiClockEvent) {
+    if (isMidiClockEvent && midiSyncSetting >= 2) {
         // Todo: SL implement midi clock
         return;
     }
@@ -242,6 +248,10 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
         }
     }
     case MidiMessage::MIDI_MIDI_CLOCK: // Midi clock
+    	  if (midiSyncSetting == 0) {
+    	  	// Transport disabled so skip
+    	  	break; 
+    	  }
         // MIDI_START = 0xFA,
         // MIDI_CONTINUE = 0xFB,
         // MIDI_STOP = 0xFC,
