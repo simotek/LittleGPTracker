@@ -35,6 +35,7 @@ public:
 	virtual double GetStreamTime() ;
 	// Additional
 	void OnChunkDone(Uint8 *stream,int len) ;
+	SDL_AudioCVT &GetCVT() { return cvt_; };
 
 private:
   int fragSize_ ;  // Actual fragsize used by the driver
@@ -44,7 +45,7 @@ private:
   int bufferPos_ ;
   int bufferSize_ ;
   SDLAudioDriverThread *thread_ ;
-	Uint32 startTime_ ;
+  Uint32 startTime_ ;
 } ;
 
 

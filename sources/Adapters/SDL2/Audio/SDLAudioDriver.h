@@ -44,6 +44,7 @@ private:
   int bufferPos_ ;
   int bufferSize_ ;
   SDLAudioDriverThread *thread_ ;
+  SDL_AudioCVT cvt_;
 	Uint32 startTime_ ;
 } ;
 

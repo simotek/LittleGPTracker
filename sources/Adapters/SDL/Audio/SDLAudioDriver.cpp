@@ -59,17 +59,29 @@ bool SDLAudioDriver::InitDriver() {
 
   //set sound
   input.freq=44100 ;
+  input.freq=48000 ;
   input.format=AUDIO_S16SYS ;
+  input.format=AUDIO_S16;
   input.channels=2 ;
   input.callback=sdl_callback ;
   input.samples=settings_.bufferSize_ ;
   input.userdata=this ;
 
+#if 1
+int dev = SDL_OpenAudioDevice(NULL, 0, &input, &returned, SDL_AUDIO_ALLOW_FREQUENCY_CHANGE);
+#else
   if (SDL_OpenAudio(&input,&returned) < 0 )
   {
   	Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
   	return false ;
   } 
+#endif
+
+    printf("freq %i, %i\n", input.freq, returned.freq);
+    printf("format %i, %i\n", input.format, returned.format);
+    printf("channels %i, %i\n", input.channels, returned.channels);
+    printf("samples %i, %i\n", input.samples, returned.samples);
+
   char bufferName[256] ;
   SDL_AudioDriverName(bufferName,256) ;
 

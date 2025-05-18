@@ -1,11 +1,11 @@
-#ifndef _LINUX_SYSTEM_H_
-#define _LINUX_SYSTEM_H_
+#ifndef _EMSCRIPTEN_SYSTEM_H_
+#define _EMSCRIPTEN_SYSTEM_H_
 
 #include "System/System/System.h"
 #include "UIFramework/SimpleBaseClasses/EventManager.h"
 #include <SDL2/SDL.h>
 
-class LINUXSystem : public System {
+class EMSCSystem : public System {
   public:
     static void Boot(int argc, char **argv);
     static void Shutdown();

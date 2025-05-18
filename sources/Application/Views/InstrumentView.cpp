@@ -14,10 +14,16 @@
 
 InstrumentView::InstrumentView(GUIWindow &w,ViewData *data):FieldView(w,data) {
 
+    Trace::Log("Instrument View", "Start\n");
+
 	project_=data->project_ ;
 	lastFocusID_=0 ;
 	current_=0 ;
+	Trace::Log("Instrument View", "on Change\n");
+
 	onInstrumentChange() ;
+	Trace::Log("Instrument View", "Complete\n");
+
 }
 
 InstrumentView::~InstrumentView() {
@@ -32,13 +38,18 @@ InstrumentType InstrumentView::getInstrumentType() {
 
 void InstrumentView::onInstrumentChange() {
 
+	Trace::Log("Instrument View", "ClearFocus\n");
+
 	ClearFocus() ;
 
 	I_Instrument *old=current_ ;
 
 	int i=viewData_->currentInstrument_ ;
+		Trace::Log("Instrument View", "GetBank\n");
+
 	InstrumentBank *bank=viewData_->project_->GetInstrumentBank() ;
 	current_=bank->GetInstrument(i) ;
+	Trace::Log("Instrument View", "A\n");
 
 	if (current_!=old) {
 		current_->RemoveObserver(*this) ;
@@ -47,6 +58,8 @@ void InstrumentView::onInstrumentChange() {
 
 	InstrumentType it=getInstrumentType() ;
  
+ 	Trace::Log("Instrument View", "B\n");
+
  	switch (it) {
 		case IT_MIDI:
 			fillMidiParameters() ;
@@ -56,15 +69,29 @@ void InstrumentView::onInstrumentChange() {
 			break ;
 	} ;
 
+	Trace::Log("Instrument View", "C\n");
+
 	SetFocus(T_SimpleList<UIField>::GetFirst()) ;
+		Trace::Log("Instrument View", "C1\n");
+
 	IteratorPtr<UIField> it2(T_SimpleList<UIField>::GetIterator()) ;
+		Trace::Log("Instrument View", "C2\n");
+
 	for (it2->Begin();!it2->IsDone();it2->Next()) {
         UIIntVarField &field=(UIIntVarField &)it2->CurrentItem() ;
+        	Trace::Log("Instrument View", "CL - %d\n",field.GetVariableID());
+
         if (field.GetVariableID()==lastFocusID_) {
+        		Trace::Log("Instrument View", "C-SetFocus\n");
+
             SetFocus(&field) ;
+            Trace::Log("Instrument View", "C-PostFocus\n");
+
             break ;
         }
     } ;
+    	Trace::Log("Instrument View", "D\n");
+
 	if (current_!=old) {
 		current_->AddObserver(*this) ;
 	}

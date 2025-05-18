@@ -69,7 +69,6 @@ void SamplePool::Load() {
 	} ;
 
 	// now, let's look at soundfonts
-
 	dir->GetContent("*.sf2") ;
 	IteratorPtr<Path> it2(dir->GetIterator()) ;
 

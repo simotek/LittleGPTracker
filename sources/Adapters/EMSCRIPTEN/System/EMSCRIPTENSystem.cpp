@@ -16,7 +16,7 @@
 
 #include "Adapters/Dummy/Midi/DummyMidi.h"
 
-#include "Adapters/SDL2/Audio/SDLAudio.h"
+#include "Adapters/SDL/Audio/SDLAudio.h"
 
 EventManager *EMSCSystem::eventManager_ = NULL;
 static int secbase = 0;
@@ -25,7 +25,6 @@ static int secbase = 0;
  * starts the main loop
  */
 int EMSCSystem::MainLoop() {
-    eventManager_->InstallMappings();
     return eventManager_->MainLoop();
 };
 
@@ -37,7 +36,7 @@ void EMSCSystem::Boot(int argc, char **argv) {
     SDL_setenv((char *)"SDL_VIDEO_X11_WMCLASS", (char *)"LittleGPTracker", 1);
 
     // Install System
-    System::Install(new LINUXSystem());
+    System::Install(new EMSCSystem());
 
     // Install FileSystem
     FileSystem::Install(new UnixFileSystem());
@@ -67,7 +66,7 @@ void EMSCSystem::Boot(int argc, char **argv) {
 
     Trace::Log("System", "Installing SDL audio");
     AudioSettings hint;
-    hint.bufferSize_ = 1024;
+    hint.bufferSize_ = 4096;
     hint.preBufferCount_ = 8;
     Audio::Install(new SDLAudio(hint));
 
@@ -86,6 +85,9 @@ void EMSCSystem::Boot(int argc, char **argv) {
 
     eventManager_ = I_GUIWindowFactory::GetInstance()->GetEventManager();
     eventManager_->Init();
+
+    eventManager_->InstallMappings();
+
 };
 
 void EMSCSystem::Shutdown() {};
@@ -124,7 +126,7 @@ void *EMSCSystem::Malloc(unsigned size) {
 /*
  * wraps free
  */
-void LINUXSystem::Free(void *ptr) { free(ptr); }
+void EMSCSystem::Free(void *ptr) { free(ptr); }
 
 /*
  * wraps memset

@@ -311,12 +311,19 @@ void AppWindow::LoadProject(const Path &p) {
     Path::SetAlias("samples", "project:samples");
 
     // Load the sample pool
+    Trace::Log("LoadSamples", "%s\n", p.GetPath().c_str());
 
     SamplePool *pool = SamplePool::GetInstance();
 
     pool->Load();
 
+    Trace::Log("SamplePool Loaded", "%s\n", p.GetPath().c_str());
+
+
     Project *project = new Project();
+
+    Trace::Log("Persist", "%s\n", p.GetPath().c_str());
+
 
     bool succeeded = persist->Load();
     if (!succeeded) {
@@ -327,9 +334,14 @@ void AppWindow::LoadProject(const Path &p) {
 
     WatchedVariable::Disable();
 
+    Trace::Log("Init Instrument Bank", "%s\n", p.GetPath().c_str());
+
     project->GetInstrumentBank()->Init();
 
     WatchedVariable::Enable();
+
+    Trace::Log("Command Dispatcher", "%s\n", p.GetPath().c_str());
+
 
     ApplicationCommandDispatcher::GetInstance()->Init(project);
 
@@ -337,50 +349,82 @@ void AppWindow::LoadProject(const Path &p) {
 
     _viewData = new ViewData(project);
 
+    Trace::Log("Init Player", "%s\n", p.GetPath().c_str());
+
     // Create & observe the player
     Player *player = Player::GetInstance();
     bool playerOK = player->Init(project, _viewData);
     player->AddObserver(*this);
 
+    Trace::Log("Init Controller", "%s\n", p.GetPath().c_str());
+
+
     // Create the controller
     UIController *controller = UIController::GetInstance();
     controller->Init(project, _viewData);
+
+    Trace::Log("Create Views", "%s\n", p.GetPath().c_str());
+
 
     // Create & observe all views
     _songView = new SongView((*this), _viewData, _root.GetName().c_str());
     _songView->AddObserver((*this));
 
+    Trace::Log("Chain View", "%s\n", p.GetPath().c_str());
+
     _chainView = new ChainView((*this), _viewData);
     _chainView->AddObserver((*this));
+
+    Trace::Log("Phrase View", "%s\n", p.GetPath().c_str());
 
     _phraseView = new PhraseView((*this), _viewData);
     _phraseView->AddObserver((*this));
 
+    Trace::Log("Project View", "%s\n", p.GetPath().c_str());
+
     _projectView = new ProjectView((*this), _viewData);
     _projectView->AddObserver((*this));
+
+    Trace::Log("Instrument View", "%s\n", p.GetPath().c_str());
 
     _instrumentView = new InstrumentView((*this), _viewData);
     _instrumentView->AddObserver((*this));
 
+    Trace::Log("Table View", "%s\n", p.GetPath().c_str());
+
     _tableView = new TableView((*this), _viewData);
     _tableView->AddObserver((*this));
 
+    Trace::Log("Groove View", "%s\n", p.GetPath().c_str());
+
     _grooveView = new GrooveView((*this), _viewData);
     _grooveView->AddObserver(*this);
+    Trace::Log("Mixer View", "%s\n", p.GetPath().c_str());
 
     _mixerView = new MixerView((*this), _viewData);
     _mixerView->AddObserver(*this);
+
+    Trace::Log("Views Created", "%s\n", p.GetPath().c_str());
+
 
     _currentView = _songView;
     _currentView->OnFocus();
 
     if (!playerOK) {
+        Trace::Log("Player", "Failed to initialize audio\n", p.GetPath().c_str());
+
         MessageBox *mb =
             new MessageBox(*_songView, "Failed to initialize audio", MBBF_OK);
         _songView->DoModal(mb);
     }
 
+    Trace::Log("Redraw", "%s\n", p.GetPath().c_str());
+
+
     Redraw();
+
+    Trace::Log("Load Complete", "%s\n", p.GetPath().c_str());
+
 }
 
 void AppWindow::CloseProject() {

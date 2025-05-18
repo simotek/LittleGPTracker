@@ -1,5 +1,8 @@
 
 #include "SDLEventManager.h"
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 #include "Application/Application.h"
 #include "Application/Model/Config.h"
 #include "System/Console/Trace.h"
@@ -71,10 +74,20 @@ int SDLEventManager::MainLoop()
 {
 	GUIWindow *appWindow=Application::GetInstance()->GetWindow() ;
 	SDLGUIWindowImp *sdlWindow=(SDLGUIWindowImp *)appWindow->GetImpWindow() ;
+#ifdef __EMSCRIPTEN__
+	if (finished_) {
+		//emscripten_cancel_main_loop();
+	}
+#else	
 	while (!finished_)
 	{
+#endif
 		SDL_Event event;
-		if (SDL_WaitEvent(&event)) 
+#ifdef __EMSCRIPTEN__
+		while (SDL_PollEvent(&event))
+#else
+		if (SDL_WaitEvent(&event))
+#endif
     {
 			switch (event.type) {
 				case SDL_KEYDOWN:
@@ -152,7 +165,9 @@ int SDLEventManager::MainLoop()
 					break ;
 			}
 		}
+#ifndef __EMSCRIPTEN__
 	}
+#endif
 	return 0 ;
 } ;
 

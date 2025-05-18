@@ -1,0 +1,33 @@
+-include $(PWD)/rules_base
+
+# config
+DEFINES := \
+        -DPLATFORM_$(PLATFORM) \
+        -D_64BIT \
+	-DCPP_MEMORY \
+	-D__LINUX_ALSA__ \
+	-D__LINUX_ALSASEQ__ \
+        -DSDL2 \
+        -DSDLAUDIO \
+        -D_NO_JACK_  \
+        -DDUMMYMIDI
+
+DEVKIT = /opt/emscripten/emsdk/upstream/emscripten/
+CC = $(CROSS_COMPILE)emcc
+CXX = $(CROSS_COMPILE)em++
+TOOLPATH=$(DEVKIT)/usr/bin
+
+
+# optimization
+OPT_FLAGS := -O3
+#OPT_FLAGS := -g
+INCLUDES := $(ALSA_CFLAGS) $(JACK_CFLAGS) $(SDL_CFLAGS) -I$(PWD)/../sources
+CFLAGS := $(OPT_FLAGS) $(DEFINES) $(INCLUDES) -Wall --use-port=sdl2 -pthread -sPTHREAD_POOL_SIZE=12
+CXXFLAGS := $(CFLAGS) -std=gnu++03 --use-port=sdl2 -pthread -sPTHREAD_POOL_SIZE=12
+LIBS := $(ALSA_LIBS) $(JACK_LIBS) $(SDL_LIBS) --use-port=sdl2  -pthread -sPTHREAD_POOL_SIZE=12 -sASSERTIONS=0 --emrun
+OUTPUT := ../lgpt
+EXTENSION := html
+
+# build rule
+%.html: $(OFILES)
+	$(CXX) $(LDFLAGS) --emrun -o $@ $(OFILES) $(LIBS) --preload-file /home/simon/tmp/lgpt-run/config.xml@config.xml --preload-file /home/simon/tmp/lgpt-run/mapping.xml@mapping.xml --preload-file /home/simon/src/devel/LittleGPTracker/projects/lgpt-resources-1.1/samplelib@/samplelib

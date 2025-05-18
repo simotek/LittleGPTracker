@@ -156,6 +156,14 @@ GARLICDIRS := $(MIYOODIRS)
 GARLICPLUSDIRS := $(GARLICDIRS)
 RS97DIRS := $(DINGUXDIRS) $(DINGUXAUDIODIRS)
 
+EMSCRIPTENDIRS := \
+    $(DUMMYMIDIDIRS) $(SDL2DIRS) $(SDL2AUDIODIRS)\
+	../sources/Adapters/EMSCRIPTEN/Main \
+    ../sources/Adapters/EMSCRIPTEN/System \
+    ../sources/Adapters/Unix/FileSystem \
+	../sources/Adapters/Unix/Process \
+    ../sources/System/Process
+
 GP2XDIRS := \
 	. \
 	../sources/Adapters/GP2X/Main \
@@ -438,6 +446,19 @@ PSPFILES := \
 	SDLProcess.o \
 	SDLTimer.o \
 	PSPSystem.o
+
+EMSCRIPTENFILES := \
+    $(SDLAUDIOFILES) \
+    $(DUMMYMIDIFILES) \
+	UnixFileSystem.o \
+	EMSCRIPTENMain.o \
+	EMSCRIPTENSystem.o \
+	GUIFactory.o \
+	SDLGUIWindowImp.o \
+	SDLEventManager.o \
+	Process.o \
+	UnixProcess.o \
+	SDLTimer.o
 
 #---------------------------------------------------------------------------------
 # Windows

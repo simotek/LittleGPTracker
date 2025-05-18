@@ -58,22 +58,29 @@ struct SDL_AudioSpec returned ;
 bool SDLAudioDriver::InitDriver() {
 
   //set sound
-  input.freq=44100 ;
-  input.format=AUDIO_S16SYS ;
+  input.freq=48000 ;
+  input.format=AUDIO_F32;
   input.channels=2 ;
   input.callback=sdl_callback ;
   input.samples=settings_.bufferSize_ ;
   input.userdata=this ;
 
-  // On my machine this wasn't working.
-  // SDL_AudioDeviceID deviceId = SDL_OpenAudioDevice(NULL,0,&input,&returned,0);
-  // The above may return 0 meaning an error or success.
-  int ret = SDL_OpenAudio(&input,&returned);
-  if ( ret != 0 )
+  SDL_BuildAudioCVT(&cvt_, AUDIO_S16SYS, 2, GetSampleRate(), AUDIO_F32, 2, 48000);
+
+#if 0
+int dev = SDL_OpenAudioDevice(NULL, 0, &input, &returned, SDL_AUDIO_ALLOW_FREQUENCY_CHANGE);
+#else
+  if (SDL_OpenAudio(&input,&returned) < 0 )
   {
-    Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
+  	Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
   	return false ;
   } 
+#endif
+	printf("SDL2 Audio:\n");
+    printf("freq %i, %i\n", input.freq, returned.freq);
+    printf("format %i, %i\n", input.format, returned.format);
+    printf("channels %i, %i\n", input.channels, returned.channels);
+    printf("samples %i, %i\n", input.samples, returned.samples);
   const char * driverName = SDL_GetCurrentAudioDriver() ;
 
   fragSize_=returned.size ;
@@ -184,7 +191,11 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream,int len) {
       }
       // Now dump audio to the device
 
-      SYS_MEMCPY(stream,(short *)(mainBuffer_+bufferPos_), len); 
+      SYS_MEMCPY(stream,(short *)(mainBuffer_+bufferPos_), len);
+	  cvt_.len = len;  
+	  cvt_.buf = stream;
+	  // read your float32 data into cvt.buf here.
+	  //SDL_ConvertAudio(&cvt_);
       onAudioBufferTick();
       bufferPos_+=len ;
 }
