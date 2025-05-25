@@ -60,6 +60,8 @@ class MidiInDevice : public Observable,
     MidiChannel *pbChannel_[16];        // Pitch bend
     MidiChannel *catChannel_[16];       // Channel after touch
     MidiChannel *pcChannel_[16];        // Program change
+
+    int tempoCount_; // Count of tempo messages since last tap
 };
 
 #endif // _MIDIIN_DEVICE_H_

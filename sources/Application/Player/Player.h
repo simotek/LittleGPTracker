@@ -104,6 +104,7 @@ public:
 	int GetAudioBufferSize() ;
 	int GetAudioRequestedBufferSize() ;
 	int GetAudioPreBufferCount() ;
+	int GetMidiSyncState() ;
 
 protected:
 	void updateSongPos(int position,int channel,int chainPos=0,int hop=-1) ;

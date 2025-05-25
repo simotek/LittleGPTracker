@@ -1,5 +1,6 @@
 #include "MidiInDevice.h"
 
+#include "Application/Commands/ApplicationCommandDispatcher.h"
 #include "Application/Model/Config.h"
 #include "Application/Player/Player.h"
 #include "System/Console/Trace.h"
@@ -27,6 +28,7 @@ MidiInDevice::MidiInDevice(const char *name)
     }
 
     isRunning_ = false;
+    tempoCount_ = 0;
 };
 
 MidiInDevice::~MidiInDevice() {
@@ -150,19 +152,30 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
     // 1 - Trasnport Only
     // 2 - Tempo Sync
     // 3 - All
-    int midiSyncSetting = Config::GetInstance()->GetValue("MIDISENDSYNC");
+    Player *player = Player::GetInstance();
+    int midiSyncSetting = player->GetMidiSyncState();
 
     // Midi clock events happen alot so handle them first to make the codepath
     // shorter
     if (isMidiClockEvent && midiSyncSetting >= 2) {
-        // Todo: SL implement midi clock
+        // Trace::Debug("midi sync:%d", tempoCount_ % ppqn*4);
+
+        // Pulses Per Quarter note, 24 is the midi 1 standard, but 
+        // Midi 2 introduces others so maybe we want it to be a config setting someday
+        int ppqn = 24;
+
+        if ((tempoCount_ % ppqn*4) == 0)
+        {
+            ApplicationCommandDispatcher::GetInstance()->OnTempoTap();
+            tempoCount_ = 0;
+        }
+        tempoCount_ += 1;
         return;
     }
 
-    if (!isMidiClockEvent) {
-        Trace::Debug("midi in:%X:%X:%X", event.status_, event.data1_,
-                     event.data2_);
-    }
+    // This doesn't print sync messages
+    Trace::Debug("midi in:%X:%X:%X", event.status_, event.data1_,
+                    event.data2_);
 
     switch (event.GetType()) {
     case MidiMessage::MIDI_NOTE_OFF: {

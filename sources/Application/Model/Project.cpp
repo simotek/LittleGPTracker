@@ -105,6 +105,12 @@ int Project::GetAttenuation() {
 	return v->GetInt();
 }
 
+int Project::GetMidiSyncState() {
+    Variable *v = FindVariable(VAR_MIDISYNC);
+    NAssert(v);
+	return v->GetInt();
+} ;
+
 void Project::NudgeTempo(int value) {
 	if((GetTempo() + tempoNudge_) > 0)
 		tempoNudge_ += value;

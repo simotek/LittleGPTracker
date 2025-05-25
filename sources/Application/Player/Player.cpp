@@ -1213,3 +1213,7 @@ int Player::GetAudioPreBufferCount() {
 	return (out)?out->GetAudioPreBufferCount():0 ;
 } ;
 
+int Player::GetMidiSyncState() {
+	return project_->GetMidiSyncState();
+}
+

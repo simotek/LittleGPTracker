@@ -43,6 +43,7 @@ public:
 	int GetTranspose() ;
     int GetSoftclip();
     int GetAttenuation();
+    int GetMidiSyncState();
 
     void Trigger();
 
