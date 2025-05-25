@@ -17,7 +17,9 @@ View::View(GUIWindow &w,ViewData *viewData):
 	w_(w),
 	modalView_(0),
 	modalViewCallback_(0),
-	hasFocus_(false)
+	hasFocus_(false),
+	notificationTime_(0),
+	viewType_(VT_SONG)
 {
   if (!initPrivate_) 
   {
