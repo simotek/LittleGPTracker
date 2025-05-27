@@ -32,6 +32,22 @@ bool SysMutex::Lock() {
 	return false ;
 }
 
+bool SysMutex::TryLock() {
+	if (!mutex_) {
+		mutex_ = SDL_CreateMutex() ;
+	}
+	if (mutex_) {
+#ifdef SDL2
+		// Returns 0 on Successs
+		return !SDL_TryLockMutex(mutex_) ;
+#else
+		SDL_LockMutex(mutex_) ;
+		return true ;
+#endif
+	} 
+	return false ;
+}
+
 void SysMutex::Unlock() {
 	if (mutex_) {
 		SDL_UnlockMutex(mutex_) ;
