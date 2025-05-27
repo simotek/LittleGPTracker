@@ -72,13 +72,16 @@ void MidiService::Stop() {
 } ;
 
 void MidiService::QueueMessage(MidiMessage &m) {
-	if (device_) {
-        SysMutexLocker locker(queueMutex_) ;
-		T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
-		MidiMessage *ms=new MidiMessage(m.status_,m.data1_,m.data2_);
-		queue->Insert(ms);
-	}
-};
+    if (!device_)
+        return;
+
+    if (queueMutex_.TryLock()) {
+        T_SimpleList<MidiMessage> *queue = queues_[currentPlayQueue_];
+        MidiMessage *ms = new MidiMessage(m.status_, m.data1_, m.data2_);
+        queue->Insert(ms);
+        queueMutex_.Unlock();
+    }
+}
 
 void MidiService::Trigger() {
 	AdvancePlayQueue();
@@ -94,10 +97,13 @@ void MidiService::Trigger() {
 }
 
 void MidiService::AdvancePlayQueue() {
- 	currentPlayQueue_=(currentPlayQueue_+1)%MIDI_MAX_BUFFERS;
-    SysMutexLocker locker(queueMutex_) ;
-	T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
-	queue->Empty();
+    int next = (currentPlayQueue_ + 1) % MIDI_MAX_BUFFERS;
+    if (queueMutex_.TryLock()) {
+        // Only clear AFTER successful lock — avoids data loss
+        queues_[next]->Empty();
+        queueMutex_.Unlock();
+        currentPlayQueue_ = next;
+    }
 }
 
 void MidiService::Update(Observable &o,I_ObservableData *d) {
@@ -123,16 +129,19 @@ void MidiService::Flush() {
 };
 
 void MidiService::flushOutQueue() {
-  // Move queue positions
-  currentOutQueue_ = (currentOutQueue_+1) % MIDI_MAX_BUFFERS;
-  SysMutexLocker locker(queueMutex_) ;
-	T_SimpleList<MidiMessage> *flushQueue=queues_[currentOutQueue_];
-  
-	if (device_) {
-    // Send whatever is on the out queue
-		device_->SendQueue(*flushQueue);
-	}
-	flushQueue->Empty();
+    int next = (currentOutQueue_ + 1) % MIDI_MAX_BUFFERS;
+
+    if (queueMutex_.TryLock()) {
+        T_SimpleList<MidiMessage> *flushQueue = queues_[next];
+
+        if (device_) {
+            device_->SendQueue(*flushQueue);
+        }
+
+        flushQueue->Empty();
+        currentOutQueue_ = next;  // Advance only after safe flush
+        queueMutex_.Unlock();
+    }
 }
 
 /*
