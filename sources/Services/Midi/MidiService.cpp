@@ -94,10 +94,14 @@ void MidiService::Trigger() {
 }
 
 void MidiService::AdvancePlayQueue() {
- 	currentPlayQueue_=(currentPlayQueue_+1)%MIDI_MAX_BUFFERS;
-    SysMutexLocker locker(queueMutex_) ;
-	T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
-	queue->Empty();
+    // This is called from the audio thread, wait for the next time
+    // through if we can't take a lock
+    if (queueMutex_.TryLock()) {
+        currentPlayQueue_=(currentPlayQueue_+1)%MIDI_MAX_BUFFERS;
+        T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
+        queue->Empty();
+        queueMutex_.Unlock();
+    }
 }
 
 void MidiService::Update(Observable &o,I_ObservableData *d) {
