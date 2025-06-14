@@ -10,13 +10,10 @@
 #endif
 	
 MidiService::MidiService()
-    : T_SimpleList<MidiOutDevice>(true), inList_(true), inDevice_(NULL),
-      outDevice_(NULL), sendSync_(true) {
-	for (int i=0;i<MIDI_MAX_BUFFERS;i++) {
-		queues_[i]=new T_SimpleList<MidiMessage>(true);
-	}
+    : T_SimpleList<MidiOutDevice>(true), inList_(true), inDevice_(NULL), outDevice_(NULL),
+      sendSync_(true) {
 
-	const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
+    const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
 	midiDelay_ = delay?atoi(delay):1;
 
 	const char *sendSync = Config::GetInstance()->GetValue("MIDISENDSYNC");
@@ -98,28 +95,19 @@ void MidiService::SelectDevice(const std::string &name) {
     }
 }
 
-bool MidiService::Start() {
-	currentPlayQueue_ = 0;
-	currentOutQueue_ = 0;
-	return true;
-}
+bool MidiService::Start() { return true; };
 
-void MidiService::Stop() { stopOutDevice(); }
+void MidiService::Stop() { stopOutDevice(); };
 
 void MidiService::QueueMessage(MidiMessage &m) {
-    if (outDevice_) {
-        SysMutexLocker locker(queueMutex_) ;
-		T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
-		MidiMessage *ms=new MidiMessage(m.status_,m.data1_,m.data2_);
-		queue->Insert(ms);
-	}
+    // Trace::Log("MidiService", "QueueMessage: status=0x%X", m.status_);
+	midiQueue_.enqueue(m);
 }
 
 void MidiService::Trigger() {
-	AdvancePlayQueue();
 
     if (outDevice_ && sendSync_) {
-		SyncMaster *sm=SyncMaster::GetInstance();
+        SyncMaster *sm=SyncMaster::GetInstance();
 		if (sm->MidiSlice()) {
 			MidiMessage msg;
 			msg.status_ = 0xF8;
@@ -128,23 +116,12 @@ void MidiService::Trigger() {
 	}
 }
 
-void MidiService::AdvancePlayQueue() {
-    // This is called from the audio thread, wait for the next time
-    // through if we can't take a lock
-    if (queueMutex_.TryLock()) {
- 	currentPlayQueue_=(currentPlayQueue_+1)%MIDI_MAX_BUFFERS;
-	T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
-	queue->Empty();
-        queueMutex_.Unlock();
+void MidiService::Update(Observable &o, I_ObservableData *d) {
+    AudioDriver::Event *event = (AudioDriver::Event *)d;
+    if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
+        onAudioTick();
     }
-}
-
-void MidiService::Update(Observable &o,I_ObservableData *d) {
-  AudioDriver::Event *event=(AudioDriver::Event *)d;
-  if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
-    onAudioTick();
-  }
-}
+};
 
 void MidiService::onAudioTick() {
 	if (tickToFlush_>0) {
@@ -162,16 +139,19 @@ void MidiService::Flush() {
 }
 
 void MidiService::flushOutQueue() {
-  // Move queue positions
-  currentOutQueue_ = (currentOutQueue_+1) % MIDI_MAX_BUFFERS;
-  SysMutexLocker locker(queueMutex_) ;
-	T_SimpleList<MidiMessage> *flushQueue=queues_[currentOutQueue_];
-  
-    if (outDevice_) {
-    // Send whatever is on the out queue
-        outDevice_->SendQueue(*flushQueue);
-	}
-	flushQueue->Empty();
+    if (!outDevice_)
+        return;
+    MidiMessage msg;
+    T_SimpleList<MidiMessage> batch; // <-- use T_SimpleList
+    // Drain all messages currently in the queue
+    while (midiQueue_.try_dequeue(msg)) {
+        batch.Insert(msg); // Assuming Add() is the method to append
+        // Trace::Log("MidiService", "flushOutQueue: status=0x%X", msg.status_);
+    }
+    if (batch.Size() > 0) { // Assuming IsEmpty() checks if list is empty
+        outDevice_->SendQueue(batch);
+		// Trace::Log("MidiService", "flushOutQueue: batch=0x%X", batch);
+    }
 }
 
 /*

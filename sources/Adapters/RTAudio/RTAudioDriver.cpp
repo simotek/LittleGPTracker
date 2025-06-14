@@ -146,9 +146,8 @@ bool RTAudioDriver::StartDriver()
 
 	for (int i=0;i<settings_.preBufferCount_;i++)
   {
-		AddBuffer((short *)miniBlank_,fragSize_/4);
-		MidiService::GetInstance()->AdvancePlayQueue();
-	}
+        AddBuffer((short *)miniBlank_, fragSize_ / 4);
+    }
 
 	if (settings_.preBufferCount_==0)
   {

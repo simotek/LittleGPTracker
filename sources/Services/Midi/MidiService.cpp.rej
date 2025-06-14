@@ -1,0 +1,140 @@
+diff a/sources/Services/Midi/MidiService.cpp b/sources/Services/Midi/MidiService.cpp	(rejected hunks)
+@@ -9,18 +9,12 @@
+ #ifdef SendMessage
+ #undef SendMessage
+ #endif
+-	
+-MidiService::MidiService():
+-	T_SimpleList<MidiOutDevice>(true),
+-  inList_(true),
+-	device_(0),
+-	sendSync_(true)
+-{
+-	for (int i=0;i<MIDI_MAX_BUFFERS;i++) {
+-		queues_[i]=new T_SimpleList<MidiMessage>(true);
+-	}
+ 
+-	const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
++MidiService::MidiService()
++    : T_SimpleList<MidiOutDevice>(true), inList_(true), device_(0),
++      sendSync_(true) {
++
++    const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
+ 	midiDelay_ = delay?atoi(delay):1;
+ 
+ 	const char *sendSync = Config::GetInstance()->GetValue("MIDISENDSYNC");
+@@ -60,65 +54,42 @@ void MidiService::SelectDevice(const std::string &name) {
+ 	deviceName_ = name;
+ };
+ 
+-bool MidiService::Start() {
+-	currentPlayQueue_ = 0;
+-	currentOutQueue_ = 0;
+-	return true;
+-} ;
+-
++bool MidiService::Start() { return true; };
+ 
+-void MidiService::Stop() {
+-	stopDevice();
+-} ;
++void MidiService::Stop() { stopDevice(); };
+ 
+ void MidiService::QueueMessage(MidiMessage &m) {
+     if (!device_)
+         return;
++    // Trace::Log("MidiService", "QueueMessage: status=0x%X", m.status_);
+ 
+-    if (queueMutex_.TryLock()) {
+-        T_SimpleList<MidiMessage> *queue = queues_[currentPlayQueue_];
+-        MidiMessage *ms = new MidiMessage(m.status_, m.data1_, m.data2_);
+-        queue->Insert(ms);
+-        queueMutex_.Unlock();
+-    }
++    midiQueue_.enqueue(m);
+ }
+ 
+ void MidiService::Trigger() {
+-	AdvancePlayQueue();
+-
+-	if (device_&&sendSync_) {
+-		SyncMaster *sm=SyncMaster::GetInstance();
++    if (device_ && sendSync_) {
++        SyncMaster *sm=SyncMaster::GetInstance();
+ 		if (sm->MidiSlice()) {
+-			MidiMessage msg;
+-			msg.status_ = 0xF8;
+-			QueueMessage(msg);
+-		}
+-	}
+-}
+-
+-void MidiService::AdvancePlayQueue() {
+-    int next = (currentPlayQueue_ + 1) % MIDI_MAX_BUFFERS;
+-    if (queueMutex_.TryLock()) {
+-        // Only clear AFTER successful lock — avoids data loss
+-        queues_[next]->Empty();
+-        queueMutex_.Unlock();
+-        currentPlayQueue_ = next;
++            MidiMessage msg;
++            msg.status_ = 0xF8;
++            QueueMessage(msg);
++        }
+     }
+ }
+ 
+-void MidiService::Update(Observable &o,I_ObservableData *d) {
+-  AudioDriver::Event *event=(AudioDriver::Event *)d;
+-  if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
+-    onAudioTick();
+-  }
++void MidiService::Update(Observable &o, I_ObservableData *d) {
++    AudioDriver::Event *event = (AudioDriver::Event *)d;
++    if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
++        onAudioTick();
++    }
+ };
+ 
+ void MidiService::onAudioTick() {
+-	if (tickToFlush_>0) {
+-		if (--tickToFlush_ ==0) {
++    if (tickToFlush_ > 0) {
++        if (--tickToFlush_ ==0) {
+ 			flushOutQueue();
+ 		}
+-	}
++    }
+ }
+ 
+ void MidiService::Flush() {
+@@ -129,18 +100,19 @@ void MidiService::Flush() {
+ };
+ 
+ void MidiService::flushOutQueue() {
+-    int next = (currentOutQueue_ + 1) % MIDI_MAX_BUFFERS;
+-
+-    if (queueMutex_.TryLock()) {
+-        T_SimpleList<MidiMessage> *flushQueue = queues_[next];
+-
+-        if (device_) {
+-            device_->SendQueue(*flushQueue);
+-        }
++    if (!device_)
++        return;
+ 
+-        flushQueue->Empty();
+-        currentOutQueue_ = next;  // Advance only after safe flush
+-        queueMutex_.Unlock();
++    MidiMessage msg;
++    T_SimpleList<MidiMessage> batch; // <-- use T_SimpleList
++    // Drain all messages currently in the queue
++    while (midiQueue_.try_dequeue(msg)) {
++        batch.Insert(msg); // Assuming Add() is the method to append
++        // Trace::Log("MidiService", "flushOutQueue: status=0x%X", msg.status_);
++    }
++    if (batch.Size() > 0) { // Assuming IsEmpty() checks if list is empty
++        device_->SendQueue(batch);
++		// Trace::Log("MidiService", "flushOutQueue: batch=0x%X", batch);
+     }
+ }
+ 

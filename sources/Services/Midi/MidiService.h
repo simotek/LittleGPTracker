@@ -7,7 +7,7 @@
 #include "MidiInDevice.h"
 #include "MidiInMerger.h"
 #include "MidiOutDevice.h"
-#include "System/Process/SysMutex.h"
+#include "System/Process/ConcurrentQueue.h"
 #include "System/Timer/Timer.h"
 #include <string>
 
@@ -40,12 +40,8 @@ class MidiService : public T_Factory<MidiService>,
     void QueueMessage(MidiMessage &);
 
     //! Time chunk trigger
-
     void Trigger();
-    void AdvancePlayQueue();
-
     //! Flush current queue to the output
-
     void Flush();
 
   protected:
@@ -75,15 +71,11 @@ class MidiService : public T_Factory<MidiService>,
     std::string deviceName_;
     MidiInDevice *inDevice_;
     MidiOutDevice *outDevice_;
+    moodycamel::ConcurrentQueue<MidiMessage> midiQueue_;
 
-    T_SimpleList<MidiMessage> *queues_[MIDI_MAX_BUFFERS];
-    int currentPlayQueue_;
-    int currentOutQueue_;
-
-    MidiInMerger *merger_;
-    int midiDelay_;
-    int tickToFlush_;
-    bool sendSync_;
-    SysMutex queueMutex_;
+  MidiInMerger *merger_;
+  int midiDelay_;
+  int tickToFlush_;
+  bool sendSync_;
 };
 #endif
