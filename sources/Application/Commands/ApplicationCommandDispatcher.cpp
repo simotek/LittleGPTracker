@@ -32,6 +32,11 @@ void ApplicationCommandDispatcher::OnTempoTap() {
 	project_->OnTempoTap() ;
 } ;
 
+void ApplicationCommandDispatcher::OnMidiTempoTap() {
+	if (!project_) return ;
+	project_->OnMidiTempoTap() ;
+} ;
+
 void ApplicationCommandDispatcher::OnQueueRow() {
 	if (!project_) return ;
 	Player *player=Player::GetInstance() ;

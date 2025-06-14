@@ -13,6 +13,7 @@ public:
 	void Close() ;
 	virtual void Execute(FourCC id,float value) ;
 	void OnTempoTap() ;
+	void OnMidiTempoTap() ;
 	void OnQueueRow() ;
 	void OnNudgeDown() ;
 	void OnNudgeUp() ;

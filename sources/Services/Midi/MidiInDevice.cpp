@@ -28,7 +28,6 @@ MidiInDevice::MidiInDevice(const char *name)
     }
 
     isRunning_ = false;
-    tempoCount_ = 0;
 };
 
 MidiInDevice::~MidiInDevice() {
@@ -160,16 +159,9 @@ void MidiInDevice::treatChannelEvent(MidiMessage &event) {
     if (isMidiClockEvent && midiSyncSetting >= 2) {
         // Trace::Debug("midi sync:%d", tempoCount_ % ppqn*4);
 
-        // Pulses Per Quarter note, 24 is the midi 1 standard, but 
-        // Midi 2 introduces others so maybe we want it to be a config setting someday
-        int ppqn = 24;
-
-        if ((tempoCount_ % ppqn*4) == 0)
-        {
-            ApplicationCommandDispatcher::GetInstance()->OnTempoTap();
-            tempoCount_ = 0;
-        }
-        tempoCount_ += 1;
+        ApplicationCommandDispatcher::GetInstance()->OnMidiTempoTap();
+        return;
+    } else if (isMidiClockEvent) {
         return;
     }
 

@@ -508,3 +508,41 @@ void Project::OnTempoTap() {
 	}
 	lastTap_[tempoTapCount_-1]=now ;
 }
+
+void Project::OnMidiTempoTap() {
+
+	// Pulses Per Quarter note, 24 is the midi 1 standard, but 
+	// Midi 2 introduces others so maybe we want it to be a config setting someday
+	int ppqn = 24;
+
+	// Midi clock comes in much faster then tap tempo
+	int tapsPerBeat = ppqn;
+
+	unsigned long now=System::GetInstance()->GetClock() ;
+
+    if (tempoTapCount_!=0) {
+		// count last tick tempo and see if in range
+		unsigned millisec=now-lastTap_[tempoTapCount_-1] ;
+		int t=int(60000/tapsPerBeat/(float)millisec) ;
+		if (t>30) {
+			if (tempoTapCount_==MAX_TAP) {
+				for (int i=0;i<int(tempoTapCount_)-1;i++)  {
+					lastTap_[i]=lastTap_[i+1] ;
+				}				
+			} else {
+				tempoTapCount_++ ;
+			}
+			int tempo=int((60000/tapsPerBeat)*(tempoTapCount_-1)/(float)(now-lastTap_[0])) ;
+			
+			Trace::Debug("Tempo: %d", tempo);
+			Variable *v=FindVariable(VAR_TEMPO) ;
+			v->SetInt(tempo) ;
+		} else {
+			tempoTapCount_=1 ;
+			Trace::Debug("T Less then 30");
+		}
+	} else {
+		tempoTapCount_=1 ;
+	}
+	lastTap_[tempoTapCount_-1]=now ;
+}
