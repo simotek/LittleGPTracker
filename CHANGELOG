@@ -28,6 +28,10 @@
         Hide lgpt_ prefix for songs #165
         Consistent view title separators #166
 
+    nine-h
+        Reduce nag dialogs (#187)
+        Allow user to save, load, save as and quit while song is playing
+
 
     Copy columns (#141)
     * Enables copying fx+params into any column in tables and phrases
