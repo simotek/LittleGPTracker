@@ -40,21 +40,22 @@ Recommended reading to get you started:
 
 ## Features per platform
 
-| Platform    | MIDI_Possible | MIDI_enabled | Soundfonts | PrintFX | Note                                 |
-|-------------|---------------|--------------|------------|---------|-----------------------------|
-| PSP         | NO            | NO           | YES        | TBA                |[See notes](projects/resources/PSP/INSTALL_HOW_TO.txt) |
-| DEB         | YES           | YES          | YES        | ENABLED     |                                      |
-| X64         | YES           | YES          | NO         | ENABLED     |                                      |
-| X86         | YES           | YES          | YES        | ENABLED     |                                      |
-| MIYOO       | NO            | NO           | YES        | TBA               | Port by [Nine-H](https://ninethehacker.xyz) |
-| W32         | YES           | YES          | YES        | ENABLED     | Built in VS2008 with love            |
-| RASPI       | YES           | YES          | YES        | ENABLED     | Versatile platform                   |
-| CHIP        | YES           | YES          | YES        | ENABLED                | [See notes](projects/resources/CHIP/INSTALL_HOW_TO.txt) |
-| BITTBOY     | MAYBE         | NO           | YES        | TBA               |                                      |
-| GARLIC      | MAYBE         | NO           | YES        | TBA               | Port by [Simotek](http://simotek.net)|
-| GARLICPLUS  | MAYBE         | NO           | YES        | TBA               | Port by [Simotek](http://simotek.net)|
-| RG35XXPLUS  | MAYBE         | NO           | YES        | TBA               | Port by [Simotek](http://simotek.net)|
-| MACOS       | YES           | YES          | NO         | ENABLED     | Port by [clsource](https://genserver.social/clsource) |
+| Platform    | MIDI_Possible | MIDI_enabled | Soundfonts | Note                                 |
+|-------------|---------------|--------------|------------|--------------------------------------|
+| PSP         | NO            | NO           | YES        | [See notes](projects/resources/PSP/INSTALL_HOW_TO.txt) |
+| DEB         | YES           | YES          | YES        |                                      |
+| X64         | YES           | YES          | NO         |                                      |
+| X86         | YES           | YES          | YES        |                                      |
+| STEAM       | YES           | YES          | NO         |                                      |
+| MIYOO       | NO            | NO           | YES        | Port by [Nine-H](https://ninethehacker.xyz) |
+| W32         | YES           | YES          | YES        | Built in VS2008 with love            |
+| RASPI       | YES           | YES          | YES        | Versatile platform                   |
+| CHIP        | YES           | YES          | YES        | [See notes](projects/resources/CHIP/INSTALL_HOW_TO.txt) |
+| BITTBOY     | MAYBE         | NO           | YES        |                                      |
+| GARLIC      | MAYBE         | NO           | YES        | Port by [Simotek](http://simotek.net)|
+| GARLICPLUS  | MAYBE         | NO           | YES        | Port by [Simotek](http://simotek.net)|
+| RG35XXPLUS  | MAYBE         | NO           | YES        | Port by [Simotek](http://simotek.net)|
+| MACOS       | YES           | YES          | NO         | Port by [clsource](https://genserver.social/clsource) |
 
 
 * **Soundfont library is currently not ported for 64bit OS**
