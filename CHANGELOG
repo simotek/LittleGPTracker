@@ -1,4 +1,7 @@
-1.6.0-bacon1
+1.6.0-bacon2
+    Interpolate values in tables and phrases
+        R + B on single-column selection will fill values from lowest to highest
+
     Contributions:
     drbscl
         Add 64 bit soundfont support (#211)
