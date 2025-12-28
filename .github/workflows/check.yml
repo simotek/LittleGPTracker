@@ -9,14 +9,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Fetch all branches
-        run: git fetch
+        with:
+            fetch-depth: 0
 
       - name: Check formatting
         run: |
-            git fetch origin master:master
-            CHANGED_FILES=$(git diff --name-only master --diff-filter=ACM | grep -iE '\.(cpp|h|c|hpp)$')
+            CHANGED_FILES=$(git diff --name-only origin/master...HEAD --diff-filter=ACM | grep -iE '\.(cpp|h|c|hpp)$' || true)
 
             if [ -z "$CHANGED_FILES" ]; then
                 echo "No C/C++ files changed."
@@ -28,7 +26,7 @@ jobs:
             # Run clang-format on the changed lines of each staged file
             for FILE in $CHANGED_FILES; do
                 # Get the changed lines in the file
-                CHANGED_LINES=$(git diff -U0 master -- $FILE | grep -E '^@@' | awk '{print $3}' | cut -d',' -f1)
+                CHANGED_LINES=$(git diff -U0 origin/master -- $FILE | grep -E '^@@' | awk '{print $3}' | cut -d',' -f1)
 
                 # Format each changed line in the file
                 for LINE in $CHANGED_LINES; do
@@ -93,9 +91,10 @@ jobs:
         shell: bash
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -125,9 +124,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -157,9 +157,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -195,9 +196,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -228,9 +230,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -252,20 +255,27 @@ jobs:
         run: |
           ln -s /home/runner/work/LittleGPTracker/LittleGPTracker workspace
           docker run -d --name rg35xx-container -v "$(pwd)/workspace:/root/workspace" aveferrum/rg35xx-toolchain sleep infinity
-          docker exec rg35xx-container bash -c "
+          docker exec rg35xx-container bash -c '
+            # Workaround for eol-ed docker debian image
+            BASE="https://deb.debian.org/debian/pool/main/d/debian-archive-keyring/"
+            LATEST="debian-archive-keyring_2025.1_all.deb"
+            wget -qO ./debian-archive-keyring.deb "$BASE$LATEST"
+            dpkg -i ./debian-archive-keyring.deb
+
             apt update && apt install -y python3 python3-pillow
             cd projects
             make PLATFORM=GARLIC
-          "
+          '
           sudo chmod -R 777 ./workspace/projects
           sudo chown -R root:root ./workspace/projects
 
       - name: Package build
         working-directory: ./workspace/projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -297,9 +307,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -331,9 +342,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -366,9 +378,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -399,9 +412,10 @@ jobs:
       - name: Package build
         working-directory: projects
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl "https://api.github.com/repos/djdiskmachine/lgpt-resources/tags" | jq -r '.[0].name')
+          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
+          mv lgpt-resources-${TAG}/*/ ./resources/packaging
           rm -rf lgpt-resources*
           ./resources/packaging/lgpt_package.sh
 
@@ -413,7 +427,7 @@ jobs:
           if-no-files-found: error
   
   macos:
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.1.7
@@ -430,13 +444,22 @@ jobs:
           cp -R bin/LittleGPTracker.app projects/
 
       - name: Package build
-        working-directory: projects
+        working-directory: projects/resources/packaging
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.1.zip
+          TAG=$(curl -fsSL \
+          -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+          -H "Accept: application/vnd.github+json" \
+          https://api.github.com/repos/djdiskmachine/lgpt-resources/tags)
+          echo TAG==$TAG
+          TAG=$(echo $TAG | jq -r '.[0].name')
+          echo TAG==$TAG
+          curl -fL -o lgpt-resources.zip \
+            https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/${TAG}.zip
           unzip lgpt-resources.zip
-          mv lgpt-resources-1.1/*/ ./resources/packaging
-          rm -rf lgpt-resources*
-          ./resources/packaging/lgpt_package.sh
+          ./lgpt_package.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

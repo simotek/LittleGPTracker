@@ -4,25 +4,32 @@
 #include "Services/Audio/AudioDriver.h"
 #include "System/Console/Trace.h"
 #include "System/Timer/Timer.h"
+#include "System/Console/Trace.h"
 
 #ifdef SendMessage
 #undef SendMessage
 #endif
 	
 MidiService::MidiService()
-    : T_SimpleList<MidiOutDevice>(true), inList_(true), inDevice_(NULL), outDevice_(NULL),
+    : T_SimpleList<MidiOutDevice>(true), inList_(true), device_(0),
       sendSync_(true) {
-
-    const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
+#ifndef _FEAT_MIDI_MULTITHREAD
+    for (int i=0;i<MIDI_MAX_BUFFERS;i++) {
+		queues_[i]=new T_SimpleList<MidiMessage>(true);
+	}
+#endif
+	const char *delay = Config::GetInstance()->GetValue("MIDIDELAY");
 	midiDelay_ = delay?atoi(delay):1;
 
 	const char *sendSync = Config::GetInstance()->GetValue("MIDISENDSYNC");
 	if (sendSync) {
 		sendSync_ = (strcmp(sendSync,"YES")==0);
 	}
-}
+};
 
-MidiService::~MidiService() { Close(); }
+MidiService::~MidiService() {
+	Close();
+};
 
 bool MidiService::Init() {
 	Empty();
@@ -37,21 +44,19 @@ bool MidiService::Init() {
 	}
 
 	return true;
-}
+};
 
 void MidiService::Close() {
 	Stop();
-    inDevice_->Stop();
-    inDevice_->Close();
-}
+};
 
 I_Iterator<MidiInDevice> *MidiService::GetInIterator() {
 	return inList_.GetIterator();
-}
+};
 
 void MidiService::SelectDevice(const std::string &name) {
-
 	deviceName_ = name;
+};
 
     // MidiIn is always running for the current device.
     // If the selected device is the same as the current device
@@ -95,19 +100,42 @@ void MidiService::SelectDevice(const std::string &name) {
     }
 }
 
-bool MidiService::Start() { return true; };
+bool MidiService::Start() {
+#ifndef _FEAT_MIDI_MULTITHREAD
+    currentPlayQueue_ = 0;
+    currentOutQueue_ = 0;
+#endif
+    return true;
+}
 
 void MidiService::Stop() { stopOutDevice(); };
 
+#ifdef _FEAT_MIDI_MULTITHREAD
+// For multi-threaded systems we use a concurrentqueue
 void MidiService::QueueMessage(MidiMessage &m) {
+    if (!outDevice_)
+        return;
     // Trace::Log("MidiService", "QueueMessage: status=0x%X", m.status_);
-	midiQueue_.enqueue(m);
+
+    midiQueue_.enqueue(m);
 }
+#else
+// For single-threaded systems we do it the old way
+void MidiService::QueueMessage(MidiMessage &m) {
+	if (outDevice_) {
+        SysMutexLocker locker(queueMutex_) ;
+		T_SimpleList<MidiMessage> *queue=queues_[currentPlayQueue_];
+		MidiMessage *ms=new MidiMessage(m.status_,m.data1_,m.data2_);
+		queue->Insert(ms);
+	}
+};
 
 void MidiService::Trigger() {
-
-    if (outDevice_ && sendSync_) {
-        SyncMaster *sm=SyncMaster::GetInstance();
+#ifndef _FEAT_MIDI_MULTITHREAD
+	AdvancePlayQueue();
+#endif
+	if (outDevice_&&sendSync_) {
+		SyncMaster *sm=SyncMaster::GetInstance();
 		if (sm->MidiSlice()) {
 			MidiMessage msg;
 			msg.status_ = 0xF8;
@@ -116,11 +144,19 @@ void MidiService::Trigger() {
 	}
 }
 
-void MidiService::Update(Observable &o, I_ObservableData *d) {
-    AudioDriver::Event *event = (AudioDriver::Event *)d;
-    if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
-        onAudioTick();
-    }
+#ifndef _FEAT_MIDI_MULTITHREAD
+void MidiService::AdvancePlayQueue() {
+    int next = (currentPlayQueue_ + 1) % MIDI_MAX_BUFFERS;
+    queues_[next]->Empty();
+    currentPlayQueue_ = next;
+}
+#endif
+
+void MidiService::Update(Observable &o,I_ObservableData *d) {
+  AudioDriver::Event *event=(AudioDriver::Event *)d;
+  if (event->type_ == AudioDriver::Event::ADET_DRIVERTICK) {
+    onAudioTick();
+  }
 };
 
 void MidiService::onAudioTick() {
@@ -136,23 +172,37 @@ void MidiService::Flush() {
 	if (tickToFlush_ == 0) {
 		flushOutQueue();
 	}
-}
+};
 
+#ifdef _FEAT_MIDI_MULTITHREAD
 void MidiService::flushOutQueue() {
     if (!outDevice_)
         return;
+
     MidiMessage msg;
-    T_SimpleList<MidiMessage> batch; // <-- use T_SimpleList
+    T_SimpleList<MidiMessage> batch;
     // Drain all messages currently in the queue
     while (midiQueue_.try_dequeue(msg)) {
-        batch.Insert(msg); // Assuming Add() is the method to append
+        batch.Insert(msg);
         // Trace::Log("MidiService", "flushOutQueue: status=0x%X", msg.status_);
     }
-    if (batch.Size() > 0) { // Assuming IsEmpty() checks if list is empty
-        outDevice_->SendQueue(batch);
+    if (batch.Size() > 0) {
+        device_->SendQueue(batch);
 		// Trace::Log("MidiService", "flushOutQueue: batch=0x%X", batch);
     }
 }
+#else
+void MidiService::flushOutQueue() {
+    int next = (currentOutQueue_ + 1) % MIDI_MAX_BUFFERS;
+    T_SimpleList<MidiMessage> *flushQueue = queues_[next];
+    if (outDevice_) {
+        outDevice_->SendQueue(*flushQueue);
+    }
+
+    flushQueue->Empty();
+    currentOutQueue_ = next;  // Advance only after safe flush
+}
+#endif
 
 /*
  * starts midi device
@@ -165,19 +215,17 @@ void MidiService::startOutDevice() {
 		if (!strcmp(deviceName_.c_str(), current.GetName())) {
 			if (current.Init()) {
 				if (current.Start()) {
-                    Trace::Log("MidiService", "midi device %s started",
-                               deviceName_.c_str());
-                    outDevice_ = &current;
+					Trace::Log("MidiService", "midi device %s started", deviceName_.c_str());
+					outDevice_ = &current;
 				} else {
-                    Trace::Log("MidiService", "midi device %s failed to start",
-                               deviceName_.c_str());
+					Trace::Log("MidiService", "midi device %s failed to start", deviceName_.c_str());
 					current.Close();
 				}
 			}
 			break;
 		}
 	}
-}
+};
 
 /*
  * closes midi device
@@ -195,8 +243,8 @@ void MidiService::stopOutDevice() {
  */
 void MidiService::OnPlayerStart() {
 	if (deviceName_.size()!=0) {
-        stopOutDevice();
-        startOutDevice();
+		stopOutDevice();
+		startOutDevice();
 		deviceName_="";
 	} else {
         startOutDevice();
@@ -207,7 +255,7 @@ void MidiService::OnPlayerStart() {
 		msg.status_=0xFA ;
 		QueueMessage(msg) ;
 	}
-}
+};
 
 /*
  * queues midi stop message when player stops
@@ -218,4 +266,4 @@ void MidiService::OnPlayerStop() {
 		msg.status_=0xFC ;
 		QueueMessage(msg) ;
 	}
-}
+};

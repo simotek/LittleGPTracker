@@ -16,12 +16,13 @@
 #define VAR_MIDISYNC    MAKE_FOURCC('S','Y','N','C')
 #define VAR_TRANSPOSE   MAKE_FOURCC('T','R','S','P')
 #define VAR_SOFTCLIP MAKE_FOURCC('S', 'F', 'T', 'C')
-#define VAR_CLIP_ATTENUATION MAKE_FOURCC('C', 'A', 'T', 'N')
+#define VAR_SOFTCLIP_GAIN 	MAKE_FOURCC('S', 'F', 'G', 'N')
+#define VAR_PREGAIN   		MAKE_FOURCC('P', 'R', 'G', 'N')
 #define VAR_SCALE MAKE_FOURCC('S', 'C', 'A', 'L')
 
 #define PROJECT_NUMBER "1"
-#define PROJECT_RELEASE "4"
-#define BUILD_COUNT "3-bacon3"
+#define PROJECT_RELEASE "6"
+#define BUILD_COUNT "0-bacon2"
 
 #define MAX_TAP 3
 
@@ -43,7 +44,8 @@ public:
     int GetTempo() ; // Takes nudging into account
 	int GetTranspose() ;
     int GetSoftclip();
-    int GetAttenuation();
+  int GetSoftclipGain();
+  int GetPregain();
     int GetMidiSyncState();
 
     void Trigger();

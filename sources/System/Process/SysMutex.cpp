@@ -33,19 +33,19 @@ bool SysMutex::Lock() {
 }
 
 bool SysMutex::TryLock() {
-	if (!mutex_) {
-		mutex_ = SDL_CreateMutex() ;
-	}
-	if (mutex_) {
-#ifdef SDL2
-		// Returns 0 on Successs
-		return !SDL_TryLockMutex(mutex_) ;
+#ifndef SDL2
+    // SDL1 generally means single-threaded older builds
+    return true;
 #else
-		SDL_LockMutex(mutex_) ;
-		return true ;
+    if (!mutex_) {
+        mutex_ = SDL_CreateMutex();
+    }
+    if (mutex_) {
+        // Returns 0 on Successs
+        return !SDL_TryLockMutex(mutex_);
+    }
+    return false;
 #endif
-	} 
-	return false ;
 }
 
 void SysMutex::Unlock() {
@@ -60,6 +60,4 @@ SysMutexLocker::SysMutexLocker(SysMutex &mutex)
 	mutex_->Lock() ;
 }
 
-SysMutexLocker::~SysMutexLocker() {
-	mutex_->Unlock() ;
-}
+SysMutexLocker::~SysMutexLocker() { mutex_->Unlock(); }

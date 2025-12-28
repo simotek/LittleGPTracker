@@ -51,7 +51,8 @@ After that you can copy additional wavs to the lgptRoot/lgptProject/samples dire
 
 ## New project
 
-When creating a new project, use the regen button to generate a random name. Generate a new name with Regen or edit it manually selecting characters with A and pressing up/down
+When creating a new project, use the Random button to generate a random name. Generate a new name with Random or edit it manually selecting characters with A and pressing up/down
+Attempting to create a project with the same name in the same location produces a notification that this operation is denied 
 
 ## Multiple Projects
 
@@ -117,6 +118,7 @@ Note: CTRL Key mappings of RT and LT are inverted. Since the keyboard's Arrow Ke
   - B+LEFT/RIGHT: Next/Previous Channel in Chain/Phrase Screen. Navigation +/- 1 in Instrument/Table Screen. Switch between Song and Live Modes in Song Screen.
 - RT+ARROWS: Navigate between the Screens.
 - LT+UP/DOWN: Jump up/down to next populated row after a blank row (great for live mode entire row queuing!)
+- RT+B: in chains or tables, a single-column selection will fill values from lowest to highest
 
 ## Selections
 
@@ -135,6 +137,14 @@ once a selection is started you can do a few more things:
 And then:
 
 - LT+A: paste the clipboard content at current location
+
+- RT+B: in chains or tables, a single-column selection will fill values from lowest to highest
+
+00  01      00  01
+01  --  =>  01  02
+02  --      02  03
+03  04      03  04
+
 
 ## Playback Modes and Controls
 
@@ -264,8 +274,7 @@ To move from one screen to the other, press the RTrigger combined with the direc
 - **Tempo:**: Can be set between 60bpm [0x3c] and 400bpm [0x190]. Resolution aligned to LSDJ. (nudge with b + left / right)
 - **Master:** Main volume goes from 10% to 200%. Piggy is loud now!
 - **Transpose:** Live transposition of every triggered instruments.
-- **Soft clip:** Master channel with 5 preset levels of saturation.
-- **Post:** Master channel attenuation post saturation.
+- **Soft clip:** Master channel with 5 preset levels of saturation. Change Unity to Boost for extreme loudness!
 - **Compact Sequencer:** Free all unused chain/phrases.
 - **Compact Instruments:** All unused instruments get their sample set to (null), old parameter settings stick. A dialog offers to remove unused samples.
 - **Load Song:** Brings you back to the Selector Screen.
@@ -324,7 +333,8 @@ To move from one screen to the other, press the RTrigger combined with the direc
 - **FX selector:** Select between 4 impulse responses to print to the currently selected sample
 - **Wet:** How much of the effect to print 0 = nothing, 10 = probably too much
 - **Pad** For short samples, add up to 5000 ms silence to the end of the sample to let the reverb tail ring out.
-FX section uses ffmpeg to process audio
+FX section requires full ffmpeg to process audio and is currently only available for certain platforms
+If it doesn't appear to do anything, check lgpt.log for hints as to why it doesn't do what you expect it to do!
 Select which reverb you want by holding A+Left/Right. Apply it by double-tapping A
 Reverbs created by using ffmpegs convolution filter [Impulse response](https://en.wikipedia.org/wiki/Convolution)
 Convolution wraps the audio file from start to end. If the sample is very short, you can get
@@ -344,7 +354,7 @@ IR credits:
 - **downsample:** decrease the bit rate, get those low frequency aliasing whines. each increase in this value will downsample the original sample by a factor of 2
 - **cutoff:** filter cutoff frequency
 - **reso:** filter resonance frequency
-- **type:** this is where it gets a little trickier. The filter now supports continuous change from low pass to high pass. set type to 00 for low pazz. FF for hi-pass and 7f for Band pass (or is it notch? n0s must check). all intermediate values morph in between them.
+- **type:** this is where it gets a little trickier. The filter now supports continuous change from low pass to high pass. set type to 00 for low pass. FF for hi-pass and 7f for Band pass (or is it notch? n0s must check). all intermediate values morph in between them.
 - **mode:** filter distortion. Modes are none, bassy & scream. Scream adds loads of distortion when increasing resonance. Bassy makes the filter behave a little better when resonance is set very high compared to the default mode.
 - **attenuate:** volume attenuator post (scream) filter
 - **fb tune:** length of the feedback delay line

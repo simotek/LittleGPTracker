@@ -76,16 +76,16 @@ All colors are defined by a set of hexadecimal triplet for RGB. Here's an exampl
 
 ```xml
 <CONFIG>
-    <BACKGROUND   value = "505444" />
-    <FOREGROUND   value = "FFFFFF" /> <!-- Text and cursor in cursor -->
+    <BACKGROUND   value = "1D0A1F" />
+    <FOREGROUND   value = "F5EBFF" /> <!-- Text and cursor in cursor -->
     <BORDER       value = "FF00DD" /> <!--Dialog Border-->
-    <HICOLOR1     value = "F41B38" /> <!-- Highlight color 1 -->
-    <HICOLOR2     value = "FF0000" /> <!-- Highlight color 2 -->
+    <HICOLOR1     value = "B750D1" /> <!-- Highlight color 1 -->
+    <HICOLOR2     value = "DB33DB" /> <!-- Highlight color 2 -->
     <SONGVIEW_FE  value = "A55B8F" /> <!-- Color of the chain "FE" in song screen-->
     <SONGVIEW_00  value = "853B6F" /> <!-- Color of the chain "00" in song screen-->
     <CURSORCOLOR  value = "FF00DD" /> <!--Cursor color-->
     <PLAYCOLOR    value = "FF00DD" /> <!--Cursor color-->
-    <MUTECOLOR    value = "FFFFFF" /> <!-- Text and cursor in cursor -->
+    <MUTECOLOR    value = "F5EBFF" /> <!-- Text and cursor in cursor -->
     <ROWCOLOR1    value = "BA28F9" /> <!--Row count color 1 -->
     <ROWCOLOR2    value = "FF00FF" /> <!--Row count color 2-->
     <ALTROWNUMBER value = "4"/>       <!--How many rows of each ROWCOLOR-->
@@ -224,7 +224,7 @@ This setting is for GP2X and Dingoo only. It is used to set the volume of the ha
 These settings are used to control various options of the audio configuration. They are currenly mostly used for W32 but might extend in the future to other platforms
 
 -   `AUDIOAPI`: Allows to select the class of drivers to use. Currently can be set to ASIO to enable asio output instead of direct sound.
--   `AUDIODRIVER`: Allows to specify which driver to open. It takes the first drvier whose name matches the beginning of the string. For example, to force using a realtek soundcard instead of the default one, you can just specify "Real"
+-   `AUDIODRIVER`: Allows to specify which driver to open. It takes the first driver whose name matches the beginning of the string. For example, to force using a realtek soundcard instead of the default one, you can just specify "Real"
 -   `AUDIOBUFFERSIZE`: Allows to tweak the default buffersize used for the audio. If the piggy glitches, increase this value.
 -   `AUDIOPREBUFFERCOUNT`: Even if the computer has the ability to run the piggy full screen, some sound hardware needs nearly instant reply for the couple of first buffers. If you have upped the AUDIOBUFFERSIZE but still get glitches, try putting it back to something decent (like 512) and define AUDIOPREBUFFERCOUNT to be 2,3,... that way, a set of blank buffer will be queued, ready for the soundcard to grab, before the sequencer is actually kicked in.
 
