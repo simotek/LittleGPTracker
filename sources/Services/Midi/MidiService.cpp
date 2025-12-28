@@ -11,7 +11,7 @@
 #endif
 	
 MidiService::MidiService()
-    : T_SimpleList<MidiOutDevice>(true), inList_(true), device_(0),
+    : T_SimpleList<MidiOutDevice>(true), inList_(true), outDevice_(0),
       sendSync_(true) {
 #ifndef _FEAT_MIDI_MULTITHREAD
     for (int i=0;i<MIDI_MAX_BUFFERS;i++) {
@@ -56,7 +56,6 @@ I_Iterator<MidiInDevice> *MidiService::GetInIterator() {
 
 void MidiService::SelectDevice(const std::string &name) {
 	deviceName_ = name;
-};
 
     // MidiIn is always running for the current device.
     // If the selected device is the same as the current device
@@ -129,6 +128,7 @@ void MidiService::QueueMessage(MidiMessage &m) {
 		queue->Insert(ms);
 	}
 };
+#endif
 
 void MidiService::Trigger() {
 #ifndef _FEAT_MIDI_MULTITHREAD
@@ -187,7 +187,7 @@ void MidiService::flushOutQueue() {
         // Trace::Log("MidiService", "flushOutQueue: status=0x%X", msg.status_);
     }
     if (batch.Size() > 0) {
-        device_->SendQueue(batch);
+        outDevice_->SendQueue(batch);
 		// Trace::Log("MidiService", "flushOutQueue: batch=0x%X", batch);
     }
 }
