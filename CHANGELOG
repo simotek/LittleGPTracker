@@ -1,4 +1,68 @@
+Various additions
+    FX Command Box selector (#238)
+        * In phrase and table views a selection box appears when editing FX commands
+        * Navigate in all directions using D-PAD
+        * Displays help legend and previews FX during playback
+
+    Preview notes by pressing A (#237)
+        * Press A on any step in phrase view to audition the note
+
+    Remove GARLIC build target
+        * Use Portmaster-compatible distro instead
+    
+    Find closest instrument
+        * In PhraseView, select the closest instrument from the top
+        * Less often edit the wrong instrument hopefully
+
+    Fixes:
+    Fixed incorrect interpolation (#248)
+        * Fixed not getting correct interpolation results between row 1 and 16
+    Don't audition note when song is playing (#247)
+    Reset chain offset when switching to SongView (#239)
+        * Prevents accidentally triggering playback with chain offset when returning to song screen
+    Fix audio dying on multithreaded systems (#236)
+        * MIDI queue protected by mutex lock on X64
+        * Fixes "audio suddenly dies" error
+    Fix regression caused in https://github.com/djdiskmachine/LittleGPTracker/pull/245
+        Fix introduced microtonality for single cycle osc, thank you @INFU-AV <3
+    Purge samples actually purges samples [author: maks](https://github.com/xiphonics/picoTracker/pull/313)
+
+1.6.0-bacon11
+    Slices decoupled from loop mode
+        * Slices are no longer a loop mode — they are now an independent parameter
+        * Set slices > 1 to enable slicing; loop mode (none/loop/ping pong/etc.) applies within each slice
+        * Enables looped slices, e.g. for amen breaks and other timed loops
+        * Old projects with "slicer" loop mode load correctly: slices count is preserved, loop mode resets to "none"
+
+1.6.0-bacon10
+    Allow greater granular stretching using LPOF
+    Documentation in tips and tricks
+
+1.6.0-bacon6
+    Delete project from SelectProjectDialog
+        * Press A + B on a project in the project selection screen to delete it
+        * A confirmation dialog will appear asking to confirm deletion
+        * The entire project directory and all contents will be removed
+        * List position is preserved after deletion
+
+1.6.0-bacon5
+    Auto-load last project on startup
+        * Application can now load the last project automatically on startup
+        * Disable by setting AUTO_LOAD_LAST=NO in config.xml
+    
+1.6.0-bacon4
+    QWERTY keyboard name entry for new projects
+    * Press A on the project name field to enter QWERTY keyboard mode
+    * Navigate the on-screen keyboard with D-PAD/arrows
+    * Press A to input the selected character
+    * Press B to backspace
+    * Press L/R to move the text cursor left/right
+    * Press START or select OK to exit keyboard mode
+    * All keyboard navigation logic extracted to reusable KeyboardLayout.h utility
+
 1.6.0-bacon2
+    ProjectView Render item
+        When in project view, it's now possible to initiate rendering
     Interpolate values in tables and phrases
         R + B on single-column selection will fill values from lowest to highest
 
@@ -9,6 +73,7 @@
     Fixes:
     Add 64 bit soundfont support (#211)
     Skip randomly generated project name if a directory with that name already exists (#175)
+    Save Song As" saves to current as well as new project (#212) 
 
 1.5.0-bacon3
     Contributions:
@@ -65,7 +130,6 @@
         Update to github actions checkout@v4.1.7 (#136)
 
     Fixes:
-    Fix audio randomly dying (#194)
     Long sample names causing crashes in InstrumentView (#189)
     Sample names that start with the same characters get mixed up InstrumentView (#199)
     Bug in chainview: column warping (#134)
@@ -83,7 +147,6 @@
     Restore 32bit linux config
 
     Crash when nudging below 0 BPM (shoutout @merumerutho) https://github.com/djdiskmachine/LittleGPTracker/issues/127
-    Fixed Garlic docker being outdated (#194)
 
 
 1.4.2
