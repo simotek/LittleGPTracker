@@ -22,19 +22,19 @@ RTMidiService::RTMidiService() {
 	// RtMidiIn constructor
 	try {
 		rtMidiIn_ = new RtMidiIn();
-	} catch ( RtError &error ) {
+	} catch ( RtMidiError &error ) {
 		Trace::Log("RtMidiService", "Couldn't get RtMidiIn object");
 		rtMidiIn_=0;
-		Trace::Log("RtMidiService", error.getMessageString());
+		Trace::Log("RtMidiService", error.getMessage().c_str());
 	}
 
 	// RtMidiOut constructor
 	try {
 		rtMidiOut_ = new RtMidiOut();
-	} catch ( RtError &error ) {
+	} catch ( RtMidiError &error ) {
 		Trace::Log("RtMidiService", "Couldn't get RtMidiOut object");
 		rtMidiOut_=0;
-		Trace::Log("RtMidiService", error.getMessageString());
+		Trace::Log("RtMidiService", error.getMessage().c_str());
 	}
 };
 
@@ -54,8 +54,8 @@ void RTMidiService::buildDriverList() {
 			RTMidiInDevice *in = new RTMidiInDevice(i, portName.c_str());
 			Trace::Log("RTMidiService", " %s", portName.c_str());
 			inList_.Insert(in);
-		} catch (RtError &error) {
-      Trace::Log("RTMidiService", error.getMessageString());
+		} catch (RtMidiError &error) {
+      Trace::Log("RTMidiService", error.getMessage().c_str());
 		}
 	}
 
@@ -68,8 +68,8 @@ void RTMidiService::buildDriverList() {
 			RTMidiOutDevice *out = new RTMidiOutDevice(*rtMidiOut_,i,portName.c_str());
 			Trace::Log("RTMidiService", " %s", portName.c_str());
 			Insert(out);
-		} catch (RtError &error) {
-			Trace::Log("RTMidiService", error.getMessageString());
+		} catch (RtMidiError &error) {
+			Trace::Log("RTMidiService", error.getMessage().c_str());
 		}
 	}
 }

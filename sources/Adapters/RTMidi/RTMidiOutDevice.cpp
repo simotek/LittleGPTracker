@@ -5,7 +5,6 @@
 
 RTMidiOutDevice::RTMidiOutDevice(RtMidiOut &out,int index,const char *name):
 	MidiOutDevice(name),
-	rtMidiOut_(out),
 	index_(index),
 	running_(false)
 {
@@ -22,7 +21,7 @@ void RTMidiOutDevice::Close(){
 }  ;
 
 bool RTMidiOutDevice::Start(){
-	rtMidiOut_.openPort( index_ );
+	rtMidiOut_.openPort( index_, "LittleGPTracker" );
 	running_=true ;
 	return true ;
 }  ;
