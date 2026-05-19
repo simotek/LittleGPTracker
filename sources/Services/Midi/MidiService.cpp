@@ -11,7 +11,7 @@
 #endif
 
 MidiService::MidiService()
-    : T_SimpleList<MidiOutDevice>(true), inList_(true), device_(0),
+    : T_SimpleList<MidiOutDevice>(true), inList_(true), outDevice_(0),
       sendSync_(true) {
     for (int i = 0; i < MIDI_MAX_BUFFERS; i++) {
         queues_[i] = new T_SimpleList<MidiMessage>(true);
@@ -103,10 +103,9 @@ bool MidiService::Start() {
 
 void MidiService::Stop() { stopDevice(); }
 
-#ifdef _FEAT_MIDI_MULTITHREAD
 // For multi-threaded systems we use a concurrentqueue
 void MidiService::QueueMessage(MidiMessage &m) {
-    if (device_) {
+    if (outDevice_) {
 #ifdef _FEAT_MIDI_LOCK
         SysMutexLocker locker(queueMutex_);
 #endif
@@ -118,7 +117,7 @@ void MidiService::QueueMessage(MidiMessage &m) {
 
 void MidiService::Trigger() {
     AdvancePlayQueue();
-    if (device_ && sendSync_) {
+    if (outDevice_ && sendSync_) {
         SyncMaster *sm=SyncMaster::GetInstance();
 		if (sm->MidiSlice()) {
             MidiMessage msg;
@@ -167,14 +166,15 @@ void MidiService::flushOutQueue() {
 #ifdef _FEAT_MIDI_LOCK
     SysMutexLocker locker(queueMutex_);
 #endif
+    if (!outDevice_)
+        return;
+
     int next = (currentOutQueue_ + 1) % MIDI_MAX_BUFFERS;
 
     if (queueMutex_.TryLock()) {
         T_SimpleList<MidiMessage> *flushQueue = queues_[next];
 
-        if (device_) {
-            device_->SendQueue(*flushQueue);
-        }
+        outDevice_->SendQueue(*flushQueue);
 
         flushQueue->Empty();
         currentOutQueue_ = next; // Advance only after safe flush
@@ -195,7 +195,7 @@ void MidiService::startDevice() {
                 if (current.Start()) {
                     Trace::Log("MidiService", "midi device %s started",
                                deviceName_.c_str());
-                    device_ = &current;
+                    outDevice_ = &current;
                 } else {
                     Trace::Log("MidiService", "midi device %s failed to start",
                                deviceName_.c_str());
@@ -211,11 +211,11 @@ void MidiService::startDevice() {
  * closes midi device
  */
 void MidiService::stopDevice() {
-    if (device_) {
-        device_->Stop();
-        device_->Close();
+    if (outDevice_) {
+        outDevice_->Stop();
+        outDevice_->Close();
     }
-    device_ = 0;
+    outDevice_ = 0;
 };
 
 /*

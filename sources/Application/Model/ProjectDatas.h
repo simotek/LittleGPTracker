@@ -3,6 +3,6 @@
 static const char *softclipStates[] = {"Bypass", "Subtle", "Medium", "Heavy", "Insane"};
 static const char *softclipGainStates[] = {"[unity]", "[boost]"};
 // char *midiSyncStates[] = {"off", "transport only", "tempo", "full"};
-char *midiSyncStates[] = {"off", "transport only"};
+static const char *midiSyncStates[] = {"off", "transport only"};
 static const char *renderModes[] = {"Off", "Stereo", "Stems"};
 #endif

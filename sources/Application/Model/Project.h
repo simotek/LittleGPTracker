@@ -39,6 +39,7 @@ public:
   int GetMasterVolume();
   bool Wrap();
   void OnTempoTap();
+  void OnMidiTempoTap();
   void NudgeTempo(int value);
   int GetScale();
   int GetTempo(); // Takes nudging into account
