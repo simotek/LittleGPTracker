@@ -25,8 +25,8 @@ OPT_FLAGS := -O3
 #For debugging
 OPT_FLAGS := -g
 INCLUDES := $(ALSA_CFLAGS) $(JACK_CFLAGS) $(SDL_CFLAGS) -I$(PWD)/../sources
-CFLAGS := $(OPT_FLAGS) $(DEFINES) $(INCLUDES) -Wall
-CXXFLAGS := $(CFLAGS) -std=gnu++03
+CFLAGS := $(OPT_FLAGS) $(DEFINES) $(INCLUDES) -Wall -std=c++17
+CXXFLAGS := $(CFLAGS) -std=c++17
 LIBS := $(ALSA_LIBS) $(JACK_LIBS) $(SDL_LIBS)
 OUTPUT := ../lgpt
 EXTENSION := x64
