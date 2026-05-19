@@ -19,56 +19,56 @@
 #define VAR_SOFTCLIP_GAIN 	MAKE_FOURCC('S', 'F', 'G', 'N')
 #define VAR_PREGAIN   		MAKE_FOURCC('P', 'R', 'G', 'N')
 #define VAR_SCALE MAKE_FOURCC('S', 'C', 'A', 'L')
+#define VAR_RENDER MAKE_FOURCC('R', 'N', 'D', 'R')
 
 #define PROJECT_NUMBER "1"
 #define PROJECT_RELEASE "6"
-#define BUILD_COUNT "0-bacon2"
+#define BUILD_COUNT "0-bacon15"
 
 #define MAX_TAP 3
 
 class Project: public Persistent,public VariableContainer,I_Observer  {
 public:
-	Project() ;
-	~Project() ;
-	void Purge() ;
-	void PurgeInstruments(bool removeFromDisk) ;
+  Project();
+  ~Project();
+  void Purge();
+  void PurgeInstruments(bool removeFromDisk);
 
-	Song *song_ ;
- 
-	int GetMasterVolume() ;
-	bool Wrap() ;
-	void OnTempoTap();
-	void OnMidiTempoTap();
-	void NudgeTempo(int value) ;
-    int GetScale();
-    int GetTempo() ; // Takes nudging into account
-	int GetTranspose() ;
-    int GetSoftclip();
+  Song *song_;
+
+  int GetMasterVolume();
+  bool Wrap();
+  void OnTempoTap();
+  void NudgeTempo(int value);
+  int GetScale();
+  int GetTempo(); // Takes nudging into account
+  int GetTranspose();
+  int GetSoftclip();
   int GetSoftclipGain();
   int GetPregain();
-    int GetMidiSyncState();
+  int GetMidiSyncState();
+  int GetRenderMode();
+  void Trigger();
 
-    void Trigger();
+  static const unsigned int MAX_RENDER_MODE = 3;
+  // I_Observer
+  virtual void Update(Observable &o, I_ObservableData *d);
 
-    // I_Observer
-    virtual void Update(Observable &o,I_ObservableData *d);
- 
-	InstrumentBank* GetInstrumentBank() ;
-	virtual void SaveContent(TiXmlNode *node) ;
-	virtual void RestoreContent(TiXmlElement *element);
+  InstrumentBank *GetInstrumentBank();
+  virtual void SaveContent(TiXmlNode *node);
+  virtual void RestoreContent(TiXmlElement *element);
 
-	void LoadFirstGen(const char *root) ;
+  void LoadFirstGen(const char *root);
 
 protected:
-	void buildMidiDeviceList() ;
+  void buildMidiDeviceList();
+
 private:
-	InstrumentBank *instrumentBank_ ;
-	char **midiDeviceList_ ;
-	int midiDeviceListSize_ ;
-	int tempoNudge_ ;
-	unsigned long lastTap_[MAX_TAP] ;
-	unsigned int tempoTapCount_ ; 
-} ;
-
+  InstrumentBank *instrumentBank_;
+  char **midiDeviceList_;
+  int midiDeviceListSize_;
+  int tempoNudge_;
+  unsigned long lastTap_[MAX_TAP];
+  unsigned int tempoTapCount_;
+};
 #endif
-
