@@ -36,6 +36,7 @@ bool RTMidiInDevice::initDriver() {
 } ;
 
 void RTMidiInDevice::closeDriver() {
+	rtMidiIn_.cancelCallback() ;
 	rtMidiIn_.closePort() ;
 } ;
 
