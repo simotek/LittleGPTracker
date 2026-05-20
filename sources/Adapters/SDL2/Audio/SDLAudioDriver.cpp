@@ -72,7 +72,7 @@ bool SDLAudioDriver::InitDriver() {
     // meaning an error or success.
     int ret = SDL_OpenAudio(&input, &returned);
     if (ret != 0) {
-        Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
+        Trace::Error("AUDIO", "Couldn't open sdl audio: %s", SDL_GetError());
         return false;
     }
     const char *driverName = SDL_GetCurrentAudioDriver();
