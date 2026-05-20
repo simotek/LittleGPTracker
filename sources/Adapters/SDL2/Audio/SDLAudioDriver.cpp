@@ -184,21 +184,23 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream, int len) {
             SYS_FREE(pool_[poolPlayPosition_].buffer_);
 
             pool_[poolPlayPosition_].buffer_ = 0;
-            poolPlayPosition_ = (poolPlayPosition_ + 1) % SOUND_BUFFER_COUNT;
-            if (thread_)
-                thread_->Notify();
-            // Tick the engine and flush MIDI ONLY when a real logical block is
-            // processed! This keeps the sequencer perfectly in sync with the
-            // audio pool consumption, and prevents runaway MIDI generation on
-            // underruns which fills the ALSA buffer and freezes the thread.
-            onAudioBufferTick();
-            MidiService::GetInstance()->Flush() ;
+        }
+        // Tick the engine and flush MIDI for every logical audio block processed.
+        // This ensures consistent timing for application logic and MIDI output,
+        // even during underruns where silence is played.
+        onAudioBufferTick();
+        MidiService::GetInstance()->Flush();
+
+        // Advance poolPlayPosition_ and notify the thread after consuming
+        // a logical chunk, regardless of whether it was real data or silence.
+        poolPlayPosition_ = (poolPlayPosition_ + 1) % SOUND_BUFFER_COUNT;
+        if (thread_) {
+            thread_->Notify();
         }
     }
     // Now dump audio to the device
 
     SYS_MEMCPY(stream, (short *)(mainBuffer_ + bufferPos_), len);
-    onAudioBufferTick();
     bufferPos_ += len;
 }
 

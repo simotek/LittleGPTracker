@@ -53,7 +53,9 @@ public:
 
 	void AddBuffer(short *buffer,int size) ; // size in samples
 
+	int GetAvailableBufferSlots(); // New method to check available slots
 	AudioSettings GetAudioSettings() ;
+
 
 	void OnNewBufferNeeded() ;
 
