@@ -7,6 +7,7 @@ DEFINES := \
 	-DCPP_MEMORY \
 	-D__LINUX_ALSA__ \
 	-D__LINUX_ALSASEQ__ \
+        -D__UNIX_JACK__ \
         -DSDL2 \
         -DSDLAUDIO \
         -DRTMIDI \
