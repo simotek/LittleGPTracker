@@ -1,10 +1,9 @@
 #include "MidiService.h"
-#include "Application/Player/SyncMaster.h"
-#include "System/Console/Trace.h"
-#include "System/Timer/Timer.h"
 #include "Application/Model/Config.h"
+#include "Application/Player/SyncMaster.h"
 #include "Services/Audio/AudioDriver.h"
 #include "System/Console/Trace.h"
+#include "System/Timer/Timer.h"
 
 #ifdef SendMessage
 #undef SendMessage
@@ -101,7 +100,7 @@ bool MidiService::Start() {
     return true;
 }
 
-void MidiService::Stop() { stopDevice(); }
+void MidiService::Stop() { stopOutDevice(); }
 
 // For multi-threaded systems we use a concurrentqueue
 void MidiService::QueueMessage(MidiMessage &m) {
@@ -118,8 +117,8 @@ void MidiService::QueueMessage(MidiMessage &m) {
 void MidiService::Trigger() {
     AdvancePlayQueue();
     if (outDevice_ && sendSync_) {
-        SyncMaster *sm=SyncMaster::GetInstance();
-		if (sm->MidiSlice()) {
+        SyncMaster *sm = SyncMaster::GetInstance();
+        if (sm->MidiSlice()) {
             MidiMessage msg;
             msg.status_ = 0xF8;
             QueueMessage(msg);
@@ -185,7 +184,7 @@ void MidiService::flushOutQueue() {
 /*
  * starts midi device
  */
-void MidiService::startDevice() {
+void MidiService::startOutDevice() {
     IteratorPtr<MidiOutDevice> it(GetIterator());
 
     for (it->Begin(); !it->IsDone(); it->Next()) {
@@ -210,7 +209,7 @@ void MidiService::startDevice() {
 /*
  * closes midi device
  */
-void MidiService::stopDevice() {
+void MidiService::stopOutDevice() {
     if (outDevice_) {
         outDevice_->Stop();
         outDevice_->Close();
@@ -223,11 +222,11 @@ void MidiService::stopDevice() {
  */
 void MidiService::OnPlayerStart() {
     if (deviceName_.size() != 0) {
-        stopDevice();
-        startDevice();
+        stopOutDevice();
+        startOutDevice();
         deviceName_ = "";
     } else {
-        startDevice();
+        startOutDevice();
     }
 
     if (sendSync_) {

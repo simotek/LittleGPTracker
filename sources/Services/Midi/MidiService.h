@@ -58,11 +58,11 @@ class MidiService : public T_Factory<MidiService>,
 
     //! start the selected midi device
 
-    void startDevice();
+    void startOutDevice();
 
     //! stop the selected midi device
 
-    void stopDevice();
+    void stopOutDevice();
 
     //! build the list of available drivers
 
@@ -71,20 +71,19 @@ class MidiService : public T_Factory<MidiService>,
   private:
     void flushOutQueue();
 
-private:
-  std::string deviceName_ ;
-  MidiInDevice *inDevice_;
-  MidiOutDevice *outDevice_;
+  private:
+    std::string deviceName_;
+    MidiInDevice *inDevice_;
+    MidiOutDevice *outDevice_;
 
-  T_SimpleList<MidiMessage> *queues_[MIDI_MAX_BUFFERS];
-  int currentPlayQueue_;
-  int currentOutQueue_;
+    T_SimpleList<MidiMessage> *queues_[MIDI_MAX_BUFFERS];
+    int currentPlayQueue_;
+    int currentOutQueue_;
 
-
-  MidiInMerger *merger_;
-  int midiDelay_;
-  int tickToFlush_;
-  bool sendSync_;
-  SysMutex queueMutex_;
+    MidiInMerger *merger_;
+    int midiDelay_;
+    int tickToFlush_;
+    bool sendSync_;
+    SysMutex queueMutex_;
 };
 #endif
