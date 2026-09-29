@@ -10,7 +10,8 @@ void sdl_callback(void *userdata, Uint8 *stream, int len) {
 };
 
 SDLAudioDriverThread::SDLAudioDriverThread(SDLAudioDriver *driver) {
-    semaphore_ = SysSemaphore::Create(0, 4);
+    // Uncap the semaphore to prevent dropped requests during long OS stalls.
+    semaphore_ = SysSemaphore::Create(0, 1024);
     driver_ = driver;
 };
 
@@ -55,12 +56,15 @@ struct SDL_AudioSpec returned;
 bool SDLAudioDriver::InitDriver() {
 
     // set sound
-    input.freq = 44100;
+    input.freq = settings_.sampleRate_;
     input.format = AUDIO_S16SYS;
     input.channels = 2;
     input.callback = sdl_callback;
     input.samples = settings_.bufferSize_;
     input.userdata = this;
+
+    SDL_SetHint("SDL_APP_NAME", "LittleGPTracker");
+    SDL_SetHint("SDL_AUDIO_DEVICE_APP_NAME", "LittleGPTracker");
 
     // On my machine this wasn't working.
     // SDL_AudioDeviceID deviceId =
@@ -68,12 +72,13 @@ bool SDLAudioDriver::InitDriver() {
     // meaning an error or success.
     int ret = SDL_OpenAudio(&input, &returned);
     if (ret != 0) {
-        Trace::Error("Couldn't open sdl audio: %s\n", SDL_GetError());
+        Trace::Error("AUDIO", "Couldn't open sdl audio: %s", SDL_GetError());
         return false;
     }
     const char *driverName = SDL_GetCurrentAudioDriver();
 
     fragSize_ = returned.size;
+    sampleRate_ = returned.freq;
     // Allocates a rotating sound buffer
     unalignedMain_ = (char *)SYS_MALLOC(fragSize_ + SOUND_BUFFER_MAX);
     // Make sure the buffer is aligned
@@ -83,8 +88,8 @@ bool SDLAudioDriver::InitDriver() {
     mainBuffer_ = (char *)((((int)unalignedMain_) + 1) & (0xFFFFFFFC));
 #endif
 
-    Trace::Log("AUDIO", "%s successfully opened with %d samples", driverName,
-               fragSize_ / 4);
+    Trace::Log("AUDIO", "%s successfully opened with %d samples %d", driverName,
+               fragSize_ / 4, returned.freq);
 
     // Create mini blank buffer in case of underruns
 
@@ -153,14 +158,18 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream, int len) {
     while (bufferSize_ - bufferPos_ < len) {
 
         // First move remaining bytes at the front
-        memcpy(mainBuffer_, mainBuffer_ + bufferPos_, bufferSize_ - bufferPos_);
+        memmove(mainBuffer_, mainBuffer_ + bufferPos_,
+                bufferSize_ - bufferPos_);
 
         // then get next queued buffer and copy data from it
 
         if (pool_[poolPlayPosition_].buffer_ == 0) {
-            SYS_MEMCPY(mainBuffer_ + bufferSize_ - bufferPos_, miniBlank_, len);
-            bufferSize_ = bufferSize_ - bufferPos_ + len;
-
+            // Use fragSize_ instead of len! miniBlank_ is only allocated to
+            // fragSize_. Using len causes a buffer over-read if SDL requests a
+            // larger chunk.
+            SYS_MEMCPY(mainBuffer_ + bufferSize_ - bufferPos_, miniBlank_,
+                       fragSize_);
+            bufferSize_ = bufferSize_ - bufferPos_ + fragSize_;
             bufferPos_ = 0;
         } else {
 
@@ -168,7 +177,6 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream, int len) {
                    pool_[poolPlayPosition_].buffer_,
                    pool_[poolPlayPosition_].size_);
 
-            MidiService::GetInstance()->Flush();
             // Adapt buffer variables
 
             bufferSize_ =
@@ -178,20 +186,37 @@ void SDLAudioDriver::OnChunkDone(Uint8 *stream, int len) {
             SYS_FREE(pool_[poolPlayPosition_].buffer_);
 
             pool_[poolPlayPosition_].buffer_ = 0;
-            poolPlayPosition_ = (poolPlayPosition_ + 1) % SOUND_BUFFER_COUNT;
-            if (thread_)
-                thread_->Notify();
+        }
+        // Tick the engine and flush MIDI for every logical audio block
+        // processed. This ensures consistent timing for application logic and
+        // MIDI output, even during underruns where silence is played.
+        onAudioBufferTick();
+        MidiService::GetInstance()->Flush();
+
+        // Advance poolPlayPosition_ and notify the thread after consuming
+        // a logical chunk, regardless of whether it was real data or silence.
+        poolPlayPosition_ = (poolPlayPosition_ + 1) % SOUND_BUFFER_COUNT;
+        if (thread_) {
+            thread_->Notify();
         }
     }
     // Now dump audio to the device
 
     SYS_MEMCPY(stream, (short *)(mainBuffer_ + bufferPos_), len);
-    onAudioBufferTick();
     bufferPos_ += len;
 }
 
 int SDLAudioDriver::GetPlayedBufferPercentage() {
     //	return
-    //100-(bufferSize_-bufferPos_-fragSize_)*100/(bufferSize_-fragSize_) ;
+    // 100-(bufferSize_-bufferPos_-fragSize_)*100/(bufferSize_-fragSize_) ;
     return 0;
+};
+
+int SDLAudioDriver::GetSampleRate() {
+    if (sampleRate_ == 0) {
+        Trace::Error(
+            "AUDIO",
+            "Sample rate requested before audio driver is initialised!");
+    }
+    return sampleRate_;
 };

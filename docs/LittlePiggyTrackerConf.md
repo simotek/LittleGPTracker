@@ -117,7 +117,7 @@ LittleGPTracker uses 6 colours to do all the drawing. If you want, you can redef
 - `FOREGROUND`: Color of the foreground
 - `BORDER`: Color of the border in the start screen / dialogs
 - `HICOLOR1`: Row count in song screen
-- `HICOLOR2`: Highlight color 2
+- `HICOLOR2`: Highlight color 2 as well as warning level ('orange') in VU meter
 - `CURSORCOLOR`: Cursor color
 - `PLAYCOLOR`: Play indicator color
 - `MUTECOLOR`: Mute indicator color
@@ -125,8 +125,10 @@ LittleGPTracker uses 6 colours to do all the drawing. If you want, you can redef
 - `SONGVIEW_00`: Color of the chain "00" in song screen
 - `ROWCOLOR1`: Row count color 1
 - `ROWCOLOR2`: Row count color 2
-- `MAJORBEAT`: Color of "--" at row 00,04,08,0c in phrase screen
+- `MAJORBEAT`: Color of rows 00,04,08,0c in phrase screen as well as clipping indicator ('red') in VU meter
+- `CONSOLE`: Color of normal signal level ('green') in VU meter
 - `ALTROWNUMBER`: How many rows for each `ROWCOLOR`
+- `COL_TITLE`: Color of the column title
 
 All colors are defined by a set of hexadecimal triplet for RGB. Here's an example:
 
@@ -145,6 +147,7 @@ All colors are defined by a set of hexadecimal triplet for RGB. Here's an exampl
     <ROWCOLOR1    value = "BA28F9" /> <!-- Row count color 1 -->
     <ROWCOLOR2    value = "FF00FF" /> <!-- Row count color 2 -->
     <ALTROWNUMBER value = "4" />      <!-- How many rows of each ROWCOLOR -->
+    <COL_TITLE    value = "853B6F" /> <!-- Color of the column title -->
 </CONFIG>
 ```
 
@@ -282,7 +285,8 @@ They are currenly _mostly_ used for **W32** but might extend in the future to ot
 - `AUDIODRIVER`: Allows to specify which driver to open. It takes the first drvier whose name matches the beginning of the string. For example, to force using a realtek soundcard instead of the default one, you can just specify “Real”
 - `AUDIOBUFFERSIZE`: Allows to tweak the default buffersize used for the audio. If the piggy glitches, increase this value.
 - `AUDIOPREBUFFERCOUNT`: Even if the computer has the ability to run the piggy full screen, some sound hardware needs nearly instant reply for the couple of first buffers. If you have upped the `AUDIOBUFFERSIZE` but still get glitches, try putting it back to something decent (like 512) and define `AUDIOPREBUFFERCOUNT` to be 2,3,… that way, a set of blank buffer will be queued, ready for the soundcard to grab, before the sequencer is actually kicked in.
-
+- `AUDIOSAMPLERATE`: SDL2 Only, Modern Linux systems running pipewire often run at 48000 rather then 44100. This setting 
+allows you to run at the system default. SDL may use a different sample rate if the specified one is not supported. Currently 44100 and 48000 have been tested on Linux.
 
 ```xml
 <CONFIG>

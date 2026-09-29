@@ -140,7 +140,7 @@ void TableView::interpolateSelection() {
     }
 
     GUIRect rect = getSelectionRect();
-    
+
     // Only interpolate if we're in param columns (1, 3, 5)
     int col = rect.Left();
     if (col != rect.Right() || (col != 1 && col != 3 && col != 5)) {
@@ -149,7 +149,7 @@ void TableView::interpolateSelection() {
 
     int startRow = rect.Top();
     int endRow = rect.Bottom();
-    
+
     // Need at least 2 rows to interpolate
     if (endRow - startRow < 1) {
         return;
@@ -677,6 +677,11 @@ void TableView::processNormalButtonMask(unsigned short mask) {
                         ViewEvent ve(VET_SWITCH_VIEW, &vt);
                         SetChanged();
                         NotifyObservers(&ve);
+                    } else if (VT_TABLE) {
+                        ViewType vt = VT_MIXER;
+                        ViewEvent ve(VET_SWITCH_VIEW, &vt);
+                        SetChanged();
+                        NotifyObservers(&ve);
                     }
                 }
                 if (mask & EPBM_RIGHT) {
@@ -828,8 +833,18 @@ void TableView::DrawView() {
 
     GUIPoint anchor = GetAnchor();
 
-    // Display row numbers
+    // Draw column titles
+    pos = anchor;
+    pos._y -= 1;
+    SetColor(CD_COL_TITLE);
+    DrawString(pos._x, pos._y, "Cmd1", props);
+    DrawString(pos._x + 5, pos._y, "", props);
+    DrawString(pos._x + 10, pos._y, "Cmd2", props);
+    DrawString(pos._x + 15, pos._y, "", props);
+    DrawString(pos._x + 20, pos._y, "Cmd3", props);
+    DrawString(pos._x + 25, pos._y, "", props);
 
+    // Display row numbers
     char buffer[6];
     pos = anchor;
     pos._x -= 3;

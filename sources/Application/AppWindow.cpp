@@ -3,6 +3,7 @@
 #include "Application/Commands/EventDispatcher.h"
 #include "Application/Instruments/SamplePool.h"
 #include "Application/Mixer/MixerService.h"
+#include "Application/Model/Mixer.h"
 #include "Application/Persistency/PersistencyService.h"
 #include "Application/Player/TablePlayback.h"
 #include "Application/Utils/char.h"
@@ -32,6 +33,7 @@ GUIColor AppWindow::muteColor_(0xF5, 0xEB, 0xFF);
 GUIColor AppWindow::rownumberColor_(0xBA, 0x28, 0xF9);
 GUIColor AppWindow::rownumber2Color_(0xFF, 0x00, 0xFF);
 GUIColor AppWindow::majorbeatColor_(0xBA, 0x28, 0xF9);
+GUIColor AppWindow::columnTitleColor_(0xA5, 0x5B, 0x8F);
 
 int AppWindow::charWidth_ = 8;
 int AppWindow::charHeight_ = 8;
@@ -113,6 +115,8 @@ AppWindow::AppWindow(I_GUIWindowImp &imp) : GUIWindow(imp) {
     defineColor("ROWCOLOR1", rownumberColor_);
     defineColor("ROWCOLOR2", rownumber2Color_);
     defineColor("MAJORBEAT", majorbeatColor_);
+    defineColor("COL_TITLE", columnTitleColor_);
+    defineColor("CONSOLE", consoleColor_);
 
     GUIWindow::Clear(backgroundColor_);
 
@@ -286,6 +290,9 @@ void AppWindow::Flush() {
                     case CD_MAJORBEAT:
                         gcolor = majorbeatColor_;
                         break;
+                    case CD_COL_TITLE:
+                        gcolor = columnTitleColor_;
+                        break;
                     default:
                         NAssert(0);
                         break;
@@ -331,7 +338,7 @@ void AppWindow::LoadProject(const Path &p) {
 
     SamplePool *pool = SamplePool::GetInstance();
 
-    pool->Load();
+    unsigned int load_result = pool->Load();
 
     Project *project = new Project();
 
@@ -397,6 +404,19 @@ void AppWindow::LoadProject(const Path &p) {
         _songView->DoModal(mb);
     }
 
+    // Report on sample & SoundFont load fails
+    if (load_result) {
+      const char *err_str = (load_result == SLOAD_ERR_MAX_SAMPLES) ? "Maximum number of samples exceeded"
+	: (load_result == SLOAD_ERR_MAX_SOUNDFONTS) ? "Maximum number of SoundFonts exceeded"
+	: (load_result == SLOAD_ERR_MAX_SAMPLES | SLOAD_ERR_MAX_SOUNDFONTS) ? "Maximum number of samples and SoundFonts exceeded"	
+	: (load_result == SLOAD_ERR_INVALID_DIR) ? "Sample directory could not be opened"
+	: "Unknown error loading sample pool";
+      Trace::Error(err_str) ;
+      MessageBox *mb =
+            new MessageBox(*_currentView, err_str);	  
+    _currentView->DoModal(mb);
+    }
+    
     Redraw();
 }
 
@@ -523,8 +543,16 @@ void AppWindow::onUpdate() {
         LoadProject(_newProjectToLoad.c_str());
         return;
     }
+
+    // Call AnimationUpdate periodically (~10-25Hz depending on frame rate)
+    static unsigned int animTick = 0;
+    if ((animTick++ % 2) == 0) {  // every 2nd call, roughly 25Hz at 50Hz main loop
+        if (_currentView) {
+            _currentView->AnimationUpdate();
+        }
+    }
     Flush();
-};
+}
 
 void AppWindow::LayoutChildren() {};
 
@@ -564,9 +592,8 @@ void AppWindow::Update(Observable &o, I_ObservableData *d) {
         case VT_GROOVE:
             _currentView = _grooveView;
             break;
-            /*			case VT_MIXER:
-                        _currentView=_mixerView ;
-            */
+        case VT_MIXER:
+            _currentView = _mixerView;
             break;
         }
         _currentView->SetFocus(*vt);
