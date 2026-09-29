@@ -499,6 +499,13 @@ void ChainView::processNormalButtonMask(unsigned short mask) {
                     }
                 }
 
+                if (mask & EPBM_DOWN) {
+                    ViewType vt = VT_MIXER;
+                    ViewEvent ve(VET_SWITCH_VIEW, &vt);
+                    SetChanged();
+                    NotifyObservers(&ve);
+                }
+
                 // We toggle full chain start only if we"re not in live mode
                 // or if the player ain't playing yet
 
@@ -595,6 +602,13 @@ void ChainView::processSelectionButtonMask(unsigned short mask) {
                     }
                 }
 
+                if (mask & EPBM_DOWN) {
+                    ViewType vt = VT_MIXER;
+                    ViewEvent ve(VET_SWITCH_VIEW, &vt);
+                    SetChanged();
+                    NotifyObservers(&ve);
+                }
+
                 if (mask & EPBM_START) {
                     player->OnStartButton(PM_CHAIN, viewData_->songX_, true,
                                           viewData_->chainRow_);
@@ -685,6 +699,13 @@ void ChainView::DrawView() {
         DrawString(pos._x, pos._y, row, props);
         pos._y += 1;
     }
+
+    // Draw column titles
+    pos = anchor;
+    pos._y -= 1;
+    SetColor(CD_COL_TITLE);
+    DrawString(pos._x, pos._y, "Ph", props);
+    DrawString(pos._x + 3, pos._y, "Ts", props);
 
     SetColor(CD_NORMAL);
 
@@ -811,8 +832,8 @@ void ChainView::OnPlayerUpdate(PlayerEventType eventType, unsigned int tick) {
     pos._x += 200;
 /*
 	if (player->Clipped()) {
-           w_.DrawString("clip",pos,props); 
+           w_.DrawString("clip",pos,props);
     } else {
-           w_.DrawString("----",pos,props); 
+           w_.DrawString("----",pos,props);
     }
 */} ;
